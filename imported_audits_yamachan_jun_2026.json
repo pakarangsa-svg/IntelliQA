@@ -1,0 +1,278 @@
+[
+  {
+    "id": "imp-ymc-jun26-qscjuneymc-bn09-06-261",
+    "brandId": "yamachan",
+    "brandName": "Yamachan",
+    "header": {
+      "branch": "บางนา",
+      "branchType": "Community mall",
+      "date": "2026-06-09",
+      "startTime": "11.30",
+      "endDateTime": "2026-06-09T00:00",
+      "quarter": "Q2",
+      "managers": "",
+      "kitchenStaff": "2",
+      "serviceStaff": "1",
+      "manager": "",
+      "areaManager": "",
+      "auditor": ""
+    },
+    "comments": "",
+    "managerAck": {
+      "name": "",
+      "date": "",
+      "signedAt": null
+    },
+    "responses": {
+      "A1.0.5": {
+        "status": "fail",
+        "note": "พบบริเวณที่นั่งลูกค้า V2-V2A ไม่ได้รับการทำความสะอาดอย่างเหมาะสม มีคราบพริกป่น",
+        "photos": []
+      },
+      "A1.0.11": {
+        "status": "fail",
+        "note": "พบลิ้นชักตู้เคาน์เตอร์ชั้นเก็บอุปกรณ์เสิร์ฟมีคราบซอส",
+        "photos": []
+      },
+      "A1.1.18": {
+        "status": "fail",
+        "note": "พบใต้ตะแกรง และกระจกตู้แช่เครื่องดื่มไม่ได้รับการทำความสะอาดอย่างเหมาะสม",
+        "photos": []
+      },
+      "A1.3.32": {
+        "status": "fail",
+        "note": "พบซิงค์บริเวณข้างเตาทอด ไม่ได้รับการทำความสะอาดอย่างเหมาะสม",
+        "photos": []
+      },
+      "A2.0.3": {
+        "status": "fail",
+        "note": "พบการจัดเก็บมีด (ของมีคม) บริเวณบาร์น้ำ จัดเก็บรวมกับอุปกรณ์อื่น",
+        "photos": []
+      },
+      "C1.4.19": {
+        "status": "fail",
+        "note": "พบการเปิดใช้แป้งคาราเกะมิกซ์ไม่ FEFO สินค้า โดยเปิดใช้ EXP: 04-11-26 ก่อน EXP : 09-10-26",
+        "photos": []
+      },
+      "C3.0.3": {
+        "status": "fail",
+        "note": "พบการจัดเก็บสัมภาะระพนักงาน บริเวณถังเบียร์สแตนเลส",
+        "photos": []
+      }
+    },
+    "coreDed": {},
+    "critical": {},
+    "pestCount": {},
+    "rmnc": [],
+    "actionPlans": {},
+    "criticalActionPlans": {},
+    "createdAt": 1717200000000,
+    "status": "submitted",
+    "submittedAt": 1717200000000,
+    "_meta": {
+      "sourceFile": "QSC JUNE (YMC-BN 09-06-26) (1).xlsx",
+      "expectedScore": 94.74,
+      "branchRaw": "บางนา",
+      "matched": false
+    }
+  },
+  {
+    "id": "imp-ymc-jun26-qscjuneymc-on05-06-262",
+    "brandId": "yamachan",
+    "brandName": "Yamachan",
+    "header": {
+      "branch": "อ่อนนุช",
+      "branchType": "Community mall",
+      "date": "2026-06-05",
+      "startTime": "12.00",
+      "endDateTime": "2026-06-05T00:00",
+      "quarter": "Q2",
+      "managers": "1",
+      "kitchenStaff": "3",
+      "serviceStaff": "",
+      "manager": "",
+      "areaManager": "",
+      "auditor": ""
+    },
+    "comments": "",
+    "managerAck": {
+      "name": "",
+      "date": "",
+      "signedAt": null
+    },
+    "responses": {
+      "A1.1.16": {
+        "status": "fail",
+        "note": "พบชั้นวางแก้วด้านบน มีคราบฝุ่น ไม่ได้รับการทำความสะอาดอย่างเหมาะสม",
+        "photos": []
+      },
+      "A1.1.20": {
+        "status": "fail",
+        "note": "พบบริเวณซิงค์ล้างแก้วบาร์น้ำ ไม่ได้รับการทำความสะอาดอย่างเหมาะสม พบร่องรอยปลวก",
+        "photos": []
+      },
+      "A1.3.27": {
+        "status": "fail",
+        "note": "พบฝากล่องพื้นที่เก็บสินค้า มีน้ำขัง ไม่ได้รับการทำความสะอาดอย่างเหมาะสม",
+        "photos": []
+      },
+      "A1.3.31": {
+        "status": "fail",
+        "note": "พบฝาถังขยะในครัว ข้างเตาทอดมีคราบมันสะสม",
+        "photos": []
+      },
+      "A2.0.9": {
+        "status": "fail",
+        "note": "พบตู้แช่เย็น เคาน์เตอร์สแตนเลสบริเวณบาร์น้ำ ด้านในเป็นสนิม ไม่ได้รับการทำความสะอาดอย่างเหมาะสม",
+        "photos": []
+      },
+      "C1.5.24": {
+        "status": "fail",
+        "note": "พบพริกแดงเน่าเสีย มีหนอน,พบกุยช่ายสำหรับเตรียมขายไม่ได้คุณภาพ,แครอทขึ้นราดำ",
+        "photos": []
+      },
+      "C1.8.34": {
+        "status": "fail",
+        "note": "พบการจัดเก็บไอศครีมในตู้แช่แข็งปิดฝาไม่สนิท อาจส่งผลเรื่องกลิ่นอาหารปนเปื้อน",
+        "photos": []
+      },
+      "C1.8.35": {
+        "status": "fail",
+        "note": "พบเครื่องดื่มคาพิแลคโตะ ไม่ FEFO ใช้ล็อต BBD : 03-08-26 ก่อน 02-07-26 เนื่องจากเป็นสินค้าที่แบ่งมาจากสาขาบางนา",
+        "photos": []
+      },
+      "D1.0.3": {
+        "status": "fail",
+        "note": "เอกสาร Checklist เปิดร้านในครัว ไม่มีบันทึกข้อมูล 05-06-26",
+        "photos": []
+      }
+    },
+    "coreDed": {},
+    "critical": {},
+    "pestCount": {},
+    "rmnc": [],
+    "actionPlans": {},
+    "criticalActionPlans": {},
+    "createdAt": 1717286400000,
+    "status": "submitted",
+    "submittedAt": 1717286400000,
+    "_meta": {
+      "sourceFile": "QSC JUNE (YMC-ON 05-06-26) (2).xlsx",
+      "expectedScore": 93.23,
+      "branchRaw": "อ่อนนุช",
+      "matched": false
+    }
+  },
+  {
+    "id": "imp-ymc-jun26-qscjuneymc-tt08-06-26",
+    "brandId": "yamachan",
+    "brandName": "Yamachan",
+    "header": {
+      "branch": "ทาวน์อินทาวน์",
+      "branchType": "Stand Alone",
+      "date": "2026-06-08",
+      "startTime": "11.40",
+      "endDateTime": "2026-06-08T00:00",
+      "quarter": "Q2",
+      "managers": "",
+      "kitchenStaff": "1",
+      "serviceStaff": "1",
+      "manager": "",
+      "areaManager": "",
+      "auditor": ""
+    },
+    "comments": "",
+    "managerAck": {
+      "name": "",
+      "date": "",
+      "signedAt": null
+    },
+    "responses": {
+      "A1.1.19": {
+        "status": "fail",
+        "note": "พบอาหารพนง.ในตู้แช่น้ำแข็ง /แช่แก้วเบียร์",
+        "photos": []
+      },
+      "A1.3.24": {
+        "status": "fail",
+        "note": "พบผนังครัวหลังตู้แช่เย็น4ประตู มีหยากไย่ ฝุ่นสะสม",
+        "photos": []
+      },
+      "A1.3.27": {
+        "status": "fail",
+        "note": "พบบริเวณพื้นที่เก็บสินค้า มีร่องรอยหนูแทะกล่องใส่วัตถุดิบ ไม่ได้รับการทำความสะอาดอย่างเหมาะสม",
+        "photos": []
+      },
+      "A1.3.32": {
+        "status": "fail",
+        "note": "พบบริเวณซิงค์ข้างเตาทอด ไม่ได้รับการทำความสะอาดอย่างเหมาะสม",
+        "photos": []
+      },
+      "A2.0.3": {
+        "status": "fail",
+        "note": "พบการจัดเก็บเขียงบริเวณซิงค์ล้างอุปกรณ์ เสี่ยงชื้น ขึ้นรา",
+        "photos": []
+      },
+      "A2.0.7": {
+        "status": "fail",
+        "note": "พบตะแกรง รางระบายน้ำ มีคราบ ไม่ได้รับการทำความสะอาดอย่างเหมาะสม",
+        "photos": []
+      },
+      "C1.4.17": {
+        "status": "fail",
+        "note": "พบสาหร่ายเปิดใช้ 04-05-26 มีลักษณะนิ่ม มีกลิ่นเหม็นหืน",
+        "photos": []
+      },
+      "C1.4.18": {
+        "status": "fail",
+        "note": "พบการจัดเก็บพริกไทยในตู้แช่เย็น จัดเก็บในอุณหภูมิไม่ถูกต้องตามมาตรฐาน",
+        "photos": []
+      },
+      "C1.4.20": {
+        "status": "fail",
+        "note": "พบซอสโชยุราเมง สำหรับเตรียมใช้หน้างาน หมดอายุ 30-05-26",
+        "photos": []
+      },
+      "C1.5.22": {
+        "status": "fail",
+        "note": "พบผักกาดขาวเตรียมใช้หน้างานไม่ได้คุณภาพ มีลักษณะดำ คล้ำ/พาสลีย์ เหลือง,กะหล่ำปลีไม่ได้คุณภาพ",
+        "photos": []
+      },
+      "C1.5.24": {
+        "status": "fail",
+        "note": "พบเห็ดหอมสด ขึ้นรา,ผักกาดหอม เน่า",
+        "photos": []
+      },
+      "C1.6.26": {
+        "status": "fail",
+        "note": "พบการจัดเก็บข้าวสารญี่ปุ่น มีร่องรอยหนูกัดแทะ",
+        "photos": []
+      },
+      "C1.8.34": {
+        "status": "fail",
+        "note": "พบการจัดเก็บดังโงะ ปิดฝาไม่สนิท",
+        "photos": []
+      },
+      "D2.0.2": {
+        "status": "fail",
+        "note": "พบสินค้าหมดอายุจากลักษณะทางกายภาพ ไม่มีแยกออกจากวัตถุดิบมาตรฐานอย่างชัดเจน",
+        "photos": []
+      }
+    },
+    "coreDed": {},
+    "critical": {},
+    "pestCount": {},
+    "rmnc": [],
+    "actionPlans": {},
+    "criticalActionPlans": {},
+    "createdAt": 1717372800000,
+    "status": "submitted",
+    "submittedAt": 1717372800000,
+    "_meta": {
+      "sourceFile": "QSC JUNE (YMC-TT 08-06-26).xlsx",
+      "expectedScore": 89.47,
+      "branchRaw": "ทาวน์อินทาวน์",
+      "matched": false
+    }
+  }
+]

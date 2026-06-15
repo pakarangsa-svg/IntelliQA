@@ -1,0 +1,207 @@
+[
+  {
+    "id": "imp-cln-se-2025-5504",
+    "brandId": "santafe-easy",
+    "branch": "LT Wanghin",
+    "branchCode": "5504",
+    "bzm": "Anurak",
+    "bzmEmail": "",
+    "storeEmail": "",
+    "brandType": "",
+    "date": "2025-12-03",
+    "auditor": "พิมพ์วิภา สีทอง",
+    "sections": {
+      "swab": [
+        { "sample": "สกู๊ปมันบด", "result": "ผลเป็นลบ (-)" },
+        { "sample": "มือพนักงานเชคเกอร์", "result": "ผลเป็นลบ (-)" },
+        { "sample": "เส้นสปาเกตตี", "result": "ผลเป็นลบ (-)" }
+      ],
+      "coliform": [
+        { "sample": "น้ำกรอง (เครื่องกรองน้ำสแตนเลส)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "ซุปเห็ด (อุณหภูมิตู้เย็น)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "", "result": "" }
+      ],
+      "polar": [
+        { "sample": "น้ำมันเตาทอด (ใช้งาน 4 วัน · D=02/12/68 → E=05/12/68)", "result": "21-24%" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ],
+      "sanitizer": [
+        { "sample": "น้ำยา Suma J-512 (น้ำแช่อุปกรณ์ 11.00-13.00 น.)", "result": "200 ppm" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ]
+    },
+    "notes": { "swab": "", "coliform": "", "polar": "", "sanitizer": "" },
+    "sectionPhotos": { "swab": [], "coliform": [], "polar": [], "sanitizer": [] },
+    "photos": [],
+    "createdAt": 1733184000000
+  },
+  {
+    "id": "imp-cln-se-2025-5505",
+    "brandId": "santafe-easy",
+    "branch": "LT Leab Klongsong",
+    "branchCode": "5505",
+    "bzm": "Noppachai",
+    "bzmEmail": "",
+    "storeEmail": "",
+    "brandType": "",
+    "date": "2025-11-14",
+    "auditor": "พิมพ์วิภา สีทอง",
+    "sections": {
+      "swab": [
+        { "sample": "สกู๊ปมันบด", "result": "ผลเป็นลบ (-)" },
+        { "sample": "มือพนักงานเชคเกอร์", "result": "ผลเป็นลบ (-)" },
+        { "sample": "เส้นสปาเกตตี", "result": "ผลเป็นบวก (++)" }
+      ],
+      "coliform": [
+        { "sample": "น้ำกรอง (เครื่องกรองน้ำสแตนเลส)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "ซุปข้น (ในวอร์มเมอร์ซุป)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "", "result": "" }
+      ],
+      "polar": [
+        { "sample": "น้ำมันเตาทอด (ใช้งาน 5 วัน) สารโพลาร์ > 25%", "result": "≥25%" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ],
+      "sanitizer": [
+        { "sample": "น้ำยา Suma J-512 (น้ำแช่อุปกรณ์ 12.00-14.00 น.)", "result": "200 ppm" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ]
+    },
+    "notes": {
+      "swab": "",
+      "coliform": "เส้นสปาเกตตี: เพื่อป้องกันการปนเปื้อน ควรเก็บวัตถุดิบในอุณหภูมิต่ำกว่า 4°C และให้ความร้อนเพียงพอในการฆ่าเชื้อก่อนออกออเดอร์",
+      "polar": "ควรเปลี่ยนใช้น้ำมันใหม่หากน้ำมันเริ่มมีสีเข้ม หรือควรตักเศษตะกอนที่ตกค้างภายในน้ำมัน เพื่อไม่ให้เกิดการเผาไหม้ของน้ำมัน ไม่ควรใช้งานน้ำมันเก่าที่เสื่อมสภาพการใช้งานแล้ว",
+      "sanitizer": ""
+    },
+    "sectionPhotos": { "swab": [], "coliform": [], "polar": [], "sanitizer": [] },
+    "photos": [],
+    "createdAt": 1731542400000
+  },
+  {
+    "id": "imp-cln-se-2025-5506",
+    "brandId": "santafe-easy",
+    "branch": "PTT Rama 2",
+    "branchCode": "C5506",
+    "bzm": "CKanusswan",
+    "bzmEmail": "",
+    "storeEmail": "",
+    "brandType": "",
+    "date": "2025-11-26",
+    "auditor": "พิมพ์วิภา สีทอง",
+    "sections": {
+      "swab": [
+        { "sample": "สกู๊ปมันบด", "result": "ผลเป็นลบ (-)" },
+        { "sample": "มือพนักงานเชคเกอร์", "result": "ผลเป็นลบ (-)" },
+        { "sample": "เส้นสปาเกตตี", "result": "ผลเป็นลบ (-)" }
+      ],
+      "coliform": [
+        { "sample": "น้ำกรอง (เครื่องกรองน้ำสแตนเลส)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "ซุปเห็ด (อุณหภูมิตู้เย็น)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "", "result": "" }
+      ],
+      "polar": [
+        { "sample": "น้ำมันเตาทอด (ใช้งาน 3 วัน · D=24/11/68 → E=27/11/68)", "result": "1-10%" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ],
+      "sanitizer": [
+        { "sample": "น้ำยา Suma J-512 (น้ำแช่อุปกรณ์ 11.30-13.30 น.)", "result": "100 ppm" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ]
+    },
+    "notes": {
+      "swab": "",
+      "coliform": "",
+      "polar": "",
+      "sanitizer": "ควรทดสอบการกดน้ำยาจากหัวปั๊ม 1 ปั๊มให้ได้ปริมาตร 1 ml หรือใช้ syringe ในการวัดตวงปริมาณ ผสมน้ำยา Suma J-512 ให้ถูกต้องได้มาตรฐานเพื่อประสิทธิภาพในการฆ่าเชื้อ"
+    },
+    "sectionPhotos": { "swab": [], "coliform": [], "polar": [], "sanitizer": [] },
+    "photos": [],
+    "createdAt": 1732579200000
+  },
+  {
+    "id": "imp-cln-se-2025-5508",
+    "brandId": "santafe-easy",
+    "branch": "Vajira Hospital",
+    "branchCode": "5508",
+    "bzm": "Pattadon",
+    "bzmEmail": "",
+    "storeEmail": "",
+    "brandType": "",
+    "date": "2025-12-12",
+    "auditor": "พิมพ์วิภา สีทอง",
+    "sections": {
+      "swab": [
+        { "sample": "สกู๊ปมันบด", "result": "ผลเป็นลบ (-)" },
+        { "sample": "มือพนักงานเชคเกอร์", "result": "ผลเป็นลบ (-)" },
+        { "sample": "เส้นสปาเกตตี", "result": "ผลเป็นลบ (-)" }
+      ],
+      "coliform": [
+        { "sample": "น้ำกรอง (เครื่องกรองน้ำสแตนเลส)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "ซุปเห็ด (อุณหภูมิตู้เย็น)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "", "result": "" }
+      ],
+      "polar": [
+        { "sample": "น้ำมันเตาทอด (ใช้งาน 5 วัน) มากกว่า 25%", "result": "≥25%" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ],
+      "sanitizer": [
+        { "sample": "น้ำยา Suma J-512 (น้ำแช่อุปกรณ์ 13.00-15.00 น.)", "result": "200 ppm" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ]
+    },
+    "notes": { "swab": "", "coliform": "", "polar": "", "sanitizer": "" },
+    "sectionPhotos": { "swab": [], "coliform": [], "polar": [], "sanitizer": [] },
+    "photos": [],
+    "createdAt": 1733961600000
+  },
+  {
+    "id": "imp-cln-se-2025-5509",
+    "brandId": "santafe-easy",
+    "branch": "LT Nakorn Inn",
+    "branchCode": "5509",
+    "bzm": "Seewika",
+    "bzmEmail": "",
+    "storeEmail": "",
+    "brandType": "",
+    "date": "2025-11-25",
+    "auditor": "พิมพ์วิภา สีทอง",
+    "sections": {
+      "swab": [
+        { "sample": "สกู๊ปมันบด", "result": "ผลเป็นลบ (-)" },
+        { "sample": "มือพนักงานเชคเกอร์", "result": "ผลเป็นลบ (-)" },
+        { "sample": "เส้นสปาเกตตี", "result": "ผลเป็นบวก (++)" }
+      ],
+      "coliform": [
+        { "sample": "น้ำกรอง (เครื่องกรองน้ำ 3 ขั้นตอน)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "ซุปข้น (ในวอร์มเมอร์ซุป)", "result": "ผลเป็นลบ (-)" },
+        { "sample": "", "result": "" }
+      ],
+      "polar": [
+        { "sample": "น้ำมันเตาทอด (ใช้งาน 7 วัน) สารโพลาร์ > 25%", "result": "≥25%" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ],
+      "sanitizer": [
+        { "sample": "น้ำยา Suma J-512 (น้ำแช่อุปกรณ์ 11.58-13.58 น.)", "result": "200 ppm" },
+        { "sample": "", "result": "" },
+        { "sample": "", "result": "" }
+      ]
+    },
+    "notes": {
+      "swab": "",
+      "coliform": "เส้นสปาเกตตี: เพื่อป้องกันการปนเปื้อน ควรเก็บวัตถุดิบในอุณหภูมิต่ำกว่า 4°C และให้ความร้อนเพียงพอในการฆ่าเชื้อก่อนออกออเดอร์",
+      "polar": "ควรเปลี่ยนใช้น้ำมันใหม่หากน้ำมันเริ่มมีสีเข้ม หรือควรตักเศษตะกอนที่ตกค้างภายในน้ำมัน เพื่อไม่ให้เกิดการเผาไหม้ของน้ำมัน ไม่ควรใช้งานน้ำมันเก่าที่เสื่อมสภาพการใช้งานแล้ว",
+      "sanitizer": ""
+    },
+    "sectionPhotos": { "swab": [], "coliform": [], "polar": [], "sanitizer": [] },
+    "photos": [],
+    "createdAt": 1732492800000
+  }
+]

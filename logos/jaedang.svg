@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="80" r="60" fill="#fda4af"/>
+  <ellipse cx="100" cy="65" rx="38" ry="32" fill="#dc2626"/>
+  <ellipse cx="100" cy="120" rx="22" ry="14" fill="#fbcfe8"/>
+  <circle cx="88" cy="65" r="4" fill="#1f2937"/>
+  <circle cx="112" cy="65" r="4" fill="#1f2937"/>
+  <path d="M88 82 Q100 92 112 82" stroke="#dc2626" stroke-width="3" fill="none"/>
+  <text x="100" y="172" text-anchor="middle" font-family="IBM Plex Sans Thai, sans-serif"
+        font-weight="800" font-size="24" fill="#dc2626">เจ๊แดง</text>
+  <text x="100" y="190" text-anchor="middle" font-family="Inter, sans-serif"
+        font-size="10" font-weight="600" fill="#1e40af">สามย่าน</text>
+</svg>

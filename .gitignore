@@ -1,0 +1,35 @@
+# ---- Python source / parser scripts (not needed at runtime) ----
+*.py
+__pycache__/
+*.pyc
+
+# ---- Source spreadsheet files (don't ship raw forms) ----
+*.xlsx
+*.xls
+*.csv
+
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- Node (if you ever add a bundler) ----
+node_modules/
+dist/
+build/
+.npm
+.eslintcache
+
+# ---- Misc ----
+*.log
+.env
+.env.local
+
+# ---- Optional: keep audit/supplier data OUT of public repo ----
+# Uncomment to ship the app without the real audit data:
+# imported_audits_*.json
+# imported_cleaning_*.json
+# imported_supplier_*.json
