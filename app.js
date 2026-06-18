@@ -402,7 +402,7 @@ function renderLoginModal() {
     <div class="login-backdrop"></div>
     <div class="login-card">
       <div class="login-brand">
-        <div class="fab-logo">Fab</div>
+        <img class="fab-logo-img" src="logos/fab-logo.png" alt="FAB"/>
         <div class="fab-tagline">FAB FOOD HOLDING</div>
       </div>
       <div style="text-align:center; margin: 6px 0 22px;">

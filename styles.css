@@ -1303,23 +1303,9 @@ table.simple tr:hover td { background: #f9fafb; }
   border-bottom: 1px solid var(--surface-2);
   margin-bottom: 22px;
 }
-.fab-logo {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  font-size: 78px;
-  font-weight: 900;
-  line-height: 1;
-  /* Vertical gradient matching the Fab logo: amber-orange top → red → magenta → purple → deep navy */
-  background: linear-gradient(180deg,
-    #ed8434 0%,    /* warm orange/amber at the very top of strokes */
-    #dc2626 20%,   /* bright red */
-    #be185d 45%,   /* deep magenta */
-    #7e22ce 70%,   /* purple */
-    #1e3a8a 100%); /* deep navy blue at the bottom */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -3px;
+.fab-logo-img {
+  height: 96px;
+  width: auto;
   display: inline-block;
 }
 .fab-tagline {
@@ -1333,7 +1319,7 @@ table.simple tr:hover td { background: #f9fafb; }
 
 @media (max-width: 480px) {
   .login-card { padding: 26px 22px 22px; width: calc(100% - 32px); }
-  .fab-logo { font-size: 52px; letter-spacing: -2px; }
+  .fab-logo-img { height: 64px; }
 }
 
 /* ----- Zoomable photo (checklist / report) ----- */
