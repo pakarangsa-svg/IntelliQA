@@ -74,6 +74,7 @@ let state = {
   dashboardPeriod: 'all',      // 'all' | 'ytd' | quarter # | month #
   reviewsBrandId: 'all',
   aboutUnlockBrand: null,  // brand currently being unlocked
+  storeContactsModalBrand: null,  // when set, About → Store Contacts popup is open for this brandId
   session: null,           // { email, department, brand, signedAt }
   chartInstances: {}
 };
@@ -200,8 +201,29 @@ function render() {
         ${renderPage()}
       </div>
     </div>
+    <div class="img-lightbox no-print" data-lightbox>
+      <span class="img-lightbox-close" data-lightbox-close>×</span>
+      <img data-lightbox-img src="" alt="" />
+    </div>
   `;
   attachPageHandlers();
+  attachLightboxHandlers();
+}
+
+function attachLightboxHandlers() {
+  const lightbox = root.querySelector('[data-lightbox]');
+  const lightboxImg = root.querySelector('[data-lightbox-img]');
+  if (!lightbox || !lightboxImg) return;
+
+  const openLightbox = (src) => { lightboxImg.src = src; lightbox.classList.add('show'); };
+  const closeLightbox = () => { lightbox.classList.remove('show'); lightboxImg.src = ''; };
+
+  root.querySelectorAll('.photo-preview img, .photo-thumbs img, .photo-grid img, .sc-photo-grid img, .photo-thumb img').forEach(img => {
+    img.onclick = () => openLightbox(img.src);
+  });
+  lightbox.onclick = (e) => { if (e.target === lightbox) closeLightbox(); };
+  root.querySelector('[data-lightbox-close]').onclick = closeLightbox;
+  document.onkeydown = (e) => { if (e.key === 'Escape') closeLightbox(); };
 }
 
 function wireLoginHandlers() {
@@ -313,7 +335,7 @@ function renderLoginNotifBanner() {
         <div class="login-notif-brands">
           ${Object.values(byBrand).map(b => `
             <div class="login-notif-brand">
-              <span class="brand-letter brand-letter-mini" style="background:${b.brand?.color || '#94a3b8'};">${b.brand?.icon || '?'}</span>
+              ${brandBadge(b.brand, {cls:'brand-letter brand-letter-mini'})}
               <b>${escapeHtml(b.brand?.short || b.brand?.name || '?')}</b>
               <span class="muted small">· ${b.audits.length} ตรวจ · ${b.branches.size} สาขา</span>
             </div>
@@ -368,6 +390,7 @@ function renderSidebar() {
 
     ${state.showNewAuditPicker ? renderNewAuditPicker() : ''}
     ${state.emailModal ? renderEmailModal() : ''}
+    ${state.storeContactsModalBrand ? renderStoreContactsModal() : ''}
   `;
 }
 
@@ -494,7 +517,7 @@ function renderNewAuditPicker() {
         ${window.BRANDS.map(b => `
           <div class="brand-picker-card ${b.enabled ? '' : 'disabled'}" style="border-top: 4px solid ${b.color}; padding:18px; cursor:${b.enabled?'pointer':'not-allowed'};" data-new-audit-brand="${b.id}">
             <div class="row" style="gap:10px;">
-              <span class="brand-letter" style="background:${b.color};">${b.icon}</span>
+              ${brandBadge(b)}
               <div>
                 <div style="font-weight:700; font-size:14px;">${b.name}</div>
                 <div class="muted small">${b.standard} · ${b.standardName}</div>
@@ -613,7 +636,7 @@ function renderHomeStandardList(allAudits) {
           <div class="brand-picker-card" style="border-top: 5px solid ${b.color};" data-brand-detail="${b.id}">
             <div class="brand-summary-head">
               <div class="row">
-                <div class="brand-letter" style="background:${b.color};">${b.icon}</div>
+                ${brandBadge(b)}
                 <div>
                   <h2 style="margin:0;">${b.name}</h2>
                   <div class="muted small">${b.standard} · ${b.standardName}</div>
@@ -656,7 +679,7 @@ function renderHomeStandardDetail(allAudits) {
   return `
     <div class="page-header">
       <div>
-        <h1><span class="brand-letter" style="background:${brand.color}; vertical-align:middle; margin-right:8px;">${brand.icon}</span> ${brand.name}</h1>
+        <h1>${brandBadge(brand, {style:'vertical-align:middle; margin-right:8px;'})} ${brand.name}</h1>
         <div class="subtitle">${brand.standard} · ${brand.standardName} · ${brand.revision}</div>
       </div>
       <div class="actions">
@@ -842,7 +865,7 @@ function renderPlannerBrandList(allAudits) {
           <div class="brand-picker-card" style="border-top: 5px solid ${b.color};" data-planner-brand="${b.id}">
             <div class="brand-summary-head">
               <div class="row">
-                <div class="brand-letter" style="background:${b.color};">${b.icon}</div>
+                ${brandBadge(b)}
                 <div>
                   <h2 style="margin:0;">${b.name}</h2>
                   <div class="muted small">${b.standard} · ${branches.length} สาขา</div>
@@ -1219,7 +1242,7 @@ function renderPlannerDetail(allAudits) {
                       <input type="text" data-planner-reason="${escapeAttr(r.code)}"
                              value="${escapeAttr(r.reasonText)}"
                              placeholder="ระบุเหตุผล Non Audit *"
-                             style="width:280px; font-size:12px; padding:4px 8px; border:1px solid ${r.reasonText?'#cbd5e1':'#dc2626'}; border-radius:6px; background:${r.reasonText?'#fff':'#fef2f2'};"/>
+                             style="width:100%; max-width:280px; font-size:12px; padding:4px 8px; border:1px solid ${r.reasonText?'#cbd5e1':'#dc2626'}; border-radius:6px; background:${r.reasonText?'#fff':'#fef2f2'};"/>
                       ${!r.reasonText ? '<span style="color:#dc2626; font-size:11px; margin-left:6px;">⚠ จำเป็น</span>' : ''}
                     </div>
                   ` : ''}
@@ -1317,7 +1340,7 @@ function renderCEMHome(allAudits) {
       <div class="card brand-summary" style="border-top: 5px solid ${b.color}; margin-bottom: 18px;">
         <div class="brand-summary-head">
           <div class="row">
-            <div class="brand-letter" style="background:${b.color};">${b.icon}</div>
+            ${brandBadge(b)}
             <div>
               <h2 style="margin:0;">${b.name}</h2>
               <div class="muted small">CEM · Mystery Shopper Program · ${stats.visits} visits</div>
@@ -1522,7 +1545,7 @@ function renderBrandSummary(brand, allAudits) {
     <div class="card brand-summary" style="border-top: 5px solid ${brand.color}; margin-bottom: 18px;">
       <div class="brand-summary-head">
         <div class="row">
-          <div class="brand-letter" style="background:${brand.color};">${brand.icon}</div>
+          ${brandBadge(brand)}
           <div>
             <h2 style="margin:0;">${brand.name}</h2>
             <div class="muted small">${brand.standard} · ${brand.standardName} · ${brand.revision}</div>
@@ -4549,7 +4572,7 @@ function renderDashboardCEM() {
   const lockNotice = `
     <div class="card" style="background:#fffbeb; border-left:4px solid #f59e0b; margin-bottom:12px;">
       <div class="row" style="gap:12px; align-items:center;">
-        <span class="brand-letter brand-letter-mini" style="background:${cemBrand?.color || '#b45309'};">${cemBrand?.icon || 'SH'}</span>
+        ${brandBadge(cemBrand, {cls:'brand-letter brand-letter-mini', fallbackColor:'#b45309', fallbackIcon:'SH'})}
         <div>
           <b>Mystery Shopper (CEM) ใช้งานเฉพาะแบรนด์ Santa Fe Happy Steak</b>
           <div class="muted small">แบรนด์อื่น (Jae Dang, Yamachan, Santa Fe Easy) ยังไม่เปิดใช้งานโปรแกรม Mystery Shopper</div>
@@ -4827,7 +4850,34 @@ function findSubsection(code) {
 // ============================================================
 //  ABOUT
 // ============================================================
-function renderStoreContactsEditor() {
+function renderStoreContactsModal() {
+  const brandId = state.storeContactsModalBrand;
+  const brand = window.BRANDS.find(b => b.id === brandId);
+  if (!brand) return '';
+  // Force the editor to render this brand
+  state.storeContactsBrandId = brandId;
+  const editMode = !!(state.aboutEditMode && state.aboutEditMode.storeContacts);
+  return `
+    <div class="modal-backdrop" data-close-store-popup></div>
+    <div class="modal-card" style="max-width: 1100px; max-height: 90vh; overflow-y: auto;">
+      <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+        <div class="row" style="gap:10px;">
+          <span class="brand-letter" style="background:${brand.color}; width:32px; height:32px; font-size:14px;">${brand.icon}</span>
+          <h2 style="margin:0;">📞 ${escapeHtml(brand.name)} · Email Contact</h2>
+        </div>
+        <div class="row" style="gap:6px;">
+          ${editMode
+            ? `<button class="btn btn-sm btn-outline" data-edit-toggle="storeContacts">🔒 ออกจากโหมดแก้ไข</button>`
+            : `<button class="btn btn-sm btn-primary" data-edit-toggle="storeContacts">✏️ แก้ไข</button>`}
+          <button class="btn btn-sm btn-ghost" data-close-store-popup>✕</button>
+        </div>
+      </div>
+      ${renderStoreContactsEditor({ hideBrandPills: true })}
+    </div>
+  `;
+}
+
+function renderStoreContactsEditor(opts = {}) {
   if (!window._storeContactsLoaded) {
     return '<div class="muted small">⏳ กำลังโหลดรายชื่อสาขา…</div>';
   }
@@ -4849,16 +4899,22 @@ function renderStoreContactsEditor() {
   const showFsCols = isSantaFeHappy && fsType === 'FS';
 
   return `
-    <div class="row" style="flex-wrap:wrap; gap:8px; margin-bottom: 12px;">
-      <span class="muted small" style="font-weight:600;">แบรนด์:</span>
-      ${window.BRANDS.map(b => `
-        <button class="brand-pill ${brandId === b.id ? 'active' : ''}" data-store-brand="${b.id}" style="--brand:${b.color}">
-          <span class="dot" style="background:${b.color}"></span>${b.short} (${(window.getStoreContacts(b.id)||[]).length})
-        </button>
-      `).join('')}
-      <span class="spacer"></span>
-      ${editMode ? `<button class="btn btn-sm btn-primary" data-store-add="${brandId}">+ เพิ่มสาขาใหม่</button>` : ''}
-    </div>
+    ${opts.hideBrandPills ? `
+      <div class="row" style="justify-content:flex-end; margin-bottom: 12px;">
+        ${editMode ? `<button class="btn btn-sm btn-primary" data-store-add="${brandId}">+ เพิ่มสาขาใหม่</button>` : ''}
+      </div>
+    ` : `
+      <div class="row" style="flex-wrap:wrap; gap:8px; margin-bottom: 12px;">
+        <span class="muted small" style="font-weight:600;">แบรนด์:</span>
+        ${window.BRANDS.map(b => `
+          <button class="brand-pill ${brandId === b.id ? 'active' : ''}" data-store-brand="${b.id}" style="--brand:${b.color}">
+            <span class="dot" style="background:${b.color}"></span>${b.short} (${(window.getStoreContacts(b.id)||[]).length})
+          </button>
+        `).join('')}
+        <span class="spacer"></span>
+        ${editMode ? `<button class="btn btn-sm btn-primary" data-store-add="${brandId}">+ เพิ่มสาขาใหม่</button>` : ''}
+      </div>
+    `}
 
     ${isSantaFeHappy ? `
       <div class="row" style="flex-wrap:wrap; gap:8px; margin-bottom: 12px;">
@@ -4924,12 +4980,13 @@ function renderAbout() {
 
     <div class="card">
       <h2>Intelligent Restaurant Quality Assurance (IntelliQA)</h2>
-      <p class="muted">เวอร์ชัน 0.3 · Prototype · Jae Dang Samyan & Jumnua เปิดใช้งาน · แบรนด์อื่นรอเฟสถัดไป</p>
+      <p class="muted">เวอร์ชัน 0.3 · เปิดใช้งานครบทุกแบรนด์ (4 แบรนด์)</p>
       <p>ระบบสำหรับแผนก QA ใช้ตรวจมาตรฐานแบรนด์ของ Restaurant Chain ครอบคลุม:</p>
       <ul>
-        <li><b>OSS</b> — Santa Fe Happy Steak & Santa Fe Easy <span class="tag tag-soon">เฟสถัดไป</span></li>
         <li><b>QSC</b> — Jae Dang Samyan & Jumnua <span class="tag tag-qsc">พร้อมใช้</span></li>
-        <li><b>QSC</b> — Yamachan <span class="tag tag-soon">เฟสถัดไป</span></li>
+        <li><b>QSC</b> — Yamachan <span class="tag tag-qsc">พร้อมใช้</span></li>
+        <li><b>OSS</b> — Santa Fe Happy Steak <span class="tag tag-oss">พร้อมใช้</span></li>
+        <li><b>OSS</b> — Santa Fe Easy <span class="tag tag-oss">พร้อมใช้</span></li>
       </ul>
     </div>
 
@@ -4952,7 +5009,7 @@ function renderAbout() {
                 <div class="row" style="flex-wrap:wrap; gap:6px; margin-bottom:12px;">
                   ${brands.map(b => `
                     <span style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; background:#f1f5f9; font-size:12px; font-weight:600;">
-                      <span class="brand-letter brand-letter-mini" style="background:${b.color};">${b.icon}</span>
+                      ${brandBadge(b, {cls:'brand-letter brand-letter-mini'})}
                       ${b.name}
                     </span>`).join('')}
                 </div>
@@ -4990,7 +5047,7 @@ function renderAbout() {
             const ro = !state.aboutEditMode.emailRecipients;
             return `
               <tr>
-                <td><span class="brand-letter brand-letter-mini" style="background:${b.color};">${b.icon}</span> ${b.name}</td>
+                <td>${brandBadge(b, {cls:'brand-letter brand-letter-mini'})} ${b.name}</td>
                 <td><input type="text" data-email-brand="${b.id}" value="${escapeAttr(val)}" placeholder="qa@company.com, manager@company.com" style="width:100%; padding:6px 10px; border:1px solid #cbd5e1; border-radius:6px; ${ro?'background:#f1f5f9; color:#475569;':''}" ${ro?'readonly':''}/></td>
                 <td>${ro?'<span class="muted small">—</span>':`<button class="btn btn-sm btn-primary" data-action="save-email-${b.id}">บันทึก</button>`}</td>
               </tr>`;
@@ -5005,14 +5062,34 @@ function renderAbout() {
     </div>
 
     <div class="card">
-      <div class="row" style="justify-content:space-between; align-items:center;">
-        <h2 style="margin:0;">📞 รายชื่อสาขา · Email Contact</h2>
-        ${state.aboutEditMode.storeContacts
-          ? `<button class="btn btn-sm btn-outline" data-edit-toggle="storeContacts">🔒 ออกจากโหมดแก้ไข</button>`
-          : `<button class="btn btn-sm btn-primary" data-edit-toggle="storeContacts">✏️ แก้ไข</button>`}
+      <h2 style="margin:0;">📞 รายชื่อสาขา · Email Contact</h2>
+      <div class="desc">เลือกแบรนด์เพื่อเปิดดู / แก้ไขรายชื่อสาขาและ Email สำหรับส่งรายงาน</div>
+      <div class="grid grid-2" style="gap:14px;">
+        ${window.BRANDS.map(b => {
+          const list = window.getStoreContacts(b.id) || [];
+          const cnt = list.length;
+          const withEmail = list.filter(c => (c.storeEmail || '').includes('@')).length;
+          const isLoading = !window._storeContactsLoaded;
+          return `
+            <button class="brand-picker-card" data-store-popup="${b.id}"
+                    style="border-top: 5px solid ${b.color}; text-align:left; cursor:pointer; background:#fff;">
+              <div class="brand-summary-head">
+                <div class="row">
+                  <div class="brand-letter" style="background:${b.color};">${b.icon}</div>
+                  <div>
+                    <h3 style="margin:0; font-size:16px;">${escapeHtml(b.name)}</h3>
+                    <div class="muted small">${b.standard} · Email Contact</div>
+                  </div>
+                </div>
+                <span class="tag tag-${b.standard.toLowerCase()}">${isLoading ? '…' : cnt + ' สาขา'}</span>
+              </div>
+              <div class="muted small" style="margin-top:10px;">
+                ${isLoading ? 'กำลังโหลด…' : `${withEmail} / ${cnt} สาขามี Store Email`}
+              </div>
+              <div class="brand-picker-cta">📧 เปิดดู / แก้ไข →</div>
+            </button>`;
+        }).join('')}
       </div>
-      <div class="desc">รายชื่อสาขาและ Email สำหรับส่งรายงาน Cleaning Program · Audit Reports · เชื่อมข้อมูลกับ Audit Planner${state.aboutEditMode.storeContacts?'':' · <b>กดปุ่ม ✏️ แก้ไข เพื่อเริ่มแก้ไข</b>'}</div>
-      ${renderStoreContactsEditor()}
     </div>
 
     <div class="card">
@@ -5023,7 +5100,7 @@ function renderAbout() {
           ${window.BRANDS.map(b => `
             <tr>
               <td>
-                <span class="brand-letter brand-letter-mini" style="background:${b.color}; vertical-align:middle; margin-right:6px;">${b.icon}</span>
+                ${brandBadge(b, {cls:'brand-letter brand-letter-mini', style:'vertical-align:middle; margin-right:6px;'})}
                 ${b.name}
               </td>
               <td>${b.standard}</td>
@@ -5054,7 +5131,7 @@ function renderBrandScoreStructure(brand) {
       <div class="score-struct-card locked" style="border-left: 4px solid ${brand.color};">
         <div class="row" style="justify-content:space-between; gap:12px; flex-wrap:wrap;">
           <div class="row">
-            <span class="brand-letter brand-letter-mini" style="background:${brand.color};">${brand.icon}</span>
+            ${brandBadge(brand, {cls:'brand-letter brand-letter-mini'})}
             <div>
               <b>${escapeHtml(brand.name)}</b>
               <div class="muted small">มาตรฐาน ${brand.standard} · ${brand.standardName}</div>
@@ -5073,7 +5150,7 @@ function renderBrandScoreStructure(brand) {
       <div class="score-struct-card" style="border-left: 4px solid ${brand.color};">
         <div class="row" style="justify-content:space-between; gap:12px;">
           <div class="row">
-            <span class="brand-letter brand-letter-mini" style="background:${brand.color};">${brand.icon}</span>
+            ${brandBadge(brand, {cls:'brand-letter brand-letter-mini'})}
             <b>${escapeHtml(brand.name)}</b>
             <span class="tag tag-soon">ยังไม่มีข้อมูลโครงสร้าง</span>
           </div>
@@ -5085,7 +5162,7 @@ function renderBrandScoreStructure(brand) {
     <div class="score-struct-card" style="border-left: 4px solid ${brand.color};">
       <div class="row" style="justify-content:space-between; gap:12px;">
         <div class="row">
-          <span class="brand-letter brand-letter-mini" style="background:${brand.color};">${brand.icon}</span>
+          ${brandBadge(brand, {cls:'brand-letter brand-letter-mini'})}
           <b>${escapeHtml(brand.name)}</b>
           <span class="tag tag-qsc">UNLOCKED</span>
         </div>
@@ -5306,7 +5383,7 @@ function renderCleaningBrandList() {
           return `
             <div class="brand-picker-card disabled" style="border-top: 4px solid ${b.color}; padding:18px; cursor:not-allowed;">
               <div class="row" style="gap:10px;">
-                <span class="brand-letter" style="background:${b.color};">${b.icon}</span>
+                ${brandBadge(b)}
                 <div>
                   <div style="font-weight:700; font-size:15px;">${b.name}</div>
                   <div class="muted small">${b.standard} · ${b.standardName}</div>
@@ -5326,7 +5403,7 @@ function renderCleaningBrandList() {
           return `
             <div class="brand-picker-card" style="border-top: 4px solid ${b.color}; padding:18px;">
               <div class="row" style="gap:10px;">
-                <span class="brand-letter" style="background:${b.color};">${b.icon}</span>
+                ${brandBadge(b)}
                 <div>
                   <div style="font-weight:700; font-size:15px;">${b.name}</div>
                   <div class="muted small">${b.standard} · แยก Franchisor (KT) + Franchisee (FS)</div>
@@ -5354,7 +5431,7 @@ function renderCleaningBrandList() {
         return `
           <div class="brand-picker-card" style="border-top: 4px solid ${b.color}; padding:18px; cursor:pointer;" data-cleaning-brand="${b.id}">
             <div class="row" style="gap:10px;">
-              <span class="brand-letter" style="background:${b.color};">${b.icon}</span>
+              ${brandBadge(b)}
               <div>
                 <div style="font-weight:700; font-size:15px;">${b.name}</div>
                 <div class="muted small">${b.standard} · ${b.standardName}</div>
@@ -5403,7 +5480,7 @@ function renderCleaningRecords() {
   return `
     <div class="page-header">
       <div>
-        <h1><span class="brand-letter" style="background:${brand.color}; vertical-align:middle; margin-right:8px;">${brand.icon}</span> ${brand.name} — Cleaning Records</h1>
+        <h1>${brandBadge(brand, {style:'vertical-align:middle; margin-right:8px;'})} ${brand.name} — Cleaning Records</h1>
         <div class="subtitle">${records.length} บันทึก · FM-QARD-004 Rev.04 · ปี <b>${currentYear + 543}</b>${typeBadge}</div>
       </div>
       <div class="actions">
@@ -6242,7 +6319,7 @@ function renderCleaningBranchPortal() {
       <div>
         <h1>🔍 Portal: ${escapeHtml(branchNameOnly)}</h1>
         <div class="subtitle">
-          <span class="brand-letter" style="background:${brand.color}; vertical-align:middle; margin-right:6px; width:22px; height:22px; font-size:12px;">${brand.icon}</span>
+          ${brandBadge(brand, {style:'vertical-align:middle; margin-right:6px; width:22px; height:22px; font-size:12px;'})}
           ${brand.name} · BZM: <b>${escapeHtml(zoneName)}</b> · ${allRecs.length} การตรวจ
         </div>
       </div>
@@ -7919,7 +7996,7 @@ function renderSupplierBrandList() {
           <div class="brand-picker-card" style="border-top: 5px solid ${b.color};" data-supplier-brand="${b.id}">
             <div class="brand-summary-head">
               <div class="row">
-                <div class="brand-letter" style="background:${b.color};">${b.icon}</div>
+                ${brandBadge(b)}
                 <div>
                   <h2 style="margin:0;">${b.name}</h2>
                   <div class="muted small">Supplier Complaint Log</div>
@@ -7989,7 +8066,7 @@ function renderSupplierRecords() {
   return `
     <div class="page-header">
       <div>
-        <h1><span class="brand-letter" style="background:${brand.color}; vertical-align:middle; margin-right:8px;">${brand.icon}</span> ${brand.name} — Supplier Complaint</h1>
+        <h1>${brandBadge(brand, {style:'vertical-align:middle; margin-right:8px;'})} ${brand.name} — Supplier Complaint</h1>
         <div class="subtitle">บันทึกแจ้งข้อบกพร่องวัตถุดิบ (Complaint Supplier) · ${all.length} รายการรวม</div>
       </div>
       <div class="actions no-print">
@@ -8097,7 +8174,7 @@ function renderSupplierEntry() {
       <div>
         <h1>📝 ${isEdit ? 'แก้ไข' : 'บันทึก'} Supplier Complaint</h1>
         <div class="subtitle">
-          <span class="brand-letter" style="background:${brand.color}; vertical-align:middle; margin-right:6px; width:22px; height:22px; font-size:12px;">${brand.icon}</span>
+          ${brandBadge(brand, {style:'vertical-align:middle; margin-right:6px; width:22px; height:22px; font-size:12px;'})}
           ${brand.name} · เลขที่ <b>${String(rec.no).padStart(3,'0')}</b>/${rec.year + 543}
         </div>
       </div>
@@ -8111,7 +8188,7 @@ function renderSupplierEntry() {
       <!-- Document header strip -->
       <div class="sc-form-doc-head">
         <div class="sc-doc-brand">
-          <div class="brand-letter" style="background:${brand.color};">${brand.icon}</div>
+          ${brandBadge(brand)}
           <div>
             <div class="sc-doc-title">บันทึกแจ้งข้อบกพร่องวัตถุดิบ</div>
             <div class="sc-doc-sub">Complaint Supplier · ${brand.name}</div>
@@ -8290,7 +8367,7 @@ function renderSupplierDetail() {
       <div>
         <h1>📄 Supplier Complaint #${String(rec.no).padStart(3,'0')}/${rec.year + 543}</h1>
         <div class="subtitle">
-          <span class="brand-letter" style="background:${brand.color}; vertical-align:middle; margin-right:6px; width:24px; height:24px; font-size:14px;">${brand.icon}</span>
+          ${brandBadge(brand, {style:'vertical-align:middle; margin-right:6px; width:24px; height:24px; font-size:14px;'})}
           ${brand.name} · ${escapeHtml(rec.materialName || '-')}
         </div>
       </div>
@@ -8458,7 +8535,7 @@ function renderSupplierDashboard() {
       <div>
         <h1>📊 Supplier Complaint Dashboard</h1>
         <div class="subtitle">
-          <span class="brand-letter" style="background:${brand.color}; vertical-align:middle; margin-right:6px; width:24px; height:24px; font-size:14px;">${brand.icon}</span>
+          ${brandBadge(brand, {style:'vertical-align:middle; margin-right:6px; width:24px; height:24px; font-size:14px;'})}
           ${brand.name} · ปี ${activeYear + 543}
         </div>
       </div>
@@ -8681,7 +8758,7 @@ function renderSupplierAggregateDashboard() {
   const renderBrandTags = (brandIdSet) => {
     if (!brandIdSet || brandIdSet.size === 0) return '';
     return ' ' + window.BRANDS.filter(b => brandIdSet.has(b.id)).map(b => `
-      <span title="${escapeAttr(b.name)}" style="display:inline-block; padding:1px 7px; margin-left:4px; border-radius:10px; background:${b.color}; color:#fff; font-size:10px; font-weight:700; vertical-align:middle;">${escapeHtml(b.icon)}</span>
+      <span title="${escapeAttr(b.name)}">${brandBadge(b, {cls:'brand-letter brand-letter-mini', style:'margin-left:4px; vertical-align:middle;'})}</span>
     `).join('');
   };
 
@@ -8797,7 +8874,7 @@ function renderSupplierAggregateDashboard() {
             return `
               <tr>
                 <td>
-                  <span class="brand-letter" style="background:${b.color}; vertical-align:middle; margin-right:8px; width:24px; height:24px; font-size:13px;">${b.icon}</span>
+                  ${brandBadge(b, {style:'vertical-align:middle; margin-right:8px; width:24px; height:24px; font-size:13px;'})}
                   <b>${b.name}</b>
                 </td>
                 <td style="text-align:right;"><b>${row.total}</b></td>
@@ -10127,6 +10204,23 @@ function attachPageHandlers() {
       render();
     };
   });
+  // About page: brand-picker opens Store Contacts popup
+  root.querySelectorAll('[data-store-popup]').forEach(el => {
+    el.onclick = () => {
+      state.storeContactsModalBrand = el.dataset.storePopup;
+      state.storeContactsBrandId = el.dataset.storePopup;
+      if (state.storeContactsBrandId === 'santafe-happy' && !state.storeContactsType) state.storeContactsType = 'KT';
+      render();
+    };
+  });
+  root.querySelectorAll('[data-close-store-popup]').forEach(el => {
+    el.onclick = () => {
+      state.storeContactsModalBrand = null;
+      // Auto-close edit mode when closing popup
+      if (state.aboutEditMode) state.aboutEditMode.storeContacts = false;
+      render();
+    };
+  });
   root.querySelectorAll('[data-store-fs]').forEach(el => {
     el.onclick = () => { state.storeContactsType = el.dataset.storeFs; render(); };
   });
@@ -10646,6 +10740,21 @@ function readAsDataURL(file) {
 }
 function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
 function escapeAttr(s) { return escapeHtml(s); }
+
+// Brand badge: shows the brand's logo image when available, otherwise the colored letter badge
+function brandBadge(brand, opts) {
+  opts = opts || {};
+  const cls = opts.cls || 'brand-letter';
+  const style = opts.style || '';
+  const icon = (brand && brand.icon) || (opts.fallbackIcon != null ? opts.fallbackIcon : '?');
+  const color = (brand && brand.color) || opts.fallbackColor || '#94a3b8';
+  const logoUrl = brand && brand.logoUrl;
+  const bg = logoUrl ? '#fff' : color;
+  const inner = logoUrl
+    ? `<img class="brand-logo-img" src="${escapeAttr(logoUrl)}" alt="${escapeAttr((brand && brand.name) || '')}" />`
+    : escapeHtml(icon);
+  return `<span class="${cls}" style="background:${bg};${style}">${inner}</span>`;
+}
 function toast(msg, kind) {
   const t = document.createElement('div');
   t.className = 'toast ' + (kind || '');
@@ -10915,20 +11024,22 @@ function drawDashboardCharts() {
         options: {
           indexAxis: 'y',
           responsive: true, maintainAspectRatio: false,
+          layout: { padding: { right: 130 } },
           plugins: {
             legend: { display: false },
             tooltip: { callbacks: {
               label: c => `${pctData[c.dataIndex].toFixed(1)}% ของการตรวจ · ${countData[c.dataIndex]} ข้อ`
             }},
             datalabels: {
-              anchor: 'end', align: 'end', offset: 4,
-              color: '#0f172a', font: { weight: '800', size: 12 },
+              anchor: 'end', align: 'end', offset: 8, clamp: true,
+              color: '#0f172a', font: { weight: '800', size: 13 },
               formatter: (v, ctx) => `${v.toFixed(1)}% (${countData[ctx.dataIndex]} ข้อ)`
             }
           },
           scales: {
-            x: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' },
-                 title: { display: true, text: '% การตรวจที่พบ' } }
+            x: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' }, grid: { color: '#f1f5f9' },
+                 title: { display: true, text: '% การตรวจที่พบ' } },
+            y: { ticks: { font: { size: 12, weight: '600' } }, grid: { display: false } }
           }
         }
       });
@@ -11185,11 +11296,19 @@ function drawDashboardCharts() {
       },
       options: {
         indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-        scales: { x: { min: 0, max: 100, ticks: { callback: v => v + '%' } } },
+        layout: { padding: { right: 70 } },
+        scales: {
+          x: { min: 0, max: 100, ticks: { callback: v => v + '%' }, grid: { color: '#f1f5f9' } },
+          y: { ticks: { font: { size: 12, weight: '600' } }, grid: { display: false } }
+        },
         plugins: {
           legend: { display: false },
-          datalabels: { color: '#fff', font: { weight: 'bold', size: 11 },
-            formatter: v => v.toFixed(1) + '%', anchor: 'end', align: 'start' }
+          tooltip: { callbacks: { label: c => `${c.parsed.x.toFixed(2)}%` } },
+          datalabels: {
+            color: '#0f172a', font: { weight: '800', size: 13 },
+            formatter: v => v.toFixed(2) + '%',
+            anchor: 'end', align: 'end', offset: 6, clamp: true
+          }
         }
       }
     });

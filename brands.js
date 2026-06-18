@@ -11,7 +11,7 @@ window.BRANDS = [
     revision: 'QSC rev.00_01/02/2569',
     manualDoc: '[Jae Dang] คู่มือการตรวจมาตรฐาน New QSC.xls',
     formDoc:   '[Jae Dang] แบบฟอร์ม New QSC Checklist.xlsx',
-    logoUrl: 'logos/jaedang.svg',
+    logoUrl: 'logos/jaedang.jpg',
     data: () => window.JAEDANG_QSC,
     enabled: true,
     // Per-brand score bands (Jae Dang QSC)
@@ -41,7 +41,7 @@ window.BRANDS = [
     revision: 'QSC rev.05',
     manualDoc: '[Yamachan] คู่มือการตรวจ QSC',
     formDoc:   '[Yamachan] QSC JUNE (YMC-BN 09-06-26).xlsx',
-    logoUrl: 'logos/yamachan.svg',
+    logoUrl: 'logos/yamachan.jpg',
     data: () => window.YAMACHAN_QSC,
     enabled: true,
     cadence: 'monthly',     // Yamachan audits are summarised per month (not per quarter)
@@ -68,7 +68,7 @@ window.BRANDS = [
     revision: 'FM-QARD-001 Rev.02_01072564 (Effective 01/09/2025)',
     manualDoc: '[Santa Fe Happy Steak] คู่มือการตรวจ OSS Santafe Manual-Thai-2025 rev.01.pdf',
     formDoc:   '[Santa Fe Happy Steak] FM-QARD-001 Rev.02_01072564 Operations Standard Skill (OSS) Santafe_Effective 010925.xlsx',
-    logoUrl: 'logos/santafe-happy.svg',
+    logoUrl: 'logos/santafe-happy.png',
     data: () => window.SANTAFE_HAPPY_OSS,
     enabled: true,
     bands: [
@@ -95,7 +95,7 @@ window.BRANDS = [
     revision: 'FM-QA/RD-001 Rev.03_01/01/2567',
     manualDoc: 'OSS Audit Manual Santa Fe Easy',
     formDoc:   '[Santa Fe Easy] แบบฟอร์ม Operations Standard Skill (OSS).xlsx',
-    logoUrl: 'logos/santafe-easy.svg',
+    logoUrl: 'logos/santafe-easy.jpg',
     data: () => window.SANTAFE_EASY_OSS,
     enabled: true,
     bands: [
