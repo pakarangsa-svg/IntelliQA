@@ -1868,15 +1868,6 @@ function renderAudit() {
     <div class="card" style="position: sticky; top: 0; z-index: 20;">
       <div class="row" style="justify-content:space-between; flex-wrap:wrap; gap: 16px;">
         <div>
-          <div class="muted small">คะแนนสด · ข้อที่ยังไม่ติ๊กถือเป็นผ่าน (ยกเว้น "วัตถุดิบอื่นๆ" = N/A)</div>
-          <div style="font-size: 28px; font-weight:800;">
-            ${liveSummary.totalScore.toFixed(2)}%
-            <span class="score-band ${window.getBand(liveSummary.totalScore, state.brand.id).cls}" style="font-size:13px; margin-left:8px;">
-              ${window.getBand(liveSummary.totalScore, state.brand.id).label}
-            </span>
-          </div>
-        </div>
-        <div>
           <div class="muted small">สรุปการระบุ</div>
           <div style="font-size: 15px;">
             <span style="color:#dc2626;font-weight:700;">หัก ${liveSummary.deduction.toFixed(2)} pt</span> ·
