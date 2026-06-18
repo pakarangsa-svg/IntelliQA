@@ -49,6 +49,7 @@ let state = {
   plannerUnlocked: false,
   plannerQuarter: null,        // { year, q }
   showNewAuditPicker: false,   // sidebar "New Audit" modal
+  sidebarOpen: false,          // mobile off-canvas drawer open/closed
   showLoginNotif: true,         // login notification banner visible until dismissed
   loginNotifList: null,         // cached list of new/updated audits since last visit
   cleaningView: 'list',         // 'list' | 'brand-list' | 'records' | 'entry' | 'detail' | 'dashboard' | 'branch-portal'
@@ -188,7 +189,12 @@ function render() {
 
   root.innerHTML = `
     <div class="layout">
+      <div class="mobile-topbar no-print">
+        <button class="mobile-menu-btn" data-sidebar-toggle aria-label="เปิดเมนู">☰</button>
+        <div class="mobile-topbar-title">IntelliQA</div>
+      </div>
       ${renderSidebar()}
+      <div class="sidebar-overlay ${state.sidebarOpen ? 'show' : ''}" data-sidebar-overlay></div>
       <div class="main">
         ${renderLoginNotifBanner()}
         ${renderPage()}
@@ -331,7 +337,7 @@ function renderSidebar() {
     { id: 'about',     label: 'ℹ️ About',            page: 'about' }
   ];
   return `
-    <aside class="sidebar">
+    <aside class="sidebar ${state.sidebarOpen ? 'sidebar-open' : ''}">
       <div class="brand">
         <span style="font-size:22px">🍽️</span>
         IntelliQA <span class="badge">v0.3</span>
@@ -9633,11 +9639,18 @@ function renderReviews() {
 //  EVENT HANDLERS
 // ============================================================
 function attachPageHandlers() {
+  // Mobile drawer toggle
+  const sidebarToggle = root.querySelector('[data-sidebar-toggle]');
+  if (sidebarToggle) sidebarToggle.onclick = () => { state.sidebarOpen = !state.sidebarOpen; render(); };
+  const sidebarOverlay = root.querySelector('[data-sidebar-overlay]');
+  if (sidebarOverlay) sidebarOverlay.onclick = () => { state.sidebarOpen = false; render(); };
+
   root.querySelectorAll('[data-nav]').forEach(el => {
     el.onclick = () => {
       // Reset home sub-view when clicking the sidebar's "Home"
       if (el.dataset.nav === 'home') state.homeView = 'landing';
       state.showNewAuditPicker = false;
+      state.sidebarOpen = false; // auto-close mobile drawer on navigation
       navigate(el.dataset.nav);
     };
   });
