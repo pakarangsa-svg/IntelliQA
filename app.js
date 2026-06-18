@@ -75,6 +75,7 @@ let state = {
   reviewsBrandId: 'all',
   aboutUnlockBrand: null,  // brand currently being unlocked
   storeContactsModalBrand: null,  // when set, About → Store Contacts popup is open for this brandId
+  dashBranchModal: false,         // Audit Dashboard: open expanded "คะแนนเฉลี่ยรายสาขา" chart popup
   session: null,           // { email, department, brand, signedAt }
   chartInstances: {}
 };
@@ -391,6 +392,7 @@ function renderSidebar() {
     ${state.showNewAuditPicker ? renderNewAuditPicker() : ''}
     ${state.emailModal ? renderEmailModal() : ''}
     ${state.storeContactsModalBrand ? renderStoreContactsModal() : ''}
+    ${state.dashBranchModal ? renderDashBranchModal() : ''}
   `;
 }
 
@@ -4113,8 +4115,11 @@ function renderDashboard() {
         <h2>📊 คะแนนเฉลี่ย${dashCadenceLocal === 'monthly' ? 'รายเดือน' : 'รายไตรมาส (Q1–Q4)'}</h2>
         <div class="chart-box tall"><canvas id="chart-dash-period-avg"></canvas></div>
       </div>
-      <div class="card">
-        <h2>📊 คะแนนเฉลี่ยรายสาขา</h2>
+      <div class="card" data-dash-branch-expand style="cursor:pointer;" title="คลิกเพื่อดูเต็มจอ">
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <h2 style="margin:0;">📊 คะแนนเฉลี่ยรายสาขา</h2>
+          <span class="muted small">🔍 คลิกเพื่อขยาย</span>
+        </div>
         <div class="chart-box tall"><canvas id="chart-dash-branch-avg"></canvas></div>
       </div>
     </div>
@@ -4850,6 +4855,73 @@ function findSubsection(code) {
 // ============================================================
 //  ABOUT
 // ============================================================
+function drawDashBranchModalChart() {
+  const rows = window._dashBranchRows || [];
+  const ctx = document.getElementById('chart-dash-branch-avg-modal');
+  if (!ctx || rows.length === 0) return;
+  if (state.chartInstances?.dashBranchModal) state.chartInstances.dashBranchModal.destroy();
+  const brandIdSel = state.dashboardBrandId !== 'all' ? state.dashboardBrandId : null;
+  state.chartInstances = state.chartInstances || {};
+  if (window.ChartDataLabels && !Chart.registry.plugins.get('datalabels')) {
+    Chart.register(window.ChartDataLabels);
+  }
+  state.chartInstances.dashBranchModal = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      // Full branch labels (no truncation) — modal has the room
+      labels: rows.map(r => {
+        const code = lookupBranchCode(r.brandId, r.branch);
+        return (code && code !== '-' ? code + ' · ' : '') + r.branch;
+      }),
+      datasets: [{
+        label: 'คะแนนเฉลี่ย (%)',
+        data: rows.map(r => +r.avg.toFixed(2)),
+        backgroundColor: rows.map(r => brandIdSel ? bandColorForScore(r.avg, brandIdSel) : bandColorForScore(r.avg, r.brandId)),
+        borderRadius: 4,
+        barThickness: 'flex',
+        maxBarThickness: 24
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { right: 110, left: 4 } },
+      scales: {
+        x: { min: 0, max: 100, ticks: { callback: v => v + '%', font: { size: 13, weight: '600' } },
+             grid: { color: '#f1f5f9' }, title: { display: true, text: '% คะแนนเฉลี่ย', font: { size: 13, weight: '700' } } },
+        y: { ticks: { font: { size: 12, weight: '600' }, autoSkip: false }, grid: { display: false } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `${c.parsed.x.toFixed(2)}% · ${rows[c.dataIndex].n} ตรวจ` } },
+        datalabels: {
+          color: '#0f172a', font: { weight: '800', size: 14 },
+          formatter: (v, c) => `${v.toFixed(2)}%  · ${rows[c.dataIndex].n} ตรวจ`,
+          anchor: 'end', align: 'end', offset: 8, clamp: true
+        }
+      }
+    }
+  });
+}
+
+function renderDashBranchModal() {
+  return `
+    <div class="modal-backdrop" data-close-dash-branch></div>
+    <div class="modal-card" style="max-width: 1200px; width: calc(100vw - 48px); max-height: 92vh; display:flex; flex-direction:column;">
+      <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div>
+          <h2 style="margin:0;">📊 คะแนนเฉลี่ยรายสาขา <span class="muted small" style="font-weight:400;">· ขยายเต็มขนาด</span></h2>
+          <div class="muted small" style="margin-top:2px;">เรียงคะแนนสูงสุด → ต่ำสุด · สีตามเกณฑ์มาตรฐานของแบรนด์</div>
+        </div>
+        <button class="btn btn-sm btn-ghost" data-close-dash-branch>✕ ปิด</button>
+      </div>
+      <div style="flex:1; min-height:520px; position:relative;">
+        <canvas id="chart-dash-branch-avg-modal"></canvas>
+      </div>
+    </div>
+  `;
+}
+
 function renderStoreContactsModal() {
   const brandId = state.storeContactsModalBrand;
   const brand = window.BRANDS.find(b => b.id === brandId);
@@ -10035,6 +10107,24 @@ function attachPageHandlers() {
       navigate('dashboard');
     };
   });
+  // Audit Dashboard: click branch-avg card → open expanded popup
+  root.querySelectorAll('[data-dash-branch-expand]').forEach(el => {
+    el.onclick = () => {
+      state.dashBranchModal = true;
+      render();
+      setTimeout(() => drawDashBranchModalChart(), 60);
+    };
+  });
+  root.querySelectorAll('[data-close-dash-branch]').forEach(el => {
+    el.onclick = () => {
+      if (state.chartInstances?.dashBranchModal) {
+        state.chartInstances.dashBranchModal.destroy();
+        state.chartInstances.dashBranchModal = null;
+      }
+      state.dashBranchModal = false;
+      render();
+    };
+  });
   root.querySelectorAll('[data-start-brand]').forEach(el => {
     el.onclick = () => {
       const b = window.BRANDS.find(x => x.id === el.dataset.startBrand);
@@ -11268,18 +11358,22 @@ function drawDashboardCharts() {
   }
 
   // ---- Branch avg bar chart ----
+  // Compute branch averages once — used by both the inline card and the expanded popup
+  const brandIdSel = state.dashboardBrandId !== 'all' ? state.dashboardBrandId : null;
+  const branchAgg = {};
+  audits.forEach(a => {
+    const b = a.header?.branch || '-';
+    branchAgg[b] = branchAgg[b] || { branch: b, sum: 0, n: 0, brandId: a.brandId };
+    branchAgg[b].sum += a.summary.totalScore;
+    branchAgg[b].n++;
+  });
+  const branchRows = Object.values(branchAgg).map(r => ({ ...r, avg: r.sum/r.n }))
+    .sort((a,b) => b.avg - a.avg);
+  window._dashBranchRows = branchRows;
+
   const ctxBranch = document.getElementById('chart-dash-branch-avg');
   if (ctxBranch && audits.length > 0) {
-    const brandIdSel = state.dashboardBrandId !== 'all' ? state.dashboardBrandId : null;
-    const branchAgg = {};
-    audits.forEach(a => {
-      const b = a.header?.branch || '-';
-      branchAgg[b] = branchAgg[b] || { branch: b, sum: 0, n: 0, brandId: a.brandId };
-      branchAgg[b].sum += a.summary.totalScore;
-      branchAgg[b].n++;
-    });
-    const rows = Object.values(branchAgg).map(r => ({ ...r, avg: r.sum/r.n }))
-      .sort((a,b) => b.avg - a.avg);
+    const rows = branchRows;
     state.chartInstances.dashBranchAvg = new Chart(ctxBranch, {
       type: 'bar',
       data: {
