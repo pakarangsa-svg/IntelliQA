@@ -65,6 +65,10 @@ let state = {
   supplierBrandId: null,
   supplierYear: null,
   supplierRecord: null,         // record currently being edited / viewed
+  customerView: 'brand-list',   // 'brand-list' | 'records' | 'entry' | 'detail' | 'dashboard'
+  customerBrandId: null,
+  customerYear: null,
+  customerRecord: null,         // record currently being edited / viewed
   storeContactsBrandId: 'jaedang',   // active brand tab in About → Store Contacts
   storeContactsType:    'KT',         // for santafe-happy only: 'KT' | 'FS'
   emailModal: null,        // { subject, body, recipients: [{role,label,email,checked}], onSend }
@@ -547,6 +551,7 @@ function renderPage() {
     case 'reviews':   return renderReviews();
     case 'cleaning':  return renderCleaningProgram();
     case 'supplier-complaint': return renderSupplierComplaint();
+    case 'customer-complaint': return renderCustomerComplaint();
     default:          return renderHome();
   }
 }
@@ -575,7 +580,7 @@ function renderHomeLanding(allAudits) {
     { id: 'planner',       kind: 'module', icon: '🗓️', title: 'Audit Planner',     color: '#1d4ed8', enabled: true },
     { id: 'store-setup',   kind: 'module', icon: '🏬', title: 'Store Setup',        color: '#059669', enabled: false },
     { id: 'supplier-complaint', kind: 'module', icon: '🏭', title: 'Supplier Complaint', color: '#7c3aed', enabled: true },
-    { id: 'customer-complaint', kind: 'module', icon: '📞', title: 'Customer Complaint', color: '#dc2626', enabled: false },
+    { id: 'customer-complaint', kind: 'module', icon: '📞', title: 'Customer Complaint', color: '#dc2626', enabled: true },
     { id: 'cleaning-program',   kind: 'module', icon: '🧽', title: 'Cleaning Program',  color: '#0891b2', enabled: true },
     { id: 'google-review',      kind: 'module', icon: '⭐', title: 'Google Review',     color: '#f59e0b', enabled: false }
   ];
@@ -9614,6 +9619,1045 @@ function wireSupplierHandlers() {
 }
 
 // ============================================================
+//  CUSTOMER COMPLAINT — log + entry + detail + dashboard
+// ============================================================
+const CUSTOMER_STORE_KEY = 'qa-app::customer::records';
+const CUSTOMER_COMPLAINT_TYPES = ['คุณภาพ', 'บริการ', 'ความสะอาด', 'ความเร็ว', 'สเต๊กไม่สุก', 'อื่นๆ'];
+const CUSTOMER_TYPE_COLORS = {
+  'คุณภาพ': '#dc2626', 'บริการ': '#f59e0b', 'ความสะอาด': '#0891b2',
+  'ความเร็ว': '#7c3aed', 'สเต๊กไม่สุก': '#be185d', 'อื่นๆ': '#64748b'
+};
+const CUSTOMER_STATUS = {
+  open:     { label: 'รอดำเนินการ', color: '#f59e0b', icon: '⏳' },
+  resolved: { label: 'เสร็จสิ้น',   color: '#059669', icon: '✓' }
+};
+
+function loadCustomerRecords() {
+  try { return JSON.parse(localStorage.getItem(CUSTOMER_STORE_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+function saveCustomerRecords(recs) {
+  localStorage.setItem(CUSTOMER_STORE_KEY, JSON.stringify(recs));
+}
+function nextCustomerNo(brandId, year) {
+  const recs = loadCustomerRecords().filter(r => r.brandId === brandId && r.year === year);
+  return (recs.length ? Math.max(...recs.map(r => r.no || 0)) : 0) + 1;
+}
+
+function renderCustomerComplaint() {
+  if (state.customerView === 'records')   return renderCustomerRecords();
+  if (state.customerView === 'entry')     return renderCustomerEntry();
+  if (state.customerView === 'detail')    return renderCustomerDetail();
+  if (state.customerView === 'dashboard') return renderCustomerDashboard();
+  return renderCustomerBrandList();
+}
+
+function renderCustomerBrandList() {
+  const all = loadCustomerRecords();
+  return `
+    <div class="page-header">
+      <div>
+        <h1>📞 Customer Complaint</h1>
+        <div class="subtitle">บันทึกข้อร้องเรียนจากลูกค้า — แยกตามแบรนด์</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-outline" data-customer-home>← กลับหน้าแรก</button>
+      </div>
+    </div>
+    <div class="grid grid-2 brand-picker">
+      ${window.BRANDS.map(b => {
+        const recs = all.filter(r => r.brandId === b.id);
+        const total = recs.length;
+        const resolved = recs.filter(r => r.status === 'resolved').length;
+        const open = recs.filter(r => r.status === 'open').length;
+        const years = Array.from(new Set(recs.map(r => r.year))).sort((a,b) => b-a);
+        const byType = {};
+        CUSTOMER_COMPLAINT_TYPES.forEach(t => byType[t] = 0);
+        recs.forEach(r => (r.types || []).forEach(t => {
+          byType[CUSTOMER_COMPLAINT_TYPES.includes(t) ? t : 'อื่นๆ']++;
+        }));
+        const typeSegs = CUSTOMER_COMPLAINT_TYPES.map(t => ({
+          label: t, count: byType[t],
+          pct: total > 0 ? (byType[t] / total * 100) : 0,
+          color: CUSTOMER_TYPE_COLORS[t]
+        }));
+        return `
+          <div class="brand-picker-card" style="border-top: 5px solid ${b.color};" data-customer-brand="${b.id}">
+            <div class="brand-summary-head">
+              <div class="row">
+                ${brandBadge(b)}
+                <div>
+                  <h2 style="margin:0;">${b.name}</h2>
+                  <div class="muted small">Customer Complaint Log</div>
+                </div>
+              </div>
+              <span class="tag tag-${b.standard.toLowerCase()}">${total} เรื่อง</span>
+            </div>
+            <div class="grid grid-3" style="margin-top: 14px;">
+              <div class="kpi" style="padding:12px;">
+                <div class="label">📋 รวมทั้งหมด</div>
+                <div class="value" style="font-size:24px; color:#1e293b;">${total}</div>
+              </div>
+              <div class="kpi" style="padding:12px;">
+                <div class="label">⏳ รอดำเนินการ</div>
+                <div class="value" style="font-size:24px; color:#f59e0b;">${open}</div>
+              </div>
+              <div class="kpi" style="padding:12px;">
+                <div class="label">✓ เสร็จสิ้น</div>
+                <div class="value" style="font-size:24px; color:#059669;">${resolved}</div>
+              </div>
+            </div>
+
+            ${total > 0 ? `
+              <div style="margin-top:14px;">
+                <div class="muted small" style="margin-bottom:6px; display:flex; justify-content:space-between;">
+                  <span>ประเภทข้อร้องเรียน</span>
+                  <span>รวม ${total}</span>
+                </div>
+                <div style="display:flex; height:10px; border-radius:6px; overflow:hidden; background:#f1f5f9;">
+                  ${typeSegs.map(s => s.count > 0 ? `
+                    <div style="background:${s.color}; width:${s.pct}%;" title="${s.label}: ${s.count} (${s.pct.toFixed(0)}%)"></div>
+                  ` : '').join('')}
+                </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px; font-size:12px;">
+                  ${typeSegs.filter(s => s.count > 0).map(s => `
+                    <span style="display:inline-flex; align-items:center; gap:5px;">
+                      <span style="width:10px; height:10px; border-radius:2px; background:${s.color}; display:inline-block;"></span>
+                      <b>${s.label}</b>
+                      <span style="color:#64748b;">${s.count} (${s.pct.toFixed(0)}%)</span>
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <div class="muted small" style="margin-top:12px;">
+              ${years.length ? `ปีที่มีข้อมูล: ${years.map(y=>y+543).join(', ')}` : 'ยังไม่มีข้อมูล'}
+              ${total ? ` · เสร็จสิ้น ${Math.round(resolved/total*100)}%` : ''}
+            </div>
+            <div class="brand-picker-cta">เปิดดูรายละเอียด →</div>
+          </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderCustomerRecords() {
+  const brand = window.BRANDS.find(b => b.id === state.customerBrandId);
+  if (!brand) { state.customerView = 'brand-list'; return renderCustomerBrandList(); }
+  const all = loadCustomerRecords().filter(r => r.brandId === brand.id);
+  const years = Array.from(new Set(all.map(r => r.year))).sort((a,b) => b-a);
+  const curYear = new Date().getFullYear();
+  if (!years.includes(curYear)) years.unshift(curYear);
+  const activeYear = state.customerYear || years[0] || curYear;
+  const recs = all.filter(r => r.year === activeYear).sort((a,b) => b.no - a.no);
+
+  return `
+    <div class="page-header">
+      <div>
+        <h1>${brandBadge(brand, {style:'vertical-align:middle; margin-right:8px;'})} ${brand.name} — Customer Complaint</h1>
+        <div class="subtitle">บันทึกข้อร้องเรียนจากลูกค้า · ${all.length} รายการรวม</div>
+      </div>
+      <div class="actions no-print">
+        <button class="btn btn-outline" data-customer-back="brand-list">← กลับเลือกแบรนด์</button>
+        <button class="btn btn-ghost" data-customer-action="print">🖨 พิมพ์</button>
+        <button class="btn btn-ghost" data-customer-action="xlsx">📥 Excel</button>
+        <button class="btn btn-primary" data-customer-view="dashboard">📊 Dashboard</button>
+        <button class="btn btn-primary" data-customer-new>+ บันทึกใหม่</button>
+      </div>
+    </div>
+
+    <div class="pill-bar no-print" style="margin: 10px 0 16px;">
+      <span class="muted small" style="margin-right:8px;">ปี:</span>
+      ${years.map(y => `
+        <button class="pill ${y===activeYear?'active':''}" data-customer-year="${y}">${y + 543}</button>
+      `).join('')}
+    </div>
+    <div class="print-only" style="margin-bottom:10px; font-size:13px;">
+      <b>${brand.name}</b> · Customer Complaint · ปี ${activeYear + 543} · พิมพ์: ${new Date().toLocaleString('th-TH')}
+    </div>
+
+    ${recs.length === 0 ? `
+      <div class="empty-state">
+        <div style="font-size:48px;">📋</div>
+        <h3>ยังไม่มีรายการในปี ${activeYear + 543}</h3>
+        <div class="muted">กด <b>+ บันทึกใหม่</b> เพื่อเริ่มต้น</div>
+      </div>
+    ` : `
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:60px;">#</th>
+            <th style="width:100px;">วันที่</th>
+            <th style="width:160px;">สาขา</th>
+            <th style="width:160px;">ประเภท</th>
+            <th>รายละเอียด</th>
+            <th style="width:130px;">สถานะ</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${recs.map(r => {
+            const st = CUSTOMER_STATUS[r.status] || CUSTOMER_STATUS.open;
+            const desc = (r.description || '').slice(0, 70);
+            return `
+              <tr style="cursor:pointer;" data-customer-open="${r.id}">
+                <td><b>${String(r.no).padStart(3,'0')}</b></td>
+                <td>${r.date ? window.fmtDate(r.date) : 'ไม่ระบุ'}</td>
+                <td style="font-size:13px;">${escapeHtml(r.branchCode ? `${r.branchCode} · ${r.branch||''}` : (r.branch||'-'))}</td>
+                <td>${(r.types||[]).map(t => `<span class="tag" style="background:${(CUSTOMER_TYPE_COLORS[t]||'#64748b')}20; color:${CUSTOMER_TYPE_COLORS[t]||'#64748b'}; border:1px solid ${(CUSTOMER_TYPE_COLORS[t]||'#64748b')}40; margin:1px;">${escapeHtml(t)}</span>`).join('') || '-'}</td>
+                <td style="font-size:13px;">${escapeHtml(desc)}${(r.description||'').length>70?'…':''}</td>
+                <td>
+                  <span class="tag" style="background:${st.color}20; color:${st.color}; border:1px solid ${st.color}40;">
+                    ${st.icon} ${st.label}
+                  </span>
+                </td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    `}
+  `;
+}
+
+function renderCustomerEntry() {
+  const brand = window.BRANDS.find(b => b.id === state.customerBrandId);
+  if (!brand) { state.customerView = 'brand-list'; return renderCustomerBrandList(); }
+  const isEdit = !!state.customerRecord;
+  const rec = state.customerRecord || {
+    id: 'cc-' + Date.now(),
+    brandId: brand.id,
+    year: new Date().getFullYear(),
+    no: nextCustomerNo(brand.id, new Date().getFullYear()),
+    date: new Date().toISOString().slice(0, 10),
+    branchCode: '',
+    branch: '',
+    types: [],
+    description: '',
+    status: 'open',
+    cause: '',
+    capa: '',
+    reporterName: '',
+    reporterDate: new Date().toISOString().slice(0, 10),
+    photos: [],
+    createdAt: Date.now()
+  };
+  state._customerDraft = rec;
+
+  return `
+    <div class="page-header">
+      <div>
+        <h1>📝 ${isEdit ? 'แก้ไข' : 'บันทึก'} Customer Complaint</h1>
+        <div class="subtitle">
+          ${brandBadge(brand, {style:'vertical-align:middle; margin-right:6px; width:22px; height:22px; font-size:12px;'})}
+          ${brand.name} · เลขที่ <b>${String(rec.no).padStart(3,'0')}</b>/${rec.year + 543}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-outline" data-customer-back="records">← ยกเลิก</button>
+        <button class="btn btn-primary" data-customer-save>💾 บันทึก</button>
+      </div>
+    </div>
+
+    <div class="sc-form">
+      <!-- Document header strip -->
+      <div class="sc-form-doc-head">
+        <div class="sc-doc-brand">
+          ${brandBadge(brand)}
+          <div>
+            <div class="sc-doc-title">บันทึกข้อร้องเรียนจากลูกค้า</div>
+            <div class="sc-doc-sub">Customer Complaint · ${brand.name}</div>
+          </div>
+        </div>
+        <div class="sc-doc-meta">
+          <label>เลขที่
+            <input type="number" data-cf="no" value="${escapeAttr(rec.no)}" min="1" style="width:80px;"/>
+          </label>
+          <label>วันที่
+            <input type="date" data-cf="date" value="${escapeAttr(rec.date)}"/>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 1: Complaint info -->
+      <div class="sc-section" style="--sc-accent:#dc2626;">
+        <div class="sc-section-head">
+          <div class="sc-section-no">1</div>
+          <div>
+            <h3>ข้อมูลข้อร้องเรียน</h3>
+            <div class="muted small">สาขา · ประเภท · รายละเอียด · รูปภาพประกอบ</div>
+          </div>
+        </div>
+        <div class="sc-section-body">
+          <div class="sc-grid-2">
+            <label class="sc-field">
+              <span>รหัสสาขา</span>
+              <input type="text" data-cf="branchCode" value="${escapeAttr(rec.branchCode)}" placeholder="เช่น 5068"/>
+            </label>
+            <label class="sc-field">
+              <span>ชื่อสาขา</span>
+              <input type="text" data-cf="branch" value="${escapeAttr(rec.branch)}" placeholder="เช่น คอสโม เมืองทอง"/>
+            </label>
+          </div>
+          <div class="sc-field">
+            <span>ประเภทข้อร้องเรียน (เลือกได้หลายข้อ)</span>
+            <div class="sc-type-pills">
+              ${CUSTOMER_COMPLAINT_TYPES.map(t => `
+                <button type="button" class="sc-type-pill ${(rec.types||[]).includes(t)?'active':''}"
+                        data-cf-type="${escapeAttr(t)}" style="--pc:${CUSTOMER_TYPE_COLORS[t]};">
+                  ${escapeHtml(t)}
+                </button>`).join('')}
+            </div>
+          </div>
+          <label class="sc-field">
+            <span>รายละเอียดข้อร้องเรียน</span>
+            <textarea data-cf="description" rows="5" placeholder="รายละเอียดที่ลูกค้าแจ้ง...">${escapeHtml(rec.description)}</textarea>
+          </label>
+          <div class="sc-field">
+            <span>📸 รูปภาพประกอบ</span>
+            <label class="sc-upload">
+              <input type="file" accept="image/*" multiple data-cf-photos hidden/>
+              <span class="sc-upload-cta">📁 เพิ่มรูปภาพ (หลายไฟล์ได้)</span>
+            </label>
+            ${rec.photos && rec.photos.length ? `
+              <div class="sc-photo-grid">
+                ${rec.photos.map((p, i) => `
+                  <div class="sc-photo-thumb">
+                    <img src="${escapeAttr(p)}" alt="photo"/>
+                    <button type="button" class="sc-photo-del" data-cf-photo-del="${i}">×</button>
+                  </div>
+                `).join('')}
+              </div>
+            ` : '<div class="muted small" style="margin-top:6px;">ยังไม่มีรูปภาพ</div>'}
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Action taken -->
+      <div class="sc-section" style="--sc-accent:#059669;">
+        <div class="sc-section-head">
+          <div class="sc-section-no">2</div>
+          <div>
+            <h3>การดำเนินการแก้ไข</h3>
+            <div class="muted small">สาเหตุ · CAPA · สถานะ · ผู้รายงาน</div>
+          </div>
+        </div>
+        <div class="sc-section-body">
+          <label class="sc-field">
+            <span>สาเหตุ</span>
+            <textarea data-cf="cause" rows="3" placeholder="สาเหตุของข้อร้องเรียน">${escapeHtml(rec.cause)}</textarea>
+          </label>
+          <label class="sc-field">
+            <span>แนวการแก้ไขและป้องกัน (CAPA)</span>
+            <textarea data-cf="capa" rows="3" placeholder="การแก้ไขและป้องกัน">${escapeHtml(rec.capa)}</textarea>
+          </label>
+          <div class="sc-field">
+            <span>สถานะ</span>
+            <div class="sc-type-pills">
+              ${Object.entries(CUSTOMER_STATUS).map(([k,st]) => `
+                <button type="button" class="sc-type-pill ${rec.status===k?'active':''}"
+                        data-cf-status="${k}" style="--pc:${st.color};">
+                  ${st.icon} ${st.label}
+                </button>`).join('')}
+            </div>
+          </div>
+          <div class="sc-grid-2">
+            <label class="sc-field">
+              <span>ผู้รายงาน</span>
+              <input type="text" data-cf="reporterName" value="${escapeAttr(rec.reporterName)}"/>
+            </label>
+            <label class="sc-field">
+              <span>วันที่รายงาน</span>
+              <input type="date" data-cf="reporterDate" value="${escapeAttr(rec.reporterDate)}"/>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-form-footer">
+        <button class="btn btn-outline" data-customer-back="records">ยกเลิก</button>
+        <button class="btn btn-primary" data-customer-save>💾 บันทึก</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderCustomerDetail() {
+  const rec = state.customerRecord;
+  if (!rec) { state.customerView = 'records'; return renderCustomerRecords(); }
+  const brand = window.BRANDS.find(b => b.id === rec.brandId);
+  const st = CUSTOMER_STATUS[rec.status] || CUSTOMER_STATUS.open;
+
+  return `
+    <div class="page-header">
+      <div>
+        <h1>📄 Customer Complaint #${String(rec.no).padStart(3,'0')}/${rec.year + 543}</h1>
+        <div class="subtitle">
+          ${brandBadge(brand, {style:'vertical-align:middle; margin-right:6px; width:24px; height:24px; font-size:14px;'})}
+          ${brand.name} · ${escapeHtml(rec.branch || '-')}
+        </div>
+      </div>
+      <div class="actions no-print">
+        <button class="btn btn-outline" data-customer-back="records">← กลับรายการ</button>
+        <button class="btn btn-ghost" data-customer-action="print">🖨 พิมพ์</button>
+        <button class="btn btn-ghost" data-customer-action="pdf">📄 PDF</button>
+        <button class="btn btn-ghost" data-customer-action="xlsx-one">📥 Excel</button>
+        <button class="btn btn-outline" data-customer-edit>✏️ แก้ไข</button>
+        <button class="btn btn-danger" data-customer-delete>🗑️ ลบ</button>
+      </div>
+    </div>
+
+    <div class="print-only" style="margin-bottom:10px; font-size:13px; border-bottom:1px solid #cbd5e1; padding-bottom:6px;">
+      <b>${brand.name}</b> · Customer Complaint #${String(rec.no).padStart(3,'0')}/${rec.year + 543} · พิมพ์: ${new Date().toLocaleString('th-TH')}
+    </div>
+
+    <div class="grid" style="grid-template-columns: 2fr 1fr; gap:20px;">
+      <div>
+        <div class="card">
+          <h3>ส่วนที่ 1 · ข้อมูลข้อร้องเรียน</h3>
+          <table class="kv-table">
+            <tr><th>วันที่</th><td>${rec.date ? window.fmtDate(rec.date) : 'ไม่ระบุ'}</td></tr>
+            <tr><th>รหัสสาขา</th><td>${escapeHtml(rec.branchCode || '-')}</td></tr>
+            <tr><th>ชื่อสาขา</th><td><b>${escapeHtml(rec.branch || '-')}</b></td></tr>
+            <tr><th>ประเภท</th><td>${(rec.types||[]).map(t => `<span class="tag" style="background:${(CUSTOMER_TYPE_COLORS[t]||'#64748b')}20; color:${CUSTOMER_TYPE_COLORS[t]||'#64748b'}; border:1px solid ${(CUSTOMER_TYPE_COLORS[t]||'#64748b')}40; margin:2px;">${escapeHtml(t)}</span>`).join('') || '-'}</td></tr>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>ส่วนที่ 2 · รายละเอียดข้อร้องเรียน</h3>
+          <div style="white-space:pre-wrap; padding:12px; background:#f8fafc; border-radius:8px;">${escapeHtml(rec.description || '-')}</div>
+          ${rec.photos && rec.photos.length ? `
+            <div class="photo-grid" style="margin-top:12px;">
+              ${rec.photos.map(p => `<div class="photo-thumb"><img src="${escapeAttr(p)}" alt="photo"/></div>`).join('')}
+            </div>
+          ` : ''}
+          <div class="muted small" style="margin-top:12px;">
+            ผู้รายงาน: <b>${escapeHtml(rec.reporterName || '-')}</b>
+            ${rec.reporterDate ? ` · ${window.fmtDate(rec.reporterDate)}` : ''}
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>ส่วนที่ 3 · การดำเนินการแก้ไข</h3>
+          <div style="margin-bottom:10px;"><b>สาเหตุ:</b></div>
+          <div style="white-space:pre-wrap; padding:10px; background:#fef3c7; border-radius:6px; min-height:60px;">${escapeHtml(rec.cause || '(ยังไม่ได้กรอก)')}</div>
+          <div style="margin:14px 0 10px;"><b>การแก้ไขและป้องกัน (CAPA):</b></div>
+          <div style="white-space:pre-wrap; padding:10px; background:#dcfce7; border-radius:6px; min-height:60px;">${escapeHtml(rec.capa || '(ยังไม่ได้กรอก)')}</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="position:sticky; top:20px;">
+          <h3>📍 สถานะปัจจุบัน</h3>
+          <div style="text-align:center; padding:14px; background:${st.color}15; border:2px solid ${st.color}; border-radius:10px;">
+            <div style="font-size:36px;">${st.icon}</div>
+            <div style="font-size:18px; font-weight:700; color:${st.color}; margin-top:4px;">${st.label}</div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <div class="label" style="margin-bottom:8px;">เปลี่ยนสถานะ</div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              ${Object.entries(CUSTOMER_STATUS).map(([k,s]) => `
+                <button class="btn ${rec.status===k?'btn-primary':'btn-outline'}" data-customer-status="${k}">${s.icon} ${s.label}</button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCustomerDashboard() {
+  const brand = window.BRANDS.find(b => b.id === state.customerBrandId);
+  if (!brand) { state.customerView = 'brand-list'; return renderCustomerBrandList(); }
+  const all = loadCustomerRecords().filter(r => r.brandId === brand.id);
+  const years = Array.from(new Set(all.map(r => r.year))).sort((a,b) => b-a);
+  const curYear = new Date().getFullYear();
+  if (!years.includes(curYear)) years.unshift(curYear);
+  const activeYear = state.customerYear || years[0] || curYear;
+  const recs = all.filter(r => r.year === activeYear);
+
+  const total = recs.length;
+  const resolved = recs.filter(r => r.status === 'resolved').length;
+  const open = recs.filter(r => r.status === 'open').length;
+  const resolveRate = total ? Math.round(resolved / total * 100) : 0;
+
+  // By type
+  const byType = {};
+  CUSTOMER_COMPLAINT_TYPES.forEach(t => byType[t] = 0);
+  recs.forEach(r => (r.types || []).forEach(t => {
+    byType[CUSTOMER_COMPLAINT_TYPES.includes(t) ? t : 'อื่นๆ']++;
+  }));
+  // By branch
+  const byBranch = {};
+  recs.forEach(r => {
+    const b = (r.branch || 'ไม่ระบุ').trim();
+    byBranch[b] = (byBranch[b] || 0) + 1;
+  });
+  const branchRanking = Object.entries(byBranch).sort((a,b) => b[1]-a[1]).slice(0, 10);
+
+  // Monthly distribution by type for active year
+  const monthByType = {};
+  CUSTOMER_COMPLAINT_TYPES.forEach(t => { monthByType[t] = Array(12).fill(0); });
+  recs.forEach(r => {
+    if (!r.date) return;
+    const m = new Date(r.date).getMonth();
+    if (m < 0 || m > 11) return;
+    (r.types && r.types.length ? r.types : ['อื่นๆ']).forEach(t => {
+      const tt = CUSTOMER_COMPLAINT_TYPES.includes(t) ? t : 'อื่นๆ';
+      monthByType[tt][m]++;
+    });
+  });
+  // Status-by-branch stacked
+  const statusByBranch = {};
+  recs.forEach(r => {
+    const b = (r.branch || 'ไม่ระบุ').trim();
+    statusByBranch[b] = statusByBranch[b] || { open:0, resolved:0 };
+    statusByBranch[b][r.status || 'open']++;
+  });
+  const topBranchKeys = branchRanking.map(([n]) => n);
+
+  window._customerDashData = {
+    byType, branchRanking,
+    byYear: yearTotals(all),
+    monthByType,
+    statusByBranch, topBranchKeys,
+    statusCounts: { open, resolved },
+    brandColor: brand.color
+  };
+
+  return `
+    <div class="page-header">
+      <div>
+        <h1>📊 Customer Complaint Dashboard</h1>
+        <div class="subtitle">
+          ${brandBadge(brand, {style:'vertical-align:middle; margin-right:6px; width:24px; height:24px; font-size:14px;'})}
+          ${brand.name} · ปี ${activeYear + 543}
+        </div>
+      </div>
+      <div class="actions no-print">
+        <button class="btn btn-outline" data-customer-back="records">← กลับรายการ</button>
+        <button class="btn btn-ghost" data-customer-action="print">🖨 พิมพ์</button>
+        <button class="btn btn-ghost" data-customer-action="xlsx">📥 Excel</button>
+      </div>
+    </div>
+
+    <div class="pill-bar no-print" style="margin: 0 0 16px;">
+      <span class="muted small" style="margin-right:8px;">ปี:</span>
+      ${years.map(y => `
+        <button class="pill ${y===activeYear?'active':''}" data-customer-year="${y}">${y + 543}</button>
+      `).join('')}
+    </div>
+
+    <div class="print-only" style="margin-bottom:10px; font-size:13px;">
+      <b>${brand.name}</b> · Customer Complaint Dashboard · ปี ${activeYear + 543} · พิมพ์: ${new Date().toLocaleString('th-TH')}
+    </div>
+
+    <!-- KPI band -->
+    <div class="sc-kpi-row">
+      <div class="sc-kpi" style="--kc:#7c3aed;">
+        <div class="sc-kpi-icon">📋</div>
+        <div class="sc-kpi-body">
+          <div class="sc-kpi-label">รวมทั้งหมด</div>
+          <div class="sc-kpi-value">${total}</div>
+          <div class="sc-kpi-sub">เรื่อง</div>
+        </div>
+      </div>
+      <div class="sc-kpi" style="--kc:#f59e0b;">
+        <div class="sc-kpi-icon">⏳</div>
+        <div class="sc-kpi-body">
+          <div class="sc-kpi-label">รอดำเนินการ</div>
+          <div class="sc-kpi-value">${open}</div>
+          <div class="sc-kpi-sub">${total ? Math.round(open/total*100) : 0}%</div>
+        </div>
+      </div>
+      <div class="sc-kpi" style="--kc:#059669;">
+        <div class="sc-kpi-icon">✓</div>
+        <div class="sc-kpi-body">
+          <div class="sc-kpi-label">เสร็จสิ้น</div>
+          <div class="sc-kpi-value">${resolved}</div>
+          <div class="sc-kpi-sub">${total ? Math.round(resolved/total*100) : 0}%</div>
+        </div>
+      </div>
+      <div class="sc-kpi" style="--kc:${resolveRate>=70?'#059669':resolveRate>=40?'#f59e0b':'#dc2626'};">
+        <div class="sc-kpi-icon">🎯</div>
+        <div class="sc-kpi-body">
+          <div class="sc-kpi-label">% เสร็จสิ้น</div>
+          <div class="sc-kpi-value">${resolveRate}<small style="font-size:18px;">%</small></div>
+          <div class="sc-kpi-sub">${resolved} / ${total}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 1: Type breakdown + Status breakdown -->
+    <div class="sc-dash-row">
+      <div class="card sc-chart-card">
+        <h3>📈 ประเภทข้อร้องเรียน</h3>
+        <div class="muted small" style="margin-bottom:8px;">สัดส่วนของ ${total} เรื่องในปี ${activeYear + 543}</div>
+        <div class="sc-chart-h"><canvas id="customerTypeChart"></canvas></div>
+      </div>
+      <div class="card sc-chart-card">
+        <h3>📊 สถานะการดำเนินการ</h3>
+        <div class="muted small" style="margin-bottom:8px;">รอดำเนินการ / เสร็จสิ้น — ${total} เรื่อง</div>
+        <div class="sc-chart-h"><canvas id="customerStatusChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Row 2: Monthly trend stacked by type (full width) -->
+    <div class="card sc-chart-card" style="margin-top:18px;">
+      <h3>📅 จำนวน Complaint รายเดือน — แยกตามประเภท (ปี ${activeYear + 543})</h3>
+      <div class="sc-chart-h" style="height:300px;"><canvas id="customerMonthChart"></canvas></div>
+    </div>
+
+    <!-- Row 3: Year-over-year (full width if data) -->
+    ${d_yearLen(all) >= 2 ? `
+      <div class="card sc-chart-card" style="margin-top:18px;">
+        <h3>📈 แนวโน้มย้อนหลัง (รายปี · ทุกปี)</h3>
+        <div class="sc-chart-h"><canvas id="customerYearChart"></canvas></div>
+      </div>
+    ` : ''}
+
+    <!-- Row 4: Top branches stacked status -->
+    <div class="card" style="margin-top:18px;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+        <h3 style="margin:0;">🏪 Top สาขา — จำนวน complaint และสถานะการดำเนินการ</h3>
+        <span class="muted small">ปี ${activeYear + 543} · top ${branchRanking.length}</span>
+      </div>
+      ${branchRanking.length === 0 ? '<div class="muted">— ไม่มีข้อมูล —</div>' : `
+        <div class="sc-chart-h" style="height: ${Math.max(180, branchRanking.length * 36)}px;">
+          <canvas id="customerTopChart"></canvas>
+        </div>
+      `}
+    </div>
+
+    <!-- Row 5: Table -->
+    <div class="card" style="margin-top:18px;">
+      <h3>🏪 Top สาขา (ตาราง)</h3>
+      ${branchRanking.length === 0 ? '<div class="muted">— ไม่มีข้อมูล —</div>' : `
+        <table class="data-table" style="font-size:15px;">
+          <thead><tr><th style="width:40px; font-size:14px;">#</th><th style="font-size:14px;">สาขา</th><th style="width:80px; text-align:right; font-size:14px;">จำนวน</th><th style="width:170px; font-size:14px;">สัดส่วน</th></tr></thead>
+          <tbody>
+            ${branchRanking.map(([name, count], i) => {
+              const pct = total ? (count/total*100) : 0;
+              return `
+                <tr>
+                  <td><b style="font-size:15px;">${i+1}</b></td>
+                  <td style="font-weight:500;">${escapeHtml(name)}</td>
+                  <td style="text-align:right;"><b style="font-size:16px;">${count}</b></td>
+                  <td>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <div style="flex:1; height:8px; background:#f1f5f9; border-radius:4px; overflow:hidden;">
+                        <div style="height:100%; width:${pct}%; background:${brand.color};"></div>
+                      </div>
+                      <span class="muted small">${pct.toFixed(0)}%</span>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `}
+    </div>
+  `;
+}
+
+function drawCustomerDashboardCharts() {
+  const d = window._customerDashData;
+  if (!d) return;
+  if (window.ChartDataLabels && !Chart.registry.plugins.get('datalabels')) {
+    Chart.register(window.ChartDataLabels);
+  }
+  state.chartInstances = state.chartInstances || {};
+  const cleanup = ['customerType','customerStatus','customerMonth','customerYear','customerTop'];
+  cleanup.forEach(k => { if (state.chartInstances[k]) { state.chartInstances[k].destroy(); state.chartInstances[k] = null; } });
+
+  // ---- Type chart (doughnut) ----
+  const tCv = document.getElementById('customerTypeChart');
+  if (tCv) {
+    const labels = Object.keys(d.byType);
+    const data = Object.values(d.byType);
+    const totalT = data.reduce((s,v)=>s+v,0) || 1;
+    state.chartInstances.customerType = new Chart(tCv, {
+      type: 'doughnut',
+      data: { labels, datasets: [{
+        data, backgroundColor: labels.map(l => CUSTOMER_TYPE_COLORS[l] || '#94a3b8'),
+        borderWidth: 2, borderColor: '#fff'
+      }]},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '55%',
+        plugins: {
+          legend: { position: 'right', labels: { padding: 10, font: { size: 12 } } },
+          tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed} (${(ctx.parsed/totalT*100).toFixed(0)}%)` }},
+          datalabels: {
+            color: '#fff', font: { weight: 'bold', size: 12 },
+            formatter: v => v > 0 ? `${v}` : ''
+          }
+        }
+      }
+    });
+  }
+
+  // ---- Status chart (doughnut) ----
+  const sCv = document.getElementById('customerStatusChart');
+  if (sCv) {
+    const sc = d.statusCounts;
+    const totalS = sc.open + sc.resolved || 1;
+    state.chartInstances.customerStatus = new Chart(sCv, {
+      type: 'doughnut',
+      data: {
+        labels: ['⏳ รอดำเนินการ', '✓ เสร็จสิ้น'],
+        datasets: [{
+          data: [sc.open, sc.resolved],
+          backgroundColor: ['#f59e0b', '#059669'],
+          borderWidth: 2, borderColor: '#fff'
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '55%',
+        plugins: {
+          legend: { position: 'right', labels: { padding: 10, font: { size: 12 } } },
+          datalabels: {
+            color: '#fff', font: { weight: 'bold', size: 13 },
+            formatter: v => v > 0 ? `${v}\n${(v/totalS*100).toFixed(0)}%` : '',
+            textAlign: 'center'
+          }
+        }
+      }
+    });
+  }
+
+  // ---- Monthly chart (stacked bar by type) ----
+  const mCv = document.getElementById('customerMonthChart');
+  if (mCv) {
+    const monthLabels = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    const monthByType = d.monthByType || {};
+    const datasets = CUSTOMER_COMPLAINT_TYPES.map(t => ({
+      label: t,
+      data: monthByType[t] || Array(12).fill(0),
+      backgroundColor: CUSTOMER_TYPE_COLORS[t],
+      borderWidth: 0,
+      borderRadius: 4,
+      stack: 'm',
+      maxBarThickness: 36
+    }));
+    state.chartInstances.customerMonth = new Chart(mCv, {
+      type: 'bar',
+      data: { labels: monthLabels, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', labels: { padding: 10, font: { size: 12 }, boxWidth: 14 } },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}`,
+              footer: items => 'รวม: ' + items.reduce((s,it) => s + (it.parsed.y || 0), 0)
+            }
+          },
+          datalabels: {
+            color: '#fff', font: { weight: 'bold', size: 11 },
+            formatter: v => v > 0 ? v : ''
+          }
+        },
+        scales: {
+          x: { stacked: true, grid: { display: false } },
+          y: { stacked: true, beginAtZero: true, ticks: { stepSize: 1, precision: 0 }, grid: { color: '#f1f5f9' } }
+        }
+      }
+    });
+  }
+
+  // ---- Year chart (bar) ----
+  const yCv = document.getElementById('customerYearChart');
+  if (yCv && d.byYear.length >= 2) {
+    const labels = d.byYear.map(([y]) => (Number(y) + 543));
+    const data = d.byYear.map(([,n]) => n);
+    state.chartInstances.customerYear = new Chart(yCv, {
+      type: 'bar',
+      data: { labels, datasets: [{ data, backgroundColor: '#dc2626', borderRadius: 6, maxBarThickness: 60 }]},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          datalabels: { anchor: 'end', align: 'top', color: '#1e293b', font: { weight: 'bold' } }
+        },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 } }, x: { grid: { display: false } } }
+      }
+    });
+  }
+
+  // ---- Top branches stacked horizontal bar ----
+  const topCv = document.getElementById('customerTopChart');
+  if (topCv && d.topBranchKeys.length) {
+    const labels = d.topBranchKeys.map(k => k.length > 30 ? k.slice(0,30)+'…' : k);
+    const openArr = d.topBranchKeys.map(k => d.statusByBranch[k]?.open || 0);
+    const resArr  = d.topBranchKeys.map(k => d.statusByBranch[k]?.resolved || 0);
+    state.chartInstances.customerTop = new Chart(topCv, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: '⏳ รอดำเนินการ', data: openArr, backgroundColor: '#f59e0b', stack: 's' },
+          { label: '✓ เสร็จสิ้น',    data: resArr,  backgroundColor: '#059669', stack: 's' }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', labels: { padding: 10, font: { size: 12 } } },
+          tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.x}` }},
+          datalabels: {
+            color: '#fff', font: { weight: 'bold', size: 11 },
+            formatter: v => v > 0 ? v : ''
+          }
+        },
+        scales: {
+          x: { stacked: true, beginAtZero: true, ticks: { stepSize: 1, precision: 0 }, grid: { color: '#f1f5f9' } },
+          y: { stacked: true, grid: { display: false } }
+        }
+      }
+    });
+  }
+}
+
+function exportCustomerRecordXLSX(r) {
+  const XLSX = window.XLSX;
+  if (!XLSX) { toast('ไม่พบไลบรารี XLSX', 'error'); return; }
+  const brand = window.BRANDS.find(b => b.id === r.brandId);
+  const wb = XLSX.utils.book_new();
+  const rows = [
+    ['Customer Complaint Report'],
+    [],
+    ['แบรนด์', brand?.name || r.brandId],
+    ['เลขที่', `${String(r.no).padStart(3,'0')}/${r.year + 543}`],
+    ['วันที่บันทึก', r.date || 'ไม่ระบุ'],
+    [],
+    ['— ส่วนที่ 1 · ข้อมูลข้อร้องเรียน —'],
+    ['รหัสสาขา', r.branchCode || ''],
+    ['ชื่อสาขา', r.branch || ''],
+    ['ประเภท', (r.types||[]).join(', ')],
+    ['รายละเอียด', r.description || ''],
+    ['จำนวนรูป', (r.photos || []).length],
+    [],
+    ['— ส่วนที่ 2 · การดำเนินการแก้ไข —'],
+    ['สถานะ', CUSTOMER_STATUS[r.status]?.label || r.status],
+    ['สาเหตุ', r.cause || ''],
+    ['CAPA', r.capa || ''],
+    ['ผู้รายงาน', r.reporterName || ''],
+    ['วันที่รายงาน', r.reporterDate || '']
+  ];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), 'รายงาน');
+  const safe = (r.branch || 'record').replace(/[\\/:*?"<>|]/g, '_').slice(0, 30);
+  XLSX.writeFile(wb, `CustomerComplaint_${String(r.no).padStart(3,'0')}_${r.year+543}_${safe}.xlsx`);
+  toast('ดาวน์โหลด Excel แล้ว', 'success');
+}
+
+function exportCustomerXLSX() {
+  const XLSX = window.XLSX;
+  if (!XLSX) { toast('ไม่พบไลบรารี XLSX', 'error'); return; }
+  const brand = window.BRANDS.find(b => b.id === state.customerBrandId);
+  const all = loadCustomerRecords().filter(r => !brand || r.brandId === brand.id);
+  const year = state.customerYear;
+  const recs = year ? all.filter(r => r.year === year) : all;
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1: Records (one row each)
+  const r1 = [['เลขที่','วันที่','ปี','แบรนด์','รหัสสาขา','สาขา','ประเภท','รายละเอียด','สาเหตุ','CAPA','สถานะ','ผู้รายงาน']];
+  recs.forEach(r => {
+    r1.push([
+      r.no, r.date || 'ไม่ระบุ', r.year + 543, r.brandId,
+      r.branchCode || '', r.branch || '', (r.types||[]).join(', '), r.description || '',
+      r.cause || '', r.capa || '',
+      CUSTOMER_STATUS[r.status]?.label || r.status,
+      r.reporterName || ''
+    ]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(r1), 'รายการ');
+
+  // Sheet 2: By branch
+  const branchAgg = {};
+  recs.forEach(r => {
+    const b = (r.branch || 'ไม่ระบุ').trim();
+    branchAgg[b] = branchAgg[b] || { name: b, total: 0, open: 0, resolved: 0 };
+    branchAgg[b].total++;
+    branchAgg[b][r.status || 'open']++;
+  });
+  const r2 = [['สาขา','รวม','รอดำเนินการ','เสร็จสิ้น','% เสร็จสิ้น']];
+  Object.values(branchAgg).sort((a,b) => b.total - a.total).forEach(b => {
+    r2.push([b.name, b.total, b.open, b.resolved, b.total ? +(b.resolved/b.total*100).toFixed(1) : 0]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(r2), 'สรุปรายสาขา');
+
+  // Sheet 3: By type/month
+  const monthLabels = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const byMonthType = {};
+  CUSTOMER_COMPLAINT_TYPES.forEach(t => { byMonthType[t] = Array(12).fill(0); });
+  recs.forEach(r => {
+    if (!r.date) return;
+    const m = new Date(r.date).getMonth();
+    if (m < 0 || m > 11) return;
+    (r.types && r.types.length ? r.types : ['อื่นๆ']).forEach(t => {
+      if (byMonthType[t]) byMonthType[t][m]++;
+    });
+  });
+  const r3 = [['ประเภท', ...monthLabels, 'รวม']];
+  CUSTOMER_COMPLAINT_TYPES.forEach(t => {
+    const row = byMonthType[t];
+    r3.push([t, ...row, row.reduce((s,v)=>s+v,0)]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(r3), 'แยกรายเดือน');
+
+  const brandTag = brand?.id || 'all';
+  const yearTag = year ? `_${year + 543}` : '';
+  XLSX.writeFile(wb, `CustomerComplaint_${brandTag}${yearTag}_${new Date().toISOString().slice(0,10)}.xlsx`);
+  toast('ดาวน์โหลด Excel แล้ว', 'success');
+}
+
+function wireCustomerHandlers() {
+  // Nav
+  root.querySelectorAll('[data-customer-home]').forEach(el => {
+    el.onclick = () => { state.homeView = 'landing'; navigate('home'); };
+  });
+  root.querySelectorAll('[data-customer-brand]').forEach(el => {
+    el.onclick = () => {
+      state.customerBrandId = el.dataset.customerBrand;
+      state.customerYear = null;
+      state.customerView = 'records';
+      render();
+    };
+  });
+  root.querySelectorAll('[data-customer-back]').forEach(el => {
+    el.onclick = () => {
+      const v = el.dataset.customerBack;
+      state.customerView = v;
+      if (v === 'brand-list') { state.customerBrandId = null; state.customerYear = null; }
+      render();
+    };
+  });
+  root.querySelectorAll('[data-customer-view]').forEach(el => {
+    el.onclick = () => { state.customerView = el.dataset.customerView; render(); };
+  });
+  root.querySelectorAll('[data-customer-action]').forEach(el => {
+    el.onclick = () => {
+      const a = el.dataset.customerAction;
+      if (a === 'print') window.print();
+      if (a === 'pdf') {
+        toast('📄 เปิดหน้าต่างพิมพ์ — เลือก "Save as PDF" ในช่อง Destination', 'info');
+        setTimeout(() => window.print(), 200);
+      }
+      if (a === 'xlsx')  exportCustomerXLSX();
+      if (a === 'xlsx-one' && state.customerRecord) exportCustomerRecordXLSX(state.customerRecord);
+    };
+  });
+  root.querySelectorAll('[data-customer-year]').forEach(el => {
+    el.onclick = () => { state.customerYear = Number(el.dataset.customerYear); render(); };
+  });
+  root.querySelectorAll('[data-customer-new]').forEach(el => {
+    el.onclick = () => {
+      state.customerRecord = null;
+      state.customerView = 'entry';
+      render();
+    };
+  });
+  root.querySelectorAll('[data-customer-open]').forEach(el => {
+    el.onclick = () => {
+      const id = el.dataset.customerOpen;
+      const rec = loadCustomerRecords().find(r => r.id === id);
+      if (rec) { state.customerRecord = rec; state.customerView = 'detail'; render(); }
+    };
+  });
+  root.querySelectorAll('[data-customer-edit]').forEach(el => {
+    el.onclick = () => { state.customerView = 'entry'; render(); };
+  });
+  root.querySelectorAll('[data-customer-delete]').forEach(el => {
+    el.onclick = () => {
+      if (!confirm('ลบบันทึก Customer Complaint นี้?')) return;
+      const id = state.customerRecord?.id;
+      saveCustomerRecords(loadCustomerRecords().filter(r => r.id !== id));
+      state.customerRecord = null;
+      state.customerView = 'records';
+      render();
+    };
+  });
+  root.querySelectorAll('[data-customer-status]').forEach(el => {
+    el.onclick = () => {
+      const rec = state.customerRecord;
+      if (!rec) return;
+      rec.status = el.dataset.customerStatus;
+      const all = loadCustomerRecords();
+      const i = all.findIndex(r => r.id === rec.id);
+      if (i >= 0) { all[i] = rec; saveCustomerRecords(all); }
+      toast('อัปเดตสถานะแล้ว: ' + (CUSTOMER_STATUS[rec.status]?.label || rec.status), 'success');
+      render();
+    };
+  });
+
+  // Entry form: bind fields to state._customerDraft and Save
+  if (state.customerView === 'entry') {
+    const draft = state._customerDraft;
+    if (!draft) return;
+    root.querySelectorAll('[data-cf]').forEach(el => {
+      const f = el.dataset.cf;
+      el.oninput = () => { draft[f] = el.value; };
+      el.onchange = () => { draft[f] = el.value; };
+    });
+    root.querySelectorAll('[data-cf-type]').forEach(btn => {
+      btn.onclick = () => {
+        draft.types = draft.types || [];
+        const t = btn.dataset.cfType;
+        const i = draft.types.indexOf(t);
+        if (i >= 0) draft.types.splice(i, 1); else draft.types.push(t);
+        btn.classList.toggle('active', draft.types.includes(t));
+      };
+    });
+    root.querySelectorAll('[data-cf-status]').forEach(btn => {
+      btn.onclick = () => {
+        draft.status = btn.dataset.cfStatus;
+        root.querySelectorAll('[data-cf-status]').forEach(b => b.classList.toggle('active', b === btn));
+      };
+    });
+    const photoInput = root.querySelector('[data-cf-photos]');
+    if (photoInput) photoInput.onchange = async (e) => {
+      draft.photos = draft.photos || [];
+      for (const f of [...e.target.files]) {
+        draft.photos.push(await readAsDataURL(f));
+      }
+      render();
+    };
+    root.querySelectorAll('[data-cf-photo-del]').forEach(btn => {
+      btn.onclick = () => {
+        draft.photos.splice(Number(btn.dataset.cfPhotoDel), 1);
+        render();
+      };
+    });
+    const saveBtn = root.querySelector('[data-customer-save]');
+    if (saveBtn) saveBtn.onclick = () => {
+      if (!draft.branch) { toast('กรุณากรอกชื่อสาขา', 'error'); return; }
+      if (!draft.types || !draft.types.length) { toast('กรุณาเลือกประเภทข้อร้องเรียนอย่างน้อย 1 ข้อ', 'error'); return; }
+      draft.no = Number(draft.no) || 1;
+      draft.year = draft.date ? Number(draft.date.slice(0,4)) : new Date().getFullYear();
+      const all = loadCustomerRecords();
+      const i = all.findIndex(r => r.id === draft.id);
+      if (i >= 0) all[i] = draft; else all.push(draft);
+      saveCustomerRecords(all);
+      toast('บันทึกเรียบร้อย', 'success');
+      state.customerRecord = draft;
+      state.customerView = 'detail';
+      render();
+    };
+  }
+
+  // Draw dashboard charts
+  if (state.customerView === 'dashboard') {
+    setTimeout(() => drawCustomerDashboardCharts(), 60);
+  }
+}
+
+// ============================================================
 //  REVIEWS PAGE — mock Google Reviews aggregation
 // ============================================================
 function renderReviews() {
@@ -10088,6 +11132,14 @@ function attachPageHandlers() {
         navigate('supplier-complaint');
         return;
       }
+      if (id === 'customer-complaint') {
+        state.customerView = 'brand-list';
+        state.customerBrandId = null;
+        state.customerYear = null;
+        state.customerRecord = null;
+        navigate('customer-complaint');
+        return;
+      }
       const label = el.querySelector('h3')?.innerText || id;
       toast(`${label} — เฟสถัดไป (Coming soon)`, 'info');
     };
@@ -10266,6 +11318,7 @@ function attachPageHandlers() {
   }
   if (state.page === 'cleaning') wireCleaningHandlers();
   if (state.page === 'supplier-complaint') wireSupplierHandlers();
+  if (state.page === 'customer-complaint') wireCustomerHandlers();
   // About page edit-mode toggle (✏️ แก้ไข ↔ 🔒 ออกจากโหมดแก้ไข)
   root.querySelectorAll('[data-edit-toggle]').forEach(el => {
     el.onclick = () => {

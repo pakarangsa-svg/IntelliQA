@@ -1,0 +1,3853 @@
+[
+  {
+    "id": "cc-sfh-96",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 1,
+    "date": "2025-10-01",
+    "branchCode": "5045",
+    "branch": "พรอมนาท",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คุณภาพ  สเต็กริบอาย เหนียวมาก หั่นก็ยาก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937941950
+  },
+  {
+    "id": "cc-sfh-97",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 2,
+    "date": "2025-10-02",
+    "branchCode": "5084",
+    "branch": "เทอมินอล พระราม 3",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "พนง.แจ้งว่า ระบบมีปัญหาจะลงแต้มให้ภายหลัง ตอนนี้ยังไม่ได้ค่ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937942950
+  },
+  {
+    "id": "cc-sfh-107",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 3,
+    "date": "2025-10-02",
+    "branchCode": "8056",
+    "branch": "โลตัส ชุมพร",
+    "types": [
+      "บริการ"
+    ],
+    "description": "สั่ง สปาเก็ตตี้  แต่ไม่ได้ทานเพราะไม่ได้ทำให้ น้องพนักงานรับออเดอร์ บอกว่าน่าจะลืม",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937943950
+  },
+  {
+    "id": "cc-sfh-108",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 4,
+    "date": "2025-10-03",
+    "branchCode": "8058",
+    "branch": "บิ๊กซี สุขสวัสดิ์",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "สั่ง Delivery วันที่ 30/09/68 มีแมลงอยู่ในกล่องโดยที่ยังไม่ได้เปิด",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937944950
+  },
+  {
+    "id": "cc-sfh-109",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 5,
+    "date": "2025-10-03",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัลขอนแก่น",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สั่งสเต็กชุดจับคู่249฿ พออาหารมาเสิร์ฟ สเต็ก1ชิ้นมีลักษณะไหม้ดำทั้งด้านหน้าและด้านหลัง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937945950
+  },
+  {
+    "id": "cc-sfh-110",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 6,
+    "date": "2025-10-03",
+    "branchCode": "8009",
+    "branch": "เซียร์รังสิต",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้าแจ้งสั่งโปร 2 แถม 1 แต่ไม่ได้จานที่แถม",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937946950
+  },
+  {
+    "id": "cc-sfh-111",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 7,
+    "date": "2025-10-06",
+    "branchCode": "8055",
+    "branch": "โรบินสัน กาญจนบุรี",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สั่งข้าวผัดอเมริกัน  ข้าวแฉะมาก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937947950
+  },
+  {
+    "id": "cc-sfh-112",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 8,
+    "date": "2025-10-06",
+    "branchCode": "8010",
+    "branch": "ซ็นทรัลสุราษฎร์ธานี",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้าชำระเงิน พนักงานนำบัตรเราไปกดคีย์หรัสหลังบัตรในเครื่องคอม ซึ่งรู้สึกว่าการทำแบบนี้ ไม่ปลอดภัยเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937948950
+  },
+  {
+    "id": "cc-sfh-98",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 9,
+    "date": "2025-10-07",
+    "branchCode": "5050",
+    "branch": "โลตัส บางพลี",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สเต็กมีรสชาติเค็มมากๆ  ทานไป 2-3 คำ รสชาติมัน แตกต่างจากเดิม มากๆ ทานไม่ได้เลย และ เนื้อหมูมีกลิ่นสาบ และ สปาเกตตี้ เค็มเกลือมากๆ เค็มที่เส้นเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937949950
+  },
+  {
+    "id": "cc-sfh-113",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 10,
+    "date": "2025-10-07",
+    "branchCode": "8058",
+    "branch": "บิ๊กซีสุขสวัสดิ์",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "ออเดอร์เข้าร้านตอน 15:10 ไรด์เดอร์ไปถึงร้านตอน 15:30 แจ้งเลขออเดอร์ พนักงานถามว่ามีออเดอร์ด้วยเหรอ ทั้งๆที่หน้าร้านก็ไม่มีลูกค้าเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937950950
+  },
+  {
+    "id": "cc-sfh-114",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 11,
+    "date": "2025-10-07",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัลขอนแก่น",
+    "types": [
+      "บริการ",
+      "ความเร็ว"
+    ],
+    "description": "ลูกค้ารออาหาร 40 นาที และเป็นคนตามอาหารเองว่ายังไม่ได้ ไม่มีพนักงานมาดูแลเลยตอนรับออเดอร์ก็ต้องเรียกเอง และต้องแจ้งว่ายังไม่ได้อาหาร ไม่มีการแสดงความรับผิดชอบด้วยตัวเอง ถามว่าจะรับผิดชอบยังไง แจ้งว่าจะให้ส่วนลด 10% ซึ่งเป็นสมาชิกได้ลด 10%  อยู่แล้ว เท่ากับว่า ไม่ได้รับการดูแลใดๆเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937951950
+  },
+  {
+    "id": "cc-sfh-115",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 12,
+    "date": "2025-10-09",
+    "branchCode": "8053",
+    "branch": "เซ็นทรัลภูเก็ต",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "วันที่ 07/10/68 ได้สั่งเมนู ไส้กรอกค็อกเทลไป และอื่นๆ แต่เมนูที่มีปัญหาคือ ไส้กรอกค็อกเทลพนักงาน มาเสิร์ฟเป็นจานแรก พอทานเข้าไป ไส้กรอกยังมีความเย็น เหมือนของที่เอาออกมาจากตู้เย็นละวางให้คลายเย็น",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937952950
+  },
+  {
+    "id": "cc-sfh-99",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 13,
+    "date": "2025-10-12",
+    "branchCode": "5088",
+    "branch": "ศูนย์ประชุมสิริกิตย์",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ปัญหายอดเงินในใบเสร็จและยอดโอนไม่ตรงกัน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937953950
+  },
+  {
+    "id": "cc-sfh-100",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 14,
+    "date": "2025-10-14",
+    "branchCode": "5042",
+    "branch": "ฟิวเจอร์รังสิต",
+    "types": [
+      "บริการ"
+    ],
+    "description": "ช่วงประมาณ19:15  พนักงานผู้หญิงใส่แว่นคนนึงมารับออเดอร์แต่ไม่ถามลูกค้าว่ารับน้ำอะไร จดเมนูเสร็จเดินออกไป แล้วไม่มีการคีย์บิลเอามาวางให้ที่โต๊ะ แต่ทุกโต๊ะที่สังเกตมีบิลทุกโต๊ะ แต่พนักงานคนนี้ไม่นำบิลมาให้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937954950
+  },
+  {
+    "id": "cc-sfh-116",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 15,
+    "date": "2025-10-15",
+    "branchCode": "8010",
+    "branch": "เซ็นทรัล สุราษฎร์ธานี",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนพนักงาน วันที่ 14/10/68 บริการไม่ดี",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937955950
+  },
+  {
+    "id": "cc-sfh-117",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 16,
+    "date": "2025-10-15",
+    "branchCode": "8062",
+    "branch": "Harbor Mall",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลน สั่งสปาเก็ตตี้ได้รับแบบไม่ร้อน  สั่งอีกรอบเส้นอืดเป็นก้อน ข้าวโพดในสลัดมีกลิ่นแปลกๆ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937956950
+  },
+  {
+    "id": "cc-sfh-118",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 17,
+    "date": "2025-10-16",
+    "branchCode": "8001",
+    "branch": "บิ๊กซีเอ็กซ์ตร้า(บิ๊กซีหาดใหญ่2)",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลน วันที่ใช้บริการ 15/10/68 สั่งสเต็กยัมมี่ เปลี่ยนเครื่องเคียงเป็นพาสต้าชีส พาสต้าเย็นมากสั่งสเต็กคอมโบ249 ซอส2ซอส เย็นมากสั่งสเต็กไก่แจ่ว ขนมปังเย็นมาก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937957950
+  },
+  {
+    "id": "cc-sfh-101",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 18,
+    "date": "2025-10-17",
+    "branchCode": "5042",
+    "branch": "ฟิวเจอร์รังสิต",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สั่งสปาเก็ตตี้ ไม่ตรงปก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937958950
+  },
+  {
+    "id": "cc-sfh-119",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 19,
+    "date": "2025-10-17",
+    "branchCode": "8013",
+    "branch": "มาร์เก็ต วิลเลจ หัวหิน",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน สั่งสเต็กไม่ได้รับช้อนและมีด พนักงานให้ ช้อนแค่ 1 อัน แต่คนกิน2 คน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937959950
+  },
+  {
+    "id": "cc-sfh-102",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 20,
+    "date": "2025-10-20",
+    "branchCode": "5088",
+    "branch": "ศูนย์ประชุมสิริกิตย์",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "สั่งเมนูสเต๊กหมู ราคา 219 กับเมนูสเต๊กไก่พบว่า หมูย่างไม่สุก เลยขอเปลี่ยนกับพนักงานพนักงานเปลี่ยนขิ้นใหม่มาให้แล้วจึงอยากให้ทางร้าน  เน้นย้ำพนักงานย่างเนื้อสัตว์ให้มีความละเอียดรอบคอบ เพื่อจะได้ถูกหลักอนามัย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937960950
+  },
+  {
+    "id": "cc-sfh-120",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 21,
+    "date": "2025-10-20",
+    "branchCode": "8056",
+    "branch": "โลตัส ชุมพร",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "สั่งสปาเก็ตตี้เส้นไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937961950
+  },
+  {
+    "id": "cc-sfh-103",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 22,
+    "date": "2025-10-21",
+    "branchCode": "5061",
+    "branch": "บิ๊กซี สัตหีบ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการสื่อสารของพนักงาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937962950
+  },
+  {
+    "id": "cc-sfh-121",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 23,
+    "date": "2025-10-24",
+    "branchCode": "8034",
+    "branch": "บิ๊กซีลพบุรี",
+    "types": [
+      "บริการ",
+      "ความสะอาด"
+    ],
+    "description": "พนักงาน ไปนั่งรอประมาณ 5นาที ไม่มีพนักงานมารับออเดอร์เลย เวลาประมาณ 16.25น",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937963950
+  },
+  {
+    "id": "cc-sfh-104",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 24,
+    "date": "2025-10-27",
+    "branchCode": "5028",
+    "branch": "โลตัส ปทุมธานี",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่งสเต็กไก่ขอห่อกลับบ้านคิดค่าห่อเรียบร้อยแต่กลับบ้านมา ได้แต่ไก่ เฟรนฟรายมันบด แต่ไม่ได้สลัดมาด้วย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937964950
+  },
+  {
+    "id": "cc-sfh-122",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 25,
+    "date": "2025-10-27",
+    "branchCode": "8032",
+    "branch": "โรบินสัน ฉะเชิงเทรา",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "รออาหารนาน สั่งเวลา 17.40  อาหารมา 18.30  คนมาทีหลังได้กินก่อน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937965950
+  },
+  {
+    "id": "cc-sfh-123",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 26,
+    "date": "2025-10-27",
+    "branchCode": "8018",
+    "branch": "เซ็นทรัล พระราม 9",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่งผ่านgrab จากสาขาาพระราม9 ได้ผิดเมนู",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937966950
+  },
+  {
+    "id": "cc-sfh-124",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 27,
+    "date": "2025-10-27",
+    "branchCode": "8019",
+    "branch": "โลตัส สงขลา",
+    "types": [
+      "บริการ"
+    ],
+    "description": "ลูกค้าทานไม่หมด  โปร 1 แถม 3 ลูกค้าต้องการห่อกลับบ้าน ผู้จัดการสาขาแจ้งว่าไม่สามารถห่อกลับได้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937967950
+  },
+  {
+    "id": "cc-sfh-125",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 28,
+    "date": "2025-10-28",
+    "branchCode": "8019",
+    "branch": "โลตัส สงขลา",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ร้องเรียน  อาหารไม่ได้คุณภาพ  มะเขือเทศเน่า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937968950
+  },
+  {
+    "id": "cc-sfh-105",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 29,
+    "date": "2025-10-31",
+    "branchCode": "5001",
+    "branch": "แฟชั่นไอส์แลนด์",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "พนักงานลืมสะสมแต้ม",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937969950
+  },
+  {
+    "id": "cc-sfh-106",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 30,
+    "date": "2025-10-31",
+    "branchCode": "5042",
+    "branch": "ฟิวเจอร์ รังสิต",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้า  สั่งไก่ สไปซี่ 3 อวกาศ 1  แต่ได้  อวกาศมา3 ชิ้น สไปซี่ 1 ชิ้น",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937970950
+  },
+  {
+    "id": "cc-sfh-183",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 31,
+    "date": "2025-11-03",
+    "branchCode": "5087",
+    "branch": "ศูนย์ประชุมสิริกิตย์",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน พนักงานไม่ได้ส่งออเดอร์ ให้ลูกค้า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937971950
+  },
+  {
+    "id": "cc-sfh-193",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 32,
+    "date": "2025-11-03",
+    "branchCode": "5038",
+    "branch": "เซ็นทรัล ระยอง",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนพนักงาน พูดจาไม่สุภาพ  โยนหลอดให้พนักงาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937972950
+  },
+  {
+    "id": "cc-sfh-184",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 33,
+    "date": "2025-11-04",
+    "branchCode": "5046",
+    "branch": "โลตัส บางกะปิ",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937973950
+  },
+  {
+    "id": "cc-sfh-186",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 34,
+    "date": "2025-11-04",
+    "branchCode": "8034",
+    "branch": "บิ๊กซีลพบุรี",
+    "types": [
+      "บริการ"
+    ],
+    "description": "พนักงาน  ยืนส่งกระจกแคะฟันอยู่หน้าโต๊ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937974950
+  },
+  {
+    "id": "cc-sfh-187",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 35,
+    "date": "2025-11-04",
+    "branchCode": "8025",
+    "branch": "โลตัส บางใหญ่",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "พนักงานขอบัตรประชาชนไปทำเอกสาร ลูกค้าเกรงว่าข้อมูลของลูกค้าจะไม่ปลอดภัยค่ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937975950
+  },
+  {
+    "id": "cc-sfh-195",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 36,
+    "date": "2025-11-07",
+    "branchCode": "8033",
+    "branch": "โลตัส หาดใหญ๋",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "คอมเพลน  มีเปลือกเศษเปลือกไข่อยู่บนไข่ดาว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937976950
+  },
+  {
+    "id": "cc-sfh-185",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 37,
+    "date": "2025-11-12",
+    "branchCode": "5017",
+    "branch": "ซีคอนบางแค",
+    "types": [
+      "คุณภาพ",
+      "อื่นๆ"
+    ],
+    "description": "ซุปข้าวโพดมีรสชาติเปรี้ยว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937977950
+  },
+  {
+    "id": "cc-sfh-196",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 38,
+    "date": "2025-11-12",
+    "branchCode": "8002",
+    "branch": "โลตัส ภูเก็ต",
+    "types": [
+      "บริการ"
+    ],
+    "description": "ลูกค้าร้องเรียน การให้บริการของพนักงานตอนรับจดออเดอร์",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937978950
+  },
+  {
+    "id": "cc-sfh-188",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 39,
+    "date": "2025-11-13",
+    "branchCode": "5038",
+    "branch": "เซ็นทรัล ระยอง",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "เรื่องกลิ่นในร้าน  เหม็นอับ คล้ายกับผ้าเช็ดโต๊ะ ซักไม่สะอาด\r\nหรือมาจากครัวก็ไม่แน่ใจ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937979950
+  },
+  {
+    "id": "cc-sfh-189",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 40,
+    "date": "2025-11-13",
+    "branchCode": "8014",
+    "branch": "เซ็นทรัล เชียงใหม่",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้าสั่งอาหาร  ได้ไม่ได้รับซอส",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937980950
+  },
+  {
+    "id": "cc-sfh-190",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 41,
+    "date": "2025-11-17",
+    "branchCode": "8009",
+    "branch": "เซียร์รังสิต",
+    "types": [
+      "บริการ"
+    ],
+    "description": "พนักงานบริการห่วยมาก\r\nไม่มี service mind\r\nไม่เต็มใจในการให้บริการ พูดจาไม่ดีกับลูกค้า หน้าตาไม่รับแขก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937981950
+  },
+  {
+    "id": "cc-sfh-194",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 42,
+    "date": "2025-11-21",
+    "branchCode": "8002",
+    "branch": "โลตัส ภูเก็ต",
+    "types": [
+      "บริการ"
+    ],
+    "description": "พนักงาน เรื่องบริการ เล่นกันมากเกินไป",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937982950
+  },
+  {
+    "id": "cc-sfh-191",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 43,
+    "date": "2025-11-22",
+    "branchCode": "5087",
+    "branch": "ศูนย์ประชุมแห่งชาติสิริกิติ์",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "เคสไก่ไม่สุกมีอาการปวดท้องแบบแสบ และ บิด ทนข้ามคืนมา และช่วงบ่ายอีกวัน ไม่ดีขึ้นจึงไป รพ และได้ยามา และวันนี้ก้ยังไม่ดีขึ้น โดยปวดขึ้นหลัง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937983950
+  },
+  {
+    "id": "cc-sfh-192",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 44,
+    "date": "2025-11-30",
+    "branchCode": "5038",
+    "branch": "เซ็นทรัล ระยอง",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลน ได้รับอาหารล่าช้า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937984950
+  },
+  {
+    "id": "cc-sfh-197",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 45,
+    "date": "2025-11-30",
+    "branchCode": "8027",
+    "branch": "โรบินสันสมุทรปราการ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการ ของพนักงาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937985950
+  },
+  {
+    "id": "cc-sfh-24",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 46,
+    "date": "2025-12-01",
+    "branchCode": "5023",
+    "branch": "บิ๊กซี พัทยาใต้",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่งอาหารจาก Santa Fe Big.C South Pattaya เป็นซุปเห็ด 99 บาท สเต๊กสันคอหมู สเต๊กปลาทอด ใส่ของไม่ครบ ขาดมันบด และเฟรยซ์ฟรายส์ แต่คิดเงิน 368บาท",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937986950
+  },
+  {
+    "id": "cc-sfh-41",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 47,
+    "date": "2025-12-01",
+    "branchCode": "5023",
+    "branch": "บิ๊กซี พัทยาใต้",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่งอาหารจาก Santa Fe Big.C South Pattaya เป็นซุปเห็ด 99 บาท สเต๊กสันคอหมู สเต๊กปลาทอด ใส่ของไม่ครบ ขาดมันบด และเฟรยซ์ฟรายส์ แต่คิดเงิน 368 บาท",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937987950
+  },
+  {
+    "id": "cc-sfh-25",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 48,
+    "date": "2025-12-03",
+    "branchCode": "5066",
+    "branch": "เกตเวย์ บางซื่อ",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้าใช้ส่วนลดวันเกิด 5% แต่ใบเสร็จชำระเงิน ลด 1 บาท",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937988950
+  },
+  {
+    "id": "cc-sfh-26",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 49,
+    "date": "2025-12-08",
+    "branchCode": "5041",
+    "branch": "เทอร์มินอลพระราม3",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลนคุณภาพสเต๊กเนื้อ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937989950
+  },
+  {
+    "id": "cc-sfh-27",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 50,
+    "date": "2025-12-08",
+    "branchCode": "5066",
+    "branch": "เกตเวย์ บางซื่อ",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "คอมเพลน หมูไม่สุก  มันบดที่ได้มาเค็มมาก  ซุปเห็ด เหลวเป็นน้ำ รสชาติแทบไม่มี",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937990950
+  },
+  {
+    "id": "cc-sfh-42",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 51,
+    "date": "2025-12-08",
+    "branchCode": "5084",
+    "branch": "เทอร์มินอลพระราม3",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลนคุณภาพสเต๊กเนื้อ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937991950
+  },
+  {
+    "id": "cc-sfh-28",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 52,
+    "date": "2025-12-11",
+    "branchCode": "5001",
+    "branch": "แฟชั่นไอซ์แลนด์",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้าแจ้งว่า  ได้รับเครื่องเคียงไม่ครบ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937992950
+  },
+  {
+    "id": "cc-sfh-32",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 53,
+    "date": "2025-12-11",
+    "branchCode": "8021",
+    "branch": "เซ็นทรัล เกาะสมุย",
+    "types": [
+      "บริการ"
+    ],
+    "description": "มีเส้นผมบนจาน และ ผักเน่า  มีรากผักด้วย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937993950
+  },
+  {
+    "id": "cc-sfh-29",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 54,
+    "date": "2025-12-12",
+    "branchCode": "5066",
+    "branch": "เกตเวย์ บางซื่อ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน พนักงานมีพฤติกรรมไม่เหมาะสม มีการมองมาทางโต๊ะที่นั่ง และจับกลุ่มคุยกัน ได้มองมาทั้งหมด ต่อมาพนักงานได้มีการพิมพ์โทรศัพท์ ทำให้รู้สึกไม่สบายใจระหว่างใช้บริการค่ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937994950
+  },
+  {
+    "id": "cc-sfh-30",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 55,
+    "date": "2025-12-12",
+    "branchCode": "5007",
+    "branch": "เซ็นทรัลพระราม 2",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สเต็กสันคอคูโรบูตะหมักพริกไทยดำ หมูมีรสเปรี้ยวและกลิ่นแปลกค่ะ  ตอนแรกนึกว่าลิ้นเพี้ยนเองแต่พอให้คนอื่นที่มาร่วมโต๊ะทานด้วยก็รู้สึกแบบเดียวกัน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937995950
+  },
+  {
+    "id": "cc-sfh-31",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 56,
+    "date": "2025-12-12",
+    "branchCode": "5018",
+    "branch": "เซ็นทรัลรามอินทรา",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลนการแก้ปัญหา ออเดอร์สลับกับอีกคน จะเอามาเปลี่ยนให้  2 ชม.กว่ายังไม่ได้ทาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937996950
+  },
+  {
+    "id": "cc-sfh-47",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 57,
+    "date": "2025-12-12",
+    "branchCode": "5018",
+    "branch": "เซ็นทรัลรามอินทรา",
+    "types": [
+      "บริการ",
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลนการแก้ปัญหา ออเดอร์สลับกับอีกคน จะเอามาเปลี่ยนให้  2 ชม.กว่ายังไม่ได้ทาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937997950
+  },
+  {
+    "id": "cc-sfh-33",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 58,
+    "date": "2025-12-15",
+    "branchCode": "5506",
+    "branch": "ปตท พระราม2",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนพนักงาน ไม่ยิ้มแย้ม  เหมือนไม่อยากขาย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937998950
+  },
+  {
+    "id": "cc-sfh-34",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 59,
+    "date": "2025-12-16",
+    "branchCode": "8025",
+    "branch": "โลตัส บางใหญ่",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่ง Delivery\r\n ไม่ได้รับชามะนาว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781937999950
+  },
+  {
+    "id": "cc-sfh-35",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 60,
+    "date": "2025-12-17",
+    "branchCode": "8013",
+    "branch": "มาร์เก็ต วิลเลจ หัวหิน",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ไก่มีกลิ่นบูด",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938000950
+  },
+  {
+    "id": "cc-sfh-36",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 61,
+    "date": "2025-12-17",
+    "branchCode": "8059",
+    "branch": "สหไทยทุ่งสง",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "ไก่ไม่สุก  พนักงานเปลี่ยนชิ้นใหม่ให้แล้ว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938001950
+  },
+  {
+    "id": "cc-sfh-37",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 62,
+    "date": "2025-12-18",
+    "branchCode": "8025",
+    "branch": "โลตัส บางใหญ่",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "Delivery เจอลูกแม็กในสเต๊ก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938002950
+  },
+  {
+    "id": "cc-sfh-48",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 63,
+    "date": "2025-12-18",
+    "branchCode": "5012",
+    "branch": "โลตัส บางพลี",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน การบริการพนักงาน บริการแย่มาก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938003950
+  },
+  {
+    "id": "cc-sfh-49",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 64,
+    "date": "2025-12-19",
+    "branchCode": "5052",
+    "branch": "โลตัส นวนคร",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่งเซตนี้มา ในGrab ในเซตมีสปาเกตตี้ผัดขี้เมาแฮม แต่ไม่มีแฮมใส่มาเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938004950
+  },
+  {
+    "id": "cc-sfh-38",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 65,
+    "date": "2025-12-23",
+    "branchCode": "8025",
+    "branch": "โลตัส บางใหญ่",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนพนักงาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938005950
+  },
+  {
+    "id": "cc-sfh-39",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 66,
+    "date": "2025-12-23",
+    "branchCode": "8066",
+    "branch": "เซ็นทรัลพิษณุโลก",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938006950
+  },
+  {
+    "id": "cc-sfh-50",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 67,
+    "date": "2025-12-23",
+    "branchCode": "5055",
+    "branch": "โลัตส สุขาภิบาล 3",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ไม่ได้รับช้อนซ้อม Delivery",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938007950
+  },
+  {
+    "id": "cc-sfh-51",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 68,
+    "date": "2025-12-24",
+    "branchCode": "8008",
+    "branch": "เซ็นทรัล อุดรธานี",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีเส้นผมในส้มตำ  ยังไม่ได้รับคำขอโทษ  วันพุธที่ 24/12/2025",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938008950
+  },
+  {
+    "id": "cc-sfh-52",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 69,
+    "date": "2025-12-25",
+    "branchCode": "5062",
+    "branch": "โรบินสัน ชลบุรี",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938009950
+  },
+  {
+    "id": "cc-sfh-53",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 70,
+    "date": "2025-12-25",
+    "branchCode": "5050",
+    "branch": "บิ๊กซี บางพลี",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "ได้รับอาหารช้า อาหารมาในเวลา 14.05 นะครับ เลยครึ่งชั่วโมงนิดเดียว ไม่ได้มีปัญหามากนัก แต่ถ้าภายใน 30 นาทีก็จะดีมาก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938010950
+  },
+  {
+    "id": "cc-sfh-40",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 71,
+    "date": "2025-12-29",
+    "branchCode": "8044",
+    "branch": "อยุธยา ซิตี้ ปาร์ค",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "ไก่ไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938011950
+  },
+  {
+    "id": "cc-sfh-54",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 72,
+    "date": "2025-12-29",
+    "branchCode": "8004",
+    "branch": "เอสพลานาด",
+    "types": [
+      "อื่นๆ",
+      "สเต๊กไม่สุก"
+    ],
+    "description": "คอมเพลนเรื่องเนื้อ สั่ง medium rare 2 ครั้ง เป็นเนื้อดิบแดงสดสั่ง medium 2 ครั้ง เป็นเนื้อแดง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938012950
+  },
+  {
+    "id": "cc-sfh-55",
+    "brandId": "santafe-happy",
+    "year": 2025,
+    "no": 73,
+    "date": "2025-12-29",
+    "branchCode": "8009",
+    "branch": "เซียร์รังสิต",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "ได้รับอาหารล่าช้า รอนาน 50 นาที",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938013950
+  },
+  {
+    "id": "cc-sfh-77",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 1,
+    "date": "2026-01-05",
+    "branchCode": "5001",
+    "branch": "แฟชั่นไอซ์แลนด์",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลน ไก่อวกาศเค็มมาก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938014950
+  },
+  {
+    "id": "cc-sfh-80",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 2,
+    "date": "2026-01-05",
+    "branchCode": "8030",
+    "branch": "บิ๊กซี นครสวรรค์",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ซอสแจ่วมีรสชาติแปลกๆ รู้สึกเหมือนไม่ใช่ค่ะทั้งรสชาติที่สัมผัสเเละมันหวานมีความทอดไว้นานเเล้ว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938015950
+  },
+  {
+    "id": "cc-sfh-78",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 3,
+    "date": "2026-01-06",
+    "branchCode": "5023",
+    "branch": "บิ๊กซี พัทยา",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีเส้นผมในอาหาร Delivry",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938016950
+  },
+  {
+    "id": "cc-sfh-81",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 4,
+    "date": "2026-01-06",
+    "branchCode": "8067",
+    "branch": "เซ็นทรัล ศรีราชา",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลนได้รับอาหารช้า พนักงานแจ้งไม่ได้รับออเดอร์",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938017950
+  },
+  {
+    "id": "cc-sfh-82",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 5,
+    "date": "2026-01-06",
+    "branchCode": "8036",
+    "branch": "ยูเนี่ยนมอลล์",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สปาเกตตี้แห้ง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938018950
+  },
+  {
+    "id": "cc-sfh-79",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 6,
+    "date": "2026-01-12",
+    "branchCode": "5082",
+    "branch": "มาร์เก็ตเพลส วงค์สว่าง",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลน คุณภาพเนื้อ  การทำมันไม่ได้เลยทั้งรสชาติเนื้อ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938019950
+  },
+  {
+    "id": "cc-sfh-83",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 7,
+    "date": "2026-01-12",
+    "branchCode": "8067",
+    "branch": "เซ็นทรัล ศรีราชา",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลนเนื้อหมูแข็ง พอร์คชอป (จานของสามี) ถูกเสิร์ฟล่าช้ากว่าปกติ และเมื่อได้รับอาหารพบว่าเนื้อหมูถูกย่างจน Overcook อย่างรุนแรง เนื้อแข็งมาก ไม่มีความชุ่มฉ่ำ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938020950
+  },
+  {
+    "id": "cc-sfh-84",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 8,
+    "date": "2026-01-13",
+    "branchCode": "5038",
+    "branch": "เซ็นทรัล พลาซา ระยอง",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สั่งอาหารจากGrab พบเส้นผมในเฟรนฟราย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938021950
+  },
+  {
+    "id": "cc-sfh-85",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 9,
+    "date": "2026-01-15",
+    "branchCode": "5014",
+    "branch": "บิ๊กซี เพลส พัทยากลาง",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สั่งสเต๊กหมูกลับบ้าน คอมเพลน คุณภาพหมู ไหม้ดำ  เคสวันที่ 14/01/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938022950
+  },
+  {
+    "id": "cc-sfh-86",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 10,
+    "date": "2026-01-16",
+    "branchCode": "5066",
+    "branch": "เกตเวย์ บางซื่อ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการ\r\n1.การบริการไม่ต้อนรับลูกค้าให้นั่งโต๊ะตั้งแต่เข้าร้าน\r\n2.ไม่ให้ข้อมูลสินค้า ว่าในเซ็ทสามารถเปลี่ยนหรือเพิ่มอะไรได้ จนต้องถามเอง\r\n3.กิริยามารยาทมีการชักสีหน้ากับลูกค้า ไม่เต็มใจบริการ\r\n4.มีการโยนเมนู\r\n5.ถามคำตอบคำ\r\n6.อาหารมีความเค็มกว่าปกติ (มีการเติมอะไรให้ลูกค้าหรือไม่)",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938023950
+  },
+  {
+    "id": "cc-sfh-87",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 11,
+    "date": "2026-01-19",
+    "branchCode": "8058",
+    "branch": "บิ๊กซี สุขสวัสดิ์",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลน ข้าวผัด อเมริกัน แฉะ  กินไม่ได้เลยมาเป็นก้อนข้าวไม่มาเป็นเม็ดเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938024950
+  },
+  {
+    "id": "cc-sfh-92",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 12,
+    "date": "2026-01-19",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัลขอนแก่น",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้าได้ของไม่ครบ  ขาด สลัดครีม   ให้ Feedback  สาขา ไม่ต้องติดต่อกลับ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938025950
+  },
+  {
+    "id": "cc-sfh-93",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 13,
+    "date": "2026-01-19",
+    "branchCode": "8015",
+    "branch": "เซ็นทรัลหาดใหญ่",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938026950
+  },
+  {
+    "id": "cc-sfh-94",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 14,
+    "date": "2026-01-23",
+    "branchCode": "5016",
+    "branch": "อิมพรีเรียลเวิลล์ สำโรง",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สปาเก็ตตี้  มีรสเค็มมาก เคสวันที่ 22/01/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938027950
+  },
+  {
+    "id": "cc-sfh-88",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 15,
+    "date": "2026-01-26",
+    "branchCode": "5024",
+    "branch": "เดอะมอลล์บางแค",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "ชุด แฮปปี้ หมู 229 ด้านในเนื้อไม่สุก ออกชมพู",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938028950
+  },
+  {
+    "id": "cc-sfh-89",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 16,
+    "date": "2026-01-31",
+    "branchCode": "5055",
+    "branch": "โลตัส สุขาภิบาล 3",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สปาเกตตี้มีเกลือเป็นก้อน เค็มมากทานไม่ได้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938029950
+  },
+  {
+    "id": "cc-sfh-90",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 17,
+    "date": "2026-01-31",
+    "branchCode": "5003",
+    "branch": "เดอะมอลล์ท่าพระ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน การให้บริการล่าช้า ระบบล่ม พนักงานลืมออเดอร์ลูกค้า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938030950
+  },
+  {
+    "id": "cc-sfh-91",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 18,
+    "date": "2026-01-31",
+    "branchCode": "5069",
+    "branch": "โลตัส พัฒนาการ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการของพนักงาน \r\nพนักงาน2คน มีการพูดจากิริยาที่แย่มาก คนที่1เป็นผู้จัดการใส่เสื้อสีขาว รูปร่างอวบ และคนที่2 เป็นพนักงานธรรมดารูปร่างอวบ ใส่เสื้อสีส้ม มีพฤติกรรมพูดเสียงดังและปสดงกริยามารยาทไม่เหมาะสมกับลูกค้าท่านอื่น รวมถึงพูดจากับพนักงานอีกคนที่เป็นคนผอมไม่ดี สงสารน้องผู้หญิงที่ผอมๆมาก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938031950
+  },
+  {
+    "id": "cc-sfh-56",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 19,
+    "date": "2026-02-01",
+    "branchCode": "5066",
+    "branch": "เกตเวย์ บางซื่อ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "ให้ลูกค้ารออาหาร 15 นาที \r\nข้าวร้อน แต่หมูย่างไม่ร้อนเลย เนื้อหมูแข็งมาก แล้วเสิร์ฟไม่พร้อมกับเฟรนฟราย เฟรนฟรายไม่ร้อนเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938032950
+  },
+  {
+    "id": "cc-sfh-65",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 20,
+    "date": "2026-02-01",
+    "branchCode": "5066",
+    "branch": "เกตเวย์ บางซื่อ",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ให้ลูกค้ารออาหาร 15 นาที \nข้าวร้อน แต่หมูย่างไม่ร้อนเลย เนื้อหมูแข็งมาก แล้วเสิร์ฟไม่พร้อมกับเฟรนฟราย เฟรนฟรายไม่ร้อนเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938033950
+  },
+  {
+    "id": "cc-sfh-64",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 21,
+    "date": "2026-02-02",
+    "branchCode": "5069",
+    "branch": "โลตัส พัฒนาการ",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ได้ของไม่ครบ ขาดซุปเห็ด",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938034950
+  },
+  {
+    "id": "cc-sfh-57",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 22,
+    "date": "2026-02-04",
+    "branchCode": "5042",
+    "branch": "ฟิวเจอร์รังสิต",
+    "types": [
+      "คุณภาพ",
+      "อื่นๆ"
+    ],
+    "description": "ปวดท้อง ท้องเสีย ติดเชื้อในลำไส้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938035950
+  },
+  {
+    "id": "cc-sfh-66",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 23,
+    "date": "2026-02-04",
+    "branchCode": "5042",
+    "branch": "ฟิวเจอร์รังสิต",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "ปวดท้อง ท้องเสีย ติดเชื้อในลำไส้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938036950
+  },
+  {
+    "id": "cc-sfh-59",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 24,
+    "date": "2026-02-06",
+    "branchCode": "8023",
+    "branch": "บิ๊กซี กัลปพฤกษ์",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่งอาหาร Delivery ไม่ได้รับซอส",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938037950
+  },
+  {
+    "id": "cc-sfh-60",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 25,
+    "date": "2026-02-07",
+    "branchCode": "8054",
+    "branch": "โลตัส บางกรวย-ไทรน้อย",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ได้สั่ง Party เซตคุ้มของแทร์ ไป 2 ชุด (ตามภาพที่แนบ)\r\nแต่ของที่มาส่ง ได้สปาเกตตี้ผัดขี้เมาแฮม 1 กล่อง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938038951
+  },
+  {
+    "id": "cc-sfh-58",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 26,
+    "date": "2026-02-08",
+    "branchCode": "5055",
+    "branch": "โลตัสสุขาภิบาล3",
+    "types": [
+      "บริการ"
+    ],
+    "description": "การบริการ , เสิร์ฟอาหารช้ากว่าโต๊ะอื่น",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938039951
+  },
+  {
+    "id": "cc-sfh-67",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 27,
+    "date": "2026-02-08",
+    "branchCode": "5055",
+    "branch": "โลตัสสุขาภิบาล3",
+    "types": [
+      "บริการ",
+      "ความเร็ว"
+    ],
+    "description": "การบริการ , เสิร์ฟอาหารช้ากว่าโต๊ะอื่น",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938040951
+  },
+  {
+    "id": "cc-sfh-61",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 28,
+    "date": "2026-02-10",
+    "branchCode": "8021",
+    "branch": "เซ็นทรัล สมุย",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "สั่งสเต๊กปลาทอด ผักโขม  มีสิ่งแปลกปลอมบนผักโขม",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938041951
+  },
+  {
+    "id": "cc-sfh-62",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 29,
+    "date": "2026-02-10",
+    "branchCode": "8002",
+    "branch": "โลตัส ภูเก็ต",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน การ[ริการของพนักงาน ใช้บริการวันที่ 09/02/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938042951
+  },
+  {
+    "id": "cc-sfh-69",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 30,
+    "date": "2026-02-10",
+    "branchCode": "5005",
+    "branch": "เดอะมอลล์บางกะปิ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน พนักงานพูดจาไม่เป็นมิตร ใช้บริการวันที่ 08/02/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938043951
+  },
+  {
+    "id": "cc-sfh-70",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 31,
+    "date": "2026-02-10",
+    "branchCode": "5028",
+    "branch": "โลตัส ปทุมธานี",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่งสเต๊กไม่ได้รับสลัด",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938044951
+  },
+  {
+    "id": "cc-sfh-63",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 32,
+    "date": "2026-02-11",
+    "branchCode": "8025",
+    "branch": "โลตัส บางใหญ่",
+    "types": [
+      "บริการ"
+    ],
+    "description": "ลูกค้าแจ้งการให้บริการ การสมัครสมาชิก พนักงานได้นำโทรศัพท์ไปใช้เวลาค่อนข้างนานต้องการให้ทางสาขาตรวจสอบ\r\n เนื่องจากลูกค้าไม่สบายใจ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938045951
+  },
+  {
+    "id": "cc-sfh-71",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 33,
+    "date": "2026-02-11",
+    "branchCode": "5010",
+    "branch": "แพชชั่น ระยอง",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลนคุณภาพเนื้อ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938046951
+  },
+  {
+    "id": "cc-sfh-72",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 34,
+    "date": "2026-02-17",
+    "branchCode": "5082",
+    "branch": "มาร์เกตเพลส วงศ์สว่าง",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนพนักงาน  ใช้บริการวันที่ 16/02/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938047951
+  },
+  {
+    "id": "cc-sfh-73",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 35,
+    "date": "2026-02-18",
+    "branchCode": "5019",
+    "branch": "เทอมินอล 21 อโศก",
+    "types": [
+      "บริการ"
+    ],
+    "description": "พนักงานไม่ถามสมาชิกเลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938048951
+  },
+  {
+    "id": "cc-sfh-74",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 36,
+    "date": "2026-02-25",
+    "branchCode": "5072",
+    "branch": "โลตัส สุขาภิบาล 1",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "อาหารเป็นพิษ 3 คน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938049951
+  },
+  {
+    "id": "cc-sfh-75",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 37,
+    "date": "2026-02-26",
+    "branchCode": "5002",
+    "branch": "ซีคอน ศรีนครินทร์",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีสิ่งแปลกปลอมอยู่ในผัก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938050951
+  },
+  {
+    "id": "cc-sfh-140",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 38,
+    "date": "2026-03-01",
+    "branchCode": "5017",
+    "branch": "ซีคอน บางแค",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการพนักงาน พนักงานก็ไม่ค่อยจะหันกัน พอมาเปิดให้ไม่แนะนำรายการอาหาร วางให้เฉยๆ \nพอรับออเดอร์เสร็จมาวางบิลไม่ทวนอะไรไม่แจ้งอะไร รอออเดอร์ก็เกิน40 นาที",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938051951
+  },
+  {
+    "id": "cc-sfh-149",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 39,
+    "date": "2026-03-02",
+    "branchCode": "",
+    "branch": "โลตัส บางใหญ่",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีแมลงในผักสลัด  พบแมคเย็บในส้มตำ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938052951
+  },
+  {
+    "id": "cc-sfh-141",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 40,
+    "date": "2026-03-03",
+    "branchCode": "5003",
+    "branch": "เดอะมอลล์ท่าพระ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการของพนักงาน เนื่องจาก ได้พอคช็อปที่แข็งและเหนียวมากคะ   พอแจ้งตอนเช็คบิลก็ไม่มีคำขอโทษ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938053951
+  },
+  {
+    "id": "cc-sfh-142",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 41,
+    "date": "2026-03-03",
+    "branchCode": "5080",
+    "branch": "โลตัส แกลง ระยอง",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลน การให้บริการล่าช้า  รอออเดอร์นาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938054951
+  },
+  {
+    "id": "cc-sfh-150",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 42,
+    "date": "2026-03-03",
+    "branchCode": "8036",
+    "branch": "ยูเนียนมอลล์",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "ซ้อมไม่สะอาด มีเศษอาหารติดซ้อม",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938055951
+  },
+  {
+    "id": "cc-sfh-151",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 43,
+    "date": "2026-03-03",
+    "branchCode": "8029",
+    "branch": "โลตัส ถลาง",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "สั่งสเต๊ก ไม่ได้รับซอสพริกไทยดำ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938056951
+  },
+  {
+    "id": "cc-sfh-143",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 44,
+    "date": "2026-03-05",
+    "branchCode": "5062",
+    "branch": "โรบินสัน ชลบุรี",
+    "types": [
+      "บริการ"
+    ],
+    "description": "พนักงานหน้าร้าน แจ้งว่าไม่มีโปร วันเกิด",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938057951
+  },
+  {
+    "id": "cc-sfh-144",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 45,
+    "date": "2026-03-10",
+    "branchCode": "5031",
+    "branch": "เซ็นทรัลศาลายา",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีแมลงวันอยู่บนผัก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938058951
+  },
+  {
+    "id": "cc-sfh-152",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 46,
+    "date": "2026-03-12",
+    "branchCode": "8034",
+    "branch": "บิ๊กซี ลพบุรี",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลน สปาเกตตี้าโบนารา  แฉะเป็นน้ำ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938059951
+  },
+  {
+    "id": "cc-sfh-153",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 47,
+    "date": "2026-03-12",
+    "branchCode": "5505",
+    "branch": "โลตัส เลียบคลองสอง",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีเศษไม้อยู่ในสเต็กไก่  (คือขนไก่แข็ง)",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938060951
+  },
+  {
+    "id": "cc-sfh-145",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 48,
+    "date": "2026-03-13",
+    "branchCode": "5042",
+    "branch": "ฟิวเจอร์ ปาร์ครังสิต",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ซุปข้าวโพดกับซุปผักโขม ซุปมีรสชาติที่เปรี้ยวโดดมาก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938061951
+  },
+  {
+    "id": "cc-sfh-154",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 49,
+    "date": "2026-03-13",
+    "branchCode": "8047",
+    "branch": "เมกาบางนา",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "เส้นสปาเกตตี้จับเป็นก้อน แข็ง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938062951
+  },
+  {
+    "id": "cc-sfh-146",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 50,
+    "date": "2026-03-15",
+    "branchCode": "",
+    "branch": "เซ็นทรัล โคราช",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการของพนักงาน  พูดจาไม่สุภาพเรื่องเปลี่ยนโต๊ะ เช่น อะไรเปลี่ยนโต๊ะอีกละ!",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938063951
+  },
+  {
+    "id": "cc-sfh-155",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 51,
+    "date": "2026-03-17",
+    "branchCode": "8061",
+    "branch": "โรบินสัน เพชรบุรี",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "เจอแมลงตาย ในแมชโปเตโต้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938064951
+  },
+  {
+    "id": "cc-sfh-147",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 52,
+    "date": "2026-03-18",
+    "branchCode": "5014",
+    "branch": "บิ๊กซี เอ๊กตร้า พัทยาลาง",
+    "types": [
+      "บริการ"
+    ],
+    "description": "พนักงานไม่สะสมแต้มให้ลูกค้า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938065951
+  },
+  {
+    "id": "cc-sfh-148",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 53,
+    "date": "2026-03-23",
+    "branchCode": "5082",
+    "branch": "มาร์เกตเพลสวงศ์สว่าง",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการพนักงานแคชเชียร์ คิดยอดเงินผิดลูกค้าไม่โอเค",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938066951
+  },
+  {
+    "id": "cc-sfh-156",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 54,
+    "date": "2026-03-24",
+    "branchCode": "8069",
+    "branch": "เซ็นทรัล นครปฐม",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการของพนักงาน วางบิลกระแทกใส่โต๊ะลูกค้า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938067951
+  },
+  {
+    "id": "cc-sfh-157",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 55,
+    "date": "2026-03-24",
+    "branchCode": "5012",
+    "branch": "โลตัส บางพลี",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "สเต๊กดำไหม้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938068951
+  },
+  {
+    "id": "cc-sfh-4",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 56,
+    "date": "2026-04-01",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัล ขอนแก่น",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลน คุณภาพเนื้อริบอาย ใช้บริการวันที่ 31/03/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938069951
+  },
+  {
+    "id": "cc-sfh-5",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 57,
+    "date": "2026-04-01",
+    "branchCode": "5015",
+    "branch": "สาขาแปซิฟิคปาร์คศรีราชา",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "คอมเพลน สั่งออร์เดอร์ไลน์แมนไปแต่ร้านทำให้ผิด",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938070951
+  },
+  {
+    "id": "cc-sfh-1",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 58,
+    "date": "2026-04-02",
+    "branchCode": "5068",
+    "branch": "คอสโมเมืองทอง",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน พนักงาน  ลูกค้าต้องการห่ออาหารกลับบ้าน แต่พนักงานนำไปทิ้ง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938071951
+  },
+  {
+    "id": "cc-sfh-6",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 59,
+    "date": "2026-04-02",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัล ขอนแก่น",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลน พนักงานไม่ส่งออร์เดอร์   ทำให้ลูกค้ารอนาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938072951
+  },
+  {
+    "id": "cc-sfh-7",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 60,
+    "date": "2026-04-03",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัล ขอนแก่น",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลน รออาหารนาน พนักงานแจ้งว่าบิลไม่เข้าครัว พออาหารมา ก็เสิร์ฟผิดโต๊ะอีก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938073951
+  },
+  {
+    "id": "cc-sfh-2",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 61,
+    "date": "2026-04-07",
+    "branchCode": "5017",
+    "branch": "ซีคอน บางแค",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูไม่สุก  ลูกค้าได้สั่งอาหารวันที่ 28/03/2026 คอมเพลนผ่าน Shopee แจ้งผ่านเพจอีกครั้งวันที่ 06/04/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938074951
+  },
+  {
+    "id": "cc-sfh-3",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 62,
+    "date": "2026-04-07",
+    "branchCode": "5046",
+    "branch": "โลตัสบางกะปิ",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีเส้นผมในสปาเกตตี้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938075951
+  },
+  {
+    "id": "cc-sfh-8",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 63,
+    "date": "2026-04-08",
+    "branchCode": "8036",
+    "branch": "ยูเนี่ยนมอลล์",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลน  สเต๊กไก่ น้ำเยอะ ทำให้เสียรสชาติ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938076951
+  },
+  {
+    "id": "cc-sfh-16",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 64,
+    "date": "2026-04-08",
+    "branchCode": "5011",
+    "branch": "เดอะมอลล์งามวงศ์วาน",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีเส้นผมในอาหาร",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938077951
+  },
+  {
+    "id": "cc-sfh-12",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 65,
+    "date": "2026-04-09",
+    "branchCode": "8013",
+    "branch": "มาร์เก็ตวิลเลจ หัวหิน",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "สเต๊กไก่ไม่สุก\r\nลูกค้าแจ้งว่า ไม่ต้องให้ผู้จัดการร้านโทรมานะคะ เพราะคุยไปแล้วตอนอยู่ในร้าน และผู้จัดการก็ทราบถึงปัญหาแล้ว ไม่ต้องการคุยต่อแล้วค่ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938078951
+  },
+  {
+    "id": "cc-sfh-13",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 66,
+    "date": "2026-04-09",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัลขอนแก่น",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "แฮชบราวมีกลิ่นแปลกๆคล้ายกลิ่นหืน และหมูมีความเหนียวและแข็งมากกว่าปกติค่ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938079951
+  },
+  {
+    "id": "cc-sfh-17",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 67,
+    "date": "2026-04-11",
+    "branchCode": "5069",
+    "branch": "โลตัสพัฒนาการ",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "ลูกค้ารออาหารนาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938080951
+  },
+  {
+    "id": "cc-sfh-18",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 68,
+    "date": "2026-04-11",
+    "branchCode": "5035",
+    "branch": "เซ็นทรัลพัทยาบีช",
+    "types": [
+      "คุณภาพ",
+      "บริการ"
+    ],
+    "description": "อาหารเสิร์ฟ เย็น , ไม่มีพนักงานให้เรียก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938081951
+  },
+  {
+    "id": "cc-sfh-14",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 69,
+    "date": "2026-04-13",
+    "branchCode": "5079",
+    "branch": "เซ็นทรัล โคราช",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "เจอหนอนในอาหารนะคะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938082951
+  },
+  {
+    "id": "cc-sfh-19",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 70,
+    "date": "2026-04-13",
+    "branchCode": "5015",
+    "branch": "โรบินสัน ศรีราชา",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ลูกค้าแจ้งเคสเข้ามาว่า ได้รับไข่ดาวไหม้ และข้าวแฉะค่ะ โดยทางพนักงานหน้าสาขาได้มอบส่วนลดให้กับลูกค้าเรียบร้อยค่ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938083951
+  },
+  {
+    "id": "cc-sfh-15",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 71,
+    "date": "2026-04-14",
+    "branchCode": "8023",
+    "branch": "บิ๊กซี กัลปพฤกษ์",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "ลูกค้าส่งวิดีโอมีเส้นผมในอาหารเข้ามาค่ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938084951
+  },
+  {
+    "id": "cc-sfh-20",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 72,
+    "date": "2026-04-14",
+    "branchCode": "5002",
+    "branch": "ซีคอนศรีนครินทร์",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "ลูกค้าแจ้งให้ทราบว่าพบเจอแมลงสาบที่โต๊ะอาหาร",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938085951
+  },
+  {
+    "id": "cc-sfh-10",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 73,
+    "date": "2026-04-16",
+    "branchCode": "8008",
+    "branch": "เซ็นทรัล อุดรธานี",
+    "types": [
+      "บริการ"
+    ],
+    "description": "ได้รับออเดอร์ล่าช้า  ตกหล่น  โต๊ะมาทีหลังได้ก่อน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938086951
+  },
+  {
+    "id": "cc-sfh-11",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 74,
+    "date": "2026-04-17",
+    "branchCode": "8062",
+    "branch": "ฮาเบอร์มอลล ชลบุรี",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938087951
+  },
+  {
+    "id": "cc-sfh-21",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 75,
+    "date": "2026-04-17",
+    "branchCode": "8016",
+    "branch": "เซ็นทรัล อุบล",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "ไก่ไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938088951
+  },
+  {
+    "id": "cc-sfh-22",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 76,
+    "date": "2026-04-19",
+    "branchCode": "8069",
+    "branch": "เซ็นทรัลนครปฐม",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนพนักงาน  ลูกค้ายังรับประทานอาหารไม่เสร็จ พนักงานเก็บจานแล้ว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938089951
+  },
+  {
+    "id": "cc-sfh-23",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 77,
+    "date": "2026-04-19",
+    "branchCode": "",
+    "branch": "เซนทรัลชลบุรี",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "หลอดดูดน้ำ มีกลิ่นเคมี ไม่แน่ใจว่าใช้พลาสติดเกรดไม่ดีหรือเปล่า ฝากตรวจสอบ เนื้อริบอายเหนียว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938090951
+  },
+  {
+    "id": "cc-sfh-167",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 78,
+    "date": "2026-05-05",
+    "branchCode": "8066",
+    "branch": "เซ็นทรัล พิษณุโลก",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการของพนักงาน พูดจาห้วน ไม่เต็มใจบริการ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938091951
+  },
+  {
+    "id": "cc-sfh-158",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 79,
+    "date": "2026-05-06",
+    "branchCode": "5049",
+    "branch": "โลตัส ชลบุรี",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้าแจ้งไม่ได้รับ ซอส",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938092951
+  },
+  {
+    "id": "cc-sfh-166",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 80,
+    "date": "2026-05-06",
+    "branchCode": "8036",
+    "branch": "ยูเนี่ยนมอลล์",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ได้ของผิด  สั่งสปาเก็ตตี้ขี้เมา ได้คาโบนาร่า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938093951
+  },
+  {
+    "id": "cc-sfh-169",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 81,
+    "date": "2026-05-07",
+    "branchCode": "8054",
+    "branch": "โลตัส บางกรวยไทรน้อย",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีลิปสติกติดบนแก้ว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938094951
+  },
+  {
+    "id": "cc-sfh-168",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 82,
+    "date": "2026-05-08",
+    "branchCode": "8017",
+    "branch": "โลตัสศรีนครินทร์",
+    "types": [
+      "บริการ",
+      "ความสะอาด"
+    ],
+    "description": "พบแมลงบนโต๊ะ  และ คอมเพลนการให้บริการพนักงานแสดงสีหน้าไม่ดีในขั้นตอนชำระเงิน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938095951
+  },
+  {
+    "id": "cc-sfh-159",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 83,
+    "date": "2026-05-09",
+    "branchCode": "5016",
+    "branch": "อิมพีเรียลสำโรง",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "อาหารเลอะ กระจายออกมาจากกล่อง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938096951
+  },
+  {
+    "id": "cc-sfh-170",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 84,
+    "date": "2026-05-09",
+    "branchCode": "8017",
+    "branch": "โลตัส ศรีนครินทร์",
+    "types": [
+      "คุณภาพ",
+      "ความสะอาด"
+    ],
+    "description": "สั่ง Medium rare  เหมือนจะได้  rare \r\nและ มีแมลงบนจาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938097951
+  },
+  {
+    "id": "cc-sfh-171",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 85,
+    "date": "2026-05-10",
+    "branchCode": "8063",
+    "branch": "เซ็นทรัล อยุธยา",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ทำผักโขมอบชีส ไม่ร้อนเลย ชีสยังไม่ละลายเลยอ่ะเย็นชืดมาก สั่งมา 2 ที่",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938098951
+  },
+  {
+    "id": "cc-sfh-172",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 86,
+    "date": "2026-05-10",
+    "branchCode": "8008",
+    "branch": "เซ็นทรัล อุดร",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนพนักงาน คีย์ออเดอร์มาไม่ครบ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938099951
+  },
+  {
+    "id": "cc-sfh-160",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 87,
+    "date": "2026-05-11",
+    "branchCode": "5044",
+    "branch": "เซ็นทรัล ระยอง",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูไม่สุก ใช้เวลาแก้ไขนาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938100951
+  },
+  {
+    "id": "cc-sfh-173",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 88,
+    "date": "2026-05-11",
+    "branchCode": "8032",
+    "branch": "โรบินสัน ฉะเชิงเทรา",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "ไปกินซานตาเฟ่  ได้รับอาหารล่าช้า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938101951
+  },
+  {
+    "id": "cc-sfh-161",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 89,
+    "date": "2026-05-12",
+    "branchCode": "5065",
+    "branch": "เกตเวย์ เอกมัย",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีแมลงสาบบนโต๊ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938102951
+  },
+  {
+    "id": "cc-sfh-162",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 90,
+    "date": "2026-05-12",
+    "branchCode": "5061",
+    "branch": "บิ๊กซี สัตหีบ",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "ได้อาหารไม่ครบ รอนาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938103951
+  },
+  {
+    "id": "cc-sfh-163",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 91,
+    "date": "2026-05-12",
+    "branchCode": "5026",
+    "branch": "ไอทีสแควร์ หลักสี่",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ซุปมีรสเปรี้ยว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938104951
+  },
+  {
+    "id": "cc-sfh-174",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 92,
+    "date": "2026-05-15",
+    "branchCode": "8010",
+    "branch": "เซ็นทรัล สุราษฎร์ธานี",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938105951
+  },
+  {
+    "id": "cc-sfh-175",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 93,
+    "date": "2026-05-15",
+    "branchCode": "8035",
+    "branch": "เซ็นทรัล  นครศรีธรรมราช",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ไม่ได้รับช้อนซ้อม หลายครั้ง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938106951
+  },
+  {
+    "id": "cc-sfh-165",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 94,
+    "date": "2026-05-16",
+    "branchCode": "5040",
+    "branch": "เซ็นทรัล เวสต์เกต",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ได้ของไม่ครบ พนักงานไม่มีการขอโทษ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938107951
+  },
+  {
+    "id": "cc-sfh-164",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 95,
+    "date": "2026-05-18",
+    "branchCode": "5003",
+    "branch": "เดอะมอลล์ท่าพระ",
+    "types": [
+      "บริการ"
+    ],
+    "description": "การให้บริการพนักงานพูดจาไม่สุภาพ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938108951
+  },
+  {
+    "id": "cc-sfh-176",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 96,
+    "date": "2026-05-19",
+    "branchCode": "5062",
+    "branch": "โรบินสันชลบุรี",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "ผักล้างไม่สะอาด มีเศษดิน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938109951
+  },
+  {
+    "id": "cc-sfh-177",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 97,
+    "date": "2026-05-19",
+    "branchCode": "5005",
+    "branch": "เดอะมอลล์ บางกะปิ",
+    "types": [
+      "บริการ",
+      "อื่นๆ"
+    ],
+    "description": "ลูกค้าทานอาหารครบ 600 บาท แต่ไม่ได้รับ สปาเกตตี้",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938110951
+  },
+  {
+    "id": "cc-sfh-179",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 98,
+    "date": "2026-05-22",
+    "branchCode": "8018",
+    "branch": "เซ็นทรัล พระราม9",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "พบแมลงสาบบนโต๊ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938111951
+  },
+  {
+    "id": "cc-sfh-178",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 99,
+    "date": "2026-05-25",
+    "branchCode": "5066",
+    "branch": "เกตเวย์ บางซื่อ",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "ลูกค้ารออาหารนาน ออเดอร์ไม่เข้าครัว   พนักงานขอโทษแล้วไม่ติดใจอะไร",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938112951
+  },
+  {
+    "id": "cc-sfh-180",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 100,
+    "date": "2026-05-25",
+    "branchCode": "8058",
+    "branch": "บิ๊กซี สุขสวัสดิ์",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการของพนักงาน ใช้บริการวันนที่ 24/05/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938113951
+  },
+  {
+    "id": "cc-sfh-181",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 101,
+    "date": "2026-05-25",
+    "branchCode": "8067",
+    "branch": "เซ็นทรัล ศรีราชา",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "ลูกค้ารออาหารนาน พนักงานแจ้งออเดอร์ไม่เข้าครัว",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938114951
+  },
+  {
+    "id": "cc-sfh-182",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 102,
+    "date": "2026-05-26",
+    "branchCode": "8029",
+    "branch": "โลตัส ถลาง",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "คอมเพลน นักเก็ตปลาด้านในไม่สุกและยังเย็นมีน้ำแข็งเกาะอยู่ทุกชิ้น",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938115951
+  },
+  {
+    "id": "cc-sfh-128",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 103,
+    "date": "2026-06-02",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัลขอนแก่น",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนการให้บริการของพนักงาน  ไม่มีการสอบถามสมาชิกกับทางลูกค้า",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938116951
+  },
+  {
+    "id": "cc-sfh-127",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 104,
+    "date": "2026-06-04",
+    "branchCode": "5012",
+    "branch": "โลตัส บางพลี",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลน พนักงาน  พนักงานหน้าไม่ยิ้ม มาอยู่หน้าร้าน พูดจา ก็ห้วน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938117951
+  },
+  {
+    "id": "cc-sfh-134",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 105,
+    "date": "2026-06-04",
+    "branchCode": "5064",
+    "branch": "เทอมินอล พัทยา",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมุไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938118951
+  },
+  {
+    "id": "cc-sfh-135",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 106,
+    "date": "2026-06-05",
+    "branchCode": "5005",
+    "branch": "เดอะมอลล์ บางกะปิ",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูยังเป็นสีชมพู รบกวนสาขาตรวจสอบ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938119951
+  },
+  {
+    "id": "cc-sfh-136",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 107,
+    "date": "2026-06-05",
+    "branchCode": "5082",
+    "branch": "มาเก็ตเพลส วงศ์สว่าง",
+    "types": [
+      "บริการ"
+    ],
+    "description": "คอมเพลนพนักงาน แสดงพฤติกรรมไม่เหมาะสม",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938120951
+  },
+  {
+    "id": "cc-sfh-129",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 108,
+    "date": "2026-06-08",
+    "branchCode": "8035",
+    "branch": "เซ็นทรัล นครศรีธรรมราช",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "ไม่ได้รับช้อนซ้อม",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938121951
+  },
+  {
+    "id": "cc-sfh-130",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 109,
+    "date": "2026-06-09",
+    "branchCode": "8035",
+    "branch": "เซ็นทรัล นครศรีธรรมราช",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีแมลงวันบนโต๊ะ",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938122951
+  },
+  {
+    "id": "cc-sfh-131",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 110,
+    "date": "2026-06-10",
+    "branchCode": "8008",
+    "branch": "เซ็นทรัล อุดร",
+    "types": [
+      "อื่นๆ"
+    ],
+    "description": "รสชาติเมนูเปลี่ยนไปค่ะ เค็มขึ้นมากแบบทานไม่ได้เลย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938123951
+  },
+  {
+    "id": "cc-sfh-137",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 111,
+    "date": "2026-06-10",
+    "branchCode": "5031",
+    "branch": "เซ็นทรัลศาลายา",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "คอมเพลนผ่านเม้น  เนื้อหมูมันแทรกเยอะ เหนียวเคี้ยวไม่ผ่าน เค็ม",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938124951
+  },
+  {
+    "id": "cc-sfh-138",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 112,
+    "date": "2026-06-11",
+    "branchCode": "5003",
+    "branch": "เดอะมอลล์ ท่าพระ",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "เจอเศษอะไรไม่รู้ในน้ำแข็ง",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938125951
+  },
+  {
+    "id": "cc-sfh-139",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 113,
+    "date": "2026-06-11",
+    "branchCode": "5038",
+    "branch": "เซ็นทรัล ระยอง",
+    "types": [
+      "บริการ"
+    ],
+    "description": "ลูกค้าแจ้ง พนักงานลืมสะสมคะแนนให้ ใช้บริการวันที่ 07/06/2026",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938126951
+  },
+  {
+    "id": "cc-sfh-132",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 114,
+    "date": "2026-06-13",
+    "branchCode": "8004",
+    "branch": "เอสพลานาด รัชดา",
+    "types": [
+      "สเต๊กไม่สุก"
+    ],
+    "description": "หมูไม่สุก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938127951
+  },
+  {
+    "id": "cc-sfh-9",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 115,
+    "date": "2026-06-15",
+    "branchCode": "8043",
+    "branch": "โลตัส รังษิณา",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลน  ลูกค้าสั่งอาหาร 2 รายการ ได้รับแค่ 1 รายการ  พนักงานแจ้งไม่มีออเดอร์ ทำให้ลูกค้าต้องรอนาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938128951
+  },
+  {
+    "id": "cc-sfh-68",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 116,
+    "date": "",
+    "branchCode": "5088",
+    "branch": "สยาม",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "ลูกค้ารับประทานอาหาร วันต่อมาท้องเสีย",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938129951
+  },
+  {
+    "id": "cc-sfh-76",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 117,
+    "date": "",
+    "branchCode": "8032",
+    "branch": "โรบินสัน ฉะเชิงเชา",
+    "types": [
+      "ความเร็ว"
+    ],
+    "description": "คอมเพลน พนักงานไม่ได้คีย์ออเดอร์  ทำให้ลูกค้ารออาหารนาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938130951
+  },
+  {
+    "id": "cc-sfh-95",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 118,
+    "date": "",
+    "branchCode": "8006",
+    "branch": "เซ็นทรัล ขอนแก่น",
+    "types": [
+      "คุณภาพ"
+    ],
+    "description": "ไก่เย็นมาก เฟรนฟายเย็นมาก แถมยังไม่มีรับซอสอีก",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938131951
+  },
+  {
+    "id": "cc-sfh-126",
+    "brandId": "santafe-happy",
+    "year": 2026,
+    "no": 119,
+    "date": "",
+    "branchCode": "8051",
+    "branch": "เซ็นทรัล มหาชัย",
+    "types": [
+      "ความสะอาด"
+    ],
+    "description": "มีแมลงอยู่บนจาน",
+    "status": "resolved",
+    "cause": "",
+    "capa": "",
+    "reporterName": "",
+    "reporterDate": "",
+    "photos": [],
+    "createdAt": 1781938132951
+  }
+]

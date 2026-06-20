@@ -22,6 +22,11 @@ window.IMPORT_SUPPLIER_SOURCES = [
   'imported_supplier_complaints_jaedang_2026.json'
 ];
 
+// Customer Complaint records (qa-app::customer::records)
+window.IMPORT_CUSTOMER_SOURCES = [
+  'imported_customer_complaints_santafe_happy_2026.json'
+];
+
 // Brand → checklist data resolver (for summary recompute on import)
 window.IMPORT_BRAND_DATA = {
   jaedang:        () => window.JAEDANG_QSC,
@@ -149,6 +154,32 @@ window.IMPORT_BRAND_DATA = {
     }
   }
 
+  // ---- Customer Complaint records loader ----
+  const CUSTOMER_KEY = 'qa-app::customer::records';
+  async function loadOneCustomerSource(src) {
+    try {
+      const resp = await fetch(src, { cache: 'no-store' });
+      if (!resp.ok) return { src, inserted: 0, error: 'http ' + resp.status };
+      const records = await resp.json();
+      if (!Array.isArray(records)) return { src, inserted: 0, error: 'not-array' };
+      let existing;
+      try { existing = JSON.parse(localStorage.getItem(CUSTOMER_KEY) || '[]'); }
+      catch(e) { existing = []; }
+      const existingIds = new Set(existing.map(r => r.id));
+      const fresh = records.filter(r => !existingIds.has(r.id));
+      if (fresh.length > 0) {
+        const merged = [...fresh, ...existing];
+        localStorage.setItem(CUSTOMER_KEY, JSON.stringify(merged));
+        if (typeof render === 'function' && state && state.page === 'customer-complaint') {
+          try { render(); } catch(e){}
+        }
+      }
+      return { src, inserted: fresh.length, existing: existing.length };
+    } catch(e) {
+      return { src, inserted: 0, error: String(e.message || e) };
+    }
+  }
+
   // Re-compute summary for ALL audits in storage so cached scores reflect the latest engine.
   // Scoring rules change over time (e.g. customFailPt, weightPerPt, directLoss); stale cached
   // a.summary makes List/Dashboard show different numbers than Report. This re-runs computeSummary
@@ -199,11 +230,16 @@ window.IMPORT_BRAND_DATA = {
     for (const src of (window.IMPORT_SUPPLIER_SOURCES || [])) {
       supplierResults.push(await loadOneSupplierSource(src));
     }
+    const customerResults = [];
+    for (const src of (window.IMPORT_CUSTOMER_SOURCES || [])) {
+      customerResults.push(await loadOneCustomerSource(src));
+    }
     // Refresh all cached summaries against current scoring engine
     const recompute = recomputeAllSummaries();
     if (window.console) console.log('[QA] Auto-import (audits):', results);
     if (window.console && cleaningResults.length) console.log('[QA] Auto-import (cleaning):', cleaningResults);
     if (window.console && supplierResults.length) console.log('[QA] Auto-import (supplier):', supplierResults);
+    if (window.console && customerResults.length) console.log('[QA] Auto-import (customer):', customerResults);
     if (window.console) console.log('[QA] Recompute summaries:', recompute);
     window._lastImport = results;
     window._lastCleaningImport = cleaningResults;
