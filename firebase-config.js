@@ -26,3 +26,6 @@ window.FIREBASE_CONFIG = {
 
 // จำกัด email domain ที่สมัคร/ใช้งานได้ (ต้องตรงกับที่ตั้งใน firestore.rules)
 window.FIREBASE_ALLOWED_DOMAIN = "fabfood.co.th";
+
+// Admin ผู้มีสิทธิ์อนุมัติผู้ใช้ใหม่ + จัดการโรล (ต้องตรงกับใน firestore.rules)
+window.FIREBASE_ADMIN_EMAILS = ["pakarang.sa@fabfood.co.th"];

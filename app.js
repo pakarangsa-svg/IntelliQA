@@ -82,6 +82,7 @@ let state = {
   dashBranchModal: false,         // Audit Dashboard: open expanded "คะแนนเฉลี่ยรายสาขา" chart popup
   session: null,           // { email, department, brand, signedAt }
   loginSignupMode: false,  // login modal: false = sign-in, true = sign-up (Firebase mode only)
+  adminUsers: null,        // admin approval page: cached users list (null = not loaded)
   chartInstances: {}
 };
 
@@ -116,6 +117,10 @@ function currentRole() {
 }
 function isModuleAllowed(moduleId) {
   return currentRole().modules.includes(moduleId);
+}
+function isAdminUser() {
+  if (!window.CloudSync?.enabled) return false;
+  return window.CloudSync.isAdminEmail(window.CloudSync.user?.email || state.session?.email);
 }
 function allowedBrandIds() {
   const role = currentRole();
@@ -233,6 +238,18 @@ function attachLightboxHandlers() {
 }
 
 function wireLoginHandlers() {
+  // Pending-approval screen buttons
+  const pendingRefresh = root.querySelector('[data-pending-refresh]');
+  if (pendingRefresh) pendingRefresh.onclick = async () => {
+    pendingRefresh.disabled = true;
+    const info = await window.CloudSync.refreshStatus();
+    if (info) { toast('ยังไม่ได้รับการอนุมัติ — ลองใหม่ภายหลัง', 'info'); pendingRefresh.disabled = false; }
+    else toast('ได้รับการอนุมัติแล้ว! ยินดีต้อนรับ', 'success');
+    render();
+  };
+  const pendingLogout = root.querySelector('[data-pending-logout]');
+  if (pendingLogout) pendingLogout.onclick = () => { window.CloudSync.logout(); };
+
   const submit = root.querySelector('[data-login-submit]');
   if (!submit) return;
   const toggleSignup = root.querySelector('[data-login-toggle-signup]');
@@ -244,22 +261,27 @@ function wireLoginHandlers() {
     const email = root.querySelector('[data-login-email]')?.value.trim();
     const dept  = root.querySelector('[data-login-dept]')?.value;
     const brand = root.querySelector('[data-login-brand]')?.value;
+    const cloud = !!window.CloudSync?.enabled;
+    const needRole = !cloud || state.loginSignupMode; // sign-in บน cloud ใช้โรลจากโปรไฟล์
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('กรุณากรอก E-mail ที่ถูกต้อง', 'error'); return; }
-    if (!dept) { toast('กรุณาเลือกหน่วยงาน', 'error'); return; }
-    if (!brand) { toast('กรุณาเลือกแบรนด์', 'error'); return; }
+    if (needRole && !dept) { toast('กรุณาเลือกหน่วยงาน', 'error'); return; }
+    if (needRole && !brand) { toast('กรุณาเลือกแบรนด์', 'error'); return; }
 
-    if (window.CloudSync?.enabled) {
+    if (cloud) {
       const password = root.querySelector('[data-login-password]')?.value || '';
       if (password.length < 6) { toast('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร', 'error'); return; }
       submit.disabled = true;
       try {
-        if (state.loginSignupMode) await window.CloudSync.signup(email, password);
-        else await window.CloudSync.login(email, password);
-        state.session = { email, department: dept, brand, signedAt: Date.now() };
-        saveSession(state.session);
-        window.CloudSync.saveProfile({ department: dept, brand });
-        state.loginSignupMode = false;
-        toast(`ยินดีต้อนรับ ${email} (${dept})`, 'success');
+        if (state.loginSignupMode) {
+          await window.CloudSync.signup(email, password, { department: dept, brand });
+          state.loginSignupMode = false;
+          if (window.CloudSync.pendingInfo) toast('สมัครสำเร็จ — รอผู้ดูแลระบบอนุมัติ', 'info');
+          else toast(`ยินดีต้อนรับ ${email}`, 'success');
+        } else {
+          await window.CloudSync.login(email, password);
+          // session/role ถูกตั้งโดย cloud-sync จากโปรไฟล์ (รวมเช็คสถานะอนุมัติ)
+          if (!window.CloudSync.pendingInfo) toast(`ยินดีต้อนรับ ${email}`, 'success');
+        }
         render();
       } catch (e) {
         const code = e?.code || '';
@@ -438,10 +460,42 @@ function renderSidebar() {
   `;
 }
 
+function renderPendingScreen() {
+  const info = window.CloudSync.pendingInfo;
+  const rejected = info.status === 'rejected';
+  return `
+    <div class="login-backdrop"></div>
+    <div class="login-card">
+      <div class="login-brand">
+        <img class="fab-logo-img" src="logos/fab-logo.png" alt="FAB"/>
+        <div class="fab-tagline">FAB FOOD HOLDING</div>
+      </div>
+      <div style="text-align:center; margin: 6px 0 10px;">
+        <div style="font-size:52px;">${rejected ? '🚫' : '⏳'}</div>
+        <h2 style="margin:10px 0 0; font-size:20px; color:#1e293b; font-weight:700;">
+          ${rejected ? 'บัญชีของคุณไม่ได้รับอนุมัติ' : 'รอการอนุมัติจากผู้ดูแลระบบ'}
+        </h2>
+        <div class="muted" style="margin-top:10px; line-height:1.6;">
+          บัญชี <b>${escapeHtml(info.email)}</b><br/>
+          ${rejected
+            ? 'กรุณาติดต่อผู้ดูแลระบบหากคิดว่าเป็นความผิดพลาด'
+            : 'สมัครสำเร็จแล้ว — ระบบจะเปิดให้ใช้งานทันทีที่ผู้ดูแลอนุมัติ'}
+        </div>
+      </div>
+      <div class="sc-form" style="gap:10px; margin-top:14px;">
+        ${rejected ? '' : '<button class="btn btn-primary" data-pending-refresh style="width:100%; padding:12px;">🔄 เช็คสถานะอีกครั้ง</button>'}
+        <button class="btn btn-outline" data-pending-logout style="width:100%; padding:12px;">🚪 ออกจากระบบ</button>
+      </div>
+    </div>
+  `;
+}
+
 function renderLoginModal() {
   if (state.session) return '';
+  if (window.CloudSync?.enabled && window.CloudSync.pendingInfo) return renderPendingScreen();
   const cloud = !!window.CloudSync?.enabled;
   const signupMode = cloud && state.loginSignupMode;
+  const showRolePickers = !cloud || signupMode; // sign-in ใช้โรลจากโปรไฟล์บน cloud
   // Local-data summary — helps identify which browser/origin holds the full
   // dataset when bootstrapping the cloud (login there first = it gets imported)
   let dataLine = '';
@@ -475,22 +529,29 @@ function renderLoginModal() {
             <input type="password" data-login-password placeholder="${signupMode ? 'ตั้งรหัสผ่าน (อย่างน้อย 6 ตัว)' : 'รหัสผ่าน'}" autocomplete="${signupMode ? 'new-password' : 'current-password'}"/>
           </label>
         ` : ''}
-        <label class="sc-field">
-          <span>🏢 หน่วยงานสังกัด <em style="color:#dc2626;">*</em></span>
-          <select data-login-dept>
-            <option value="">— เลือกหน่วยงาน —</option>
-            ${DEPARTMENTS.map(d => `<option value="${escapeAttr(d)}">${escapeHtml(d)}</option>`).join('')}
-          </select>
-        </label>
-        <label class="sc-field">
-          <span>🍽️ แบรนด์ <em style="color:#dc2626;">*</em></span>
-          <select data-login-brand>
-            <option value="">— เลือกแบรนด์ —</option>
-            ${window.BRANDS.map(b => `<option value="${escapeAttr(b.id)}">${escapeHtml(b.icon + ' ' + b.name)}</option>`).join('')}
-            <option value="back-office">🏢 Back Office</option>
-          </select>
-        </label>
-        <button class="btn btn-primary" data-login-submit style="width:100%; padding:12px;">${signupMode ? 'สมัครและเข้าใช้งาน →' : 'เข้าใช้งาน →'}</button>
+        ${showRolePickers ? `
+          <label class="sc-field">
+            <span>🏢 หน่วยงานสังกัด (โรล) <em style="color:#dc2626;">*</em></span>
+            <select data-login-dept>
+              <option value="">— เลือกหน่วยงาน —</option>
+              ${DEPARTMENTS.map(d => `<option value="${escapeAttr(d)}">${escapeHtml(d)}</option>`).join('')}
+            </select>
+          </label>
+          <label class="sc-field">
+            <span>🍽️ แบรนด์ <em style="color:#dc2626;">*</em></span>
+            <select data-login-brand>
+              <option value="">— เลือกแบรนด์ —</option>
+              ${window.BRANDS.map(b => `<option value="${escapeAttr(b.id)}">${escapeHtml(b.icon + ' ' + b.name)}</option>`).join('')}
+              <option value="back-office">🏢 Back Office</option>
+            </select>
+          </label>
+        ` : ''}
+        ${signupMode ? `
+          <div class="muted small" style="background:#fef3c7; border:1px solid #fbbf24; border-radius:8px; padding:10px; line-height:1.5;">
+            ℹ️ สิทธิ์เข้าถึงโมดูล/แบรนด์จะเป็นไปตามโรลที่เลือก และบัญชีใหม่ต้องได้รับ<b>การอนุมัติจากผู้ดูแลระบบ</b>ก่อนจึงเข้าใช้งานได้
+          </div>
+        ` : ''}
+        <button class="btn btn-primary" data-login-submit style="width:100%; padding:12px;">${signupMode ? 'สมัคร (รอ admin อนุมัติ) →' : 'เข้าใช้งาน →'}</button>
         ${cloud ? `
           <div style="text-align:center;">
             <button class="btn btn-ghost btn-sm" data-login-toggle-signup>
@@ -616,6 +677,7 @@ function renderPage() {
     case 'cleaning':  return renderCleaningProgram();
     case 'supplier-complaint': return renderSupplierComplaint();
     case 'customer-complaint': return renderCustomerComplaint();
+    case 'admin': return isAdminUser() ? renderAdminApprove() : renderHome();
     default:          return renderHome();
   }
 }
@@ -648,8 +710,13 @@ function renderHomeLanding(allAudits) {
     { id: 'cleaning-program',   kind: 'module', icon: '🧽', title: 'Cleaning Program',  color: '#0891b2', enabled: true },
     { id: 'google-review',      kind: 'module', icon: '⭐', title: 'Google Review',     color: '#f59e0b', enabled: false }
   ];
+  // Admin-only: user approval dashboard card
+  if (isAdminUser()) {
+    cards.push({ id: 'admin-approve', kind: 'module', icon: '🛡️', title: 'User Approval', color: '#0f172a', enabled: true, adminOnly: true });
+  }
   // Role-based: lock modules not allowed for this dept (show with 🔒 chip)
   cards.forEach(c => {
+    if (c.adminOnly) return; // admin card bypasses dept allowlist
     if (c.enabled && !isModuleAllowed(c.id)) {
       c.enabled = false;
       c.locked = true;
@@ -10722,6 +10789,149 @@ function wireCustomerHandlers() {
 }
 
 // ============================================================
+//  ADMIN — user approval + role management (admin email only)
+// ============================================================
+const USER_STATUS_TAGS = {
+  pending:  { label: '⏳ รออนุมัติ', color: '#f59e0b' },
+  approved: { label: '✓ ใช้งานได้', color: '#059669' },
+  rejected: { label: '🚫 ปฏิเสธ',   color: '#dc2626' }
+};
+
+function renderAdminApprove() {
+  const users = state.adminUsers;
+  const meEmail = (window.CloudSync.user?.email || '').toLowerCase();
+  const brandName = id => id === 'back-office' ? '🏢 Back Office' : (window.BRANDS.find(b => b.id === id)?.name || id || '-');
+
+  const userRow = (u) => {
+    const st = USER_STATUS_TAGS[u.status] || USER_STATUS_TAGS.pending;
+    const isMe = (u.email || '').toLowerCase() === meEmail;
+    return `
+      <tr>
+        <td>
+          <b>${escapeHtml(u.email || '-')}</b>${isMe ? ' <span class="tag" style="background:#e0e7ff; color:#4338ca;">คุณ</span>' : ''}
+          <div class="muted small">${u.requestedAt ? 'สมัคร: ' + window.fmtDateTime(u.requestedAt) : ''}</div>
+        </td>
+        <td>
+          <select data-admin-dept="${u.uid}" style="width:100%;" ${isMe ? 'disabled' : ''}>
+            ${DEPARTMENTS.map(d => `<option value="${escapeAttr(d)}" ${d === u.department ? 'selected' : ''}>${escapeHtml(d)}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <select data-admin-brand="${u.uid}" style="width:100%;" ${isMe ? 'disabled' : ''}>
+            ${window.BRANDS.map(b => `<option value="${escapeAttr(b.id)}" ${b.id === u.brand ? 'selected' : ''}>${escapeHtml(b.name)}</option>`).join('')}
+            <option value="back-office" ${u.brand === 'back-office' ? 'selected' : ''}>🏢 Back Office</option>
+          </select>
+        </td>
+        <td><span class="tag" style="background:${st.color}20; color:${st.color}; border:1px solid ${st.color}40;">${st.label}</span></td>
+        <td style="white-space:nowrap;">
+          ${isMe ? '<span class="muted small">—</span>' : `
+            ${u.status !== 'approved' ? `<button class="btn btn-sm btn-primary" data-admin-approve="${u.uid}">✓ อนุมัติ</button>` : ''}
+            ${u.status !== 'rejected' ? `<button class="btn btn-sm btn-danger" data-admin-reject="${u.uid}">✕ ${u.status === 'approved' ? 'ระงับ' : 'ปฏิเสธ'}</button>` : ''}
+            <button class="btn btn-sm btn-outline" data-admin-save="${u.uid}">💾 บันทึกโรล</button>
+          `}
+        </td>
+      </tr>
+    `;
+  };
+
+  const pending = (users || []).filter(u => (u.status || 'pending') === 'pending');
+  const others  = (users || []).filter(u => (u.status || 'pending') !== 'pending');
+
+  return `
+    <div class="page-header">
+      <div>
+        <h1>🛡️ User Approval — จัดการผู้ใช้และสิทธิ์</h1>
+        <div class="subtitle">อนุมัติบัญชีใหม่ · กำหนดโรล (หน่วยงาน/แบรนด์) · ระงับการใช้งาน</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-outline" data-admin-back>← กลับหน้าแรก</button>
+        <button class="btn btn-ghost" data-admin-reload>🔄 โหลดใหม่</button>
+      </div>
+    </div>
+
+    ${users === null ? `
+      <div class="empty-state"><div style="font-size:40px;">⏳</div><h3>กำลังโหลดรายชื่อผู้ใช้...</h3></div>
+    ` : `
+      <div class="card">
+        <h3>⏳ รออนุมัติ (${pending.length})</h3>
+        ${pending.length === 0 ? '<div class="muted">— ไม่มีบัญชีที่รออนุมัติ —</div>' : `
+          <table class="data-table">
+            <thead><tr><th>ผู้ใช้</th><th style="width:170px;">หน่วยงาน (โรล)</th><th style="width:180px;">แบรนด์</th><th style="width:120px;">สถานะ</th><th style="width:250px;">จัดการ</th></tr></thead>
+            <tbody>${pending.map(userRow).join('')}</tbody>
+          </table>
+        `}
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <h3>👥 ผู้ใช้ทั้งหมด (${others.length})</h3>
+        ${others.length === 0 ? '<div class="muted">— ยังไม่มีผู้ใช้ —</div>' : `
+          <table class="data-table">
+            <thead><tr><th>ผู้ใช้</th><th style="width:170px;">หน่วยงาน (โรล)</th><th style="width:180px;">แบรนด์</th><th style="width:120px;">สถานะ</th><th style="width:250px;">จัดการ</th></tr></thead>
+            <tbody>${others.map(userRow).join('')}</tbody>
+          </table>
+        `}
+        <div class="muted small" style="margin-top:12px;">
+          💡 สิทธิ์เข้าถึงโมดูลเป็นไปตามหน่วยงาน (โรล) — เปลี่ยนโรลแล้วกด "บันทึกโรล" ผู้ใช้จะได้สิทธิ์ใหม่ในการ login ครั้งถัดไป ·
+          "ระงับ" ทำให้บัญชีเข้าใช้งานไม่ได้จนกว่าจะอนุมัติใหม่
+        </div>
+      </div>
+    `}
+  `;
+}
+
+function wireAdminHandlers() {
+  if (!isAdminUser()) return;
+  // First visit: load users then re-render
+  if (state.adminUsers === null && !state._adminLoading) {
+    state._adminLoading = true;
+    window.CloudSync.adminListUsers()
+      .then(list => {
+        list.sort((a, b) => (a.status === 'pending' ? 0 : 1) - (b.status === 'pending' ? 0 : 1) || (b.requestedAt || 0) - (a.requestedAt || 0));
+        state.adminUsers = list;
+      })
+      .catch(e => { toast('โหลดรายชื่อผู้ใช้ไม่สำเร็จ: ' + (e.code || e.message), 'error'); state.adminUsers = []; })
+      .finally(() => { state._adminLoading = false; render(); });
+  }
+  root.querySelectorAll('[data-admin-back]').forEach(el => {
+    el.onclick = () => { state.homeView = 'landing'; navigate('home'); };
+  });
+  root.querySelectorAll('[data-admin-reload]').forEach(el => {
+    el.onclick = () => { state.adminUsers = null; render(); };
+  });
+  const setStatus = async (uid, status, msg) => {
+    try {
+      await window.CloudSync.adminSetStatus(uid, status);
+      const u = (state.adminUsers || []).find(x => x.uid === uid);
+      if (u) u.status = status;
+      toast(msg, 'success');
+      render();
+    } catch (e) { toast('ไม่สำเร็จ: ' + (e.code || e.message), 'error'); }
+  };
+  root.querySelectorAll('[data-admin-approve]').forEach(el => {
+    el.onclick = () => setStatus(el.dataset.adminApprove, 'approved', 'อนุมัติแล้ว ✓');
+  });
+  root.querySelectorAll('[data-admin-reject]').forEach(el => {
+    el.onclick = () => {
+      if (!confirm('ระงับ/ปฏิเสธบัญชีนี้? ผู้ใช้จะเข้าระบบไม่ได้จนกว่าจะอนุมัติใหม่')) return;
+      setStatus(el.dataset.adminReject, 'rejected', 'ระงับบัญชีแล้ว');
+    };
+  });
+  root.querySelectorAll('[data-admin-save]').forEach(el => {
+    el.onclick = async () => {
+      const uid = el.dataset.adminSave;
+      const dept = root.querySelector(`[data-admin-dept="${uid}"]`)?.value;
+      const brand = root.querySelector(`[data-admin-brand="${uid}"]`)?.value;
+      try {
+        await window.CloudSync.adminUpdateUser(uid, { department: dept, brand });
+        const u = (state.adminUsers || []).find(x => x.uid === uid);
+        if (u) { u.department = dept; u.brand = brand; }
+        toast('บันทึกโรลแล้ว — มีผลตอน login ครั้งถัดไป', 'success');
+      } catch (e) { toast('ไม่สำเร็จ: ' + (e.code || e.message), 'error'); }
+    };
+  });
+}
+
+// ============================================================
 //  REVIEWS PAGE — mock Google Reviews aggregation
 // ============================================================
 function renderReviews() {
@@ -11205,6 +11415,11 @@ function attachPageHandlers() {
         navigate('customer-complaint');
         return;
       }
+      if (id === 'admin-approve') {
+        state.adminUsers = null; // force fresh load
+        navigate('admin');
+        return;
+      }
       const label = el.querySelector('h3')?.innerText || id;
       toast(`${label} — เฟสถัดไป (Coming soon)`, 'info');
     };
@@ -11384,6 +11599,7 @@ function attachPageHandlers() {
   if (state.page === 'cleaning') wireCleaningHandlers();
   if (state.page === 'supplier-complaint') wireSupplierHandlers();
   if (state.page === 'customer-complaint') wireCustomerHandlers();
+  if (state.page === 'admin') wireAdminHandlers();
   // About page edit-mode toggle (✏️ แก้ไข ↔ 🔒 ออกจากโหมดแก้ไข)
   root.querySelectorAll('[data-edit-toggle]').forEach(el => {
     el.onclick = () => {

@@ -1,11 +1,13 @@
 rules_version = '2';
 
-// IntelliQA — Firestore Security Rules
+// IntelliQA — Firestore Security Rules (v2: approval workflow)
 // วางเนื้อหาไฟล์นี้ที่ Firebase Console → Firestore Database → Rules → Publish
 //
-// นโยบาย: เฉพาะผู้ใช้ที่ login แล้ว "และ" email ลงท้ายด้วย @fabfood.co.th
-// เท่านั้นจึงอ่าน/เขียนข้อมูลได้ — คนนอกที่เจอ URL แอปหรือสมัคร email อื่น
-// จะถูกปฏิเสธที่ระดับ server เสมอ
+// นโยบาย:
+//  1. ต้อง login และ email ลงท้าย @fabfood.co.th
+//  2. บัญชีใหม่สถานะ pending — เข้าถึงข้อมูลไม่ได้จนกว่า admin จะอนุมัติ
+//  3. admin (pakarang.sa@fabfood.co.th) เท่านั้นที่อนุมัติ/เปลี่ยนโรล/จัดการผู้ใช้ได้
+//  4. ผู้ใช้เปลี่ยนโรล/สถานะของตัวเองไม่ได้ (กันสมัครแล้วเลือกสิทธิ์สูงเอง)
 
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -16,18 +18,37 @@ service cloud.firestore {
         && request.auth.token.email.matches('.*@fabfood[.]co[.]th');
     }
 
-    // Shared record stores
-    match /audits/{doc}   { allow read, write: if isTeam(); }
-    match /cleaning/{doc} { allow read, write: if isTeam(); }
-    match /supplier/{doc} { allow read, write: if isTeam(); }
-    match /customer/{doc} { allow read, write: if isTeam(); }
-    match /parts/{doc}    { allow read, write: if isTeam(); }
-    match /kv/{doc}       { allow read, write: if isTeam(); }
+    function isAdmin() {
+      return isTeam() && request.auth.token.email == 'pakarang.sa@fabfood.co.th';
+    }
 
-    // User profiles: ทุกคนในทีมอ่านได้ แต่แก้ได้เฉพาะโปรไฟล์ตัวเอง
+    function isApproved() {
+      return isAdmin() || (
+        isTeam()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.status == 'approved'
+      );
+    }
+
+    // Shared record stores — เฉพาะผู้ใช้ที่อนุมัติแล้ว
+    match /audits/{doc}   { allow read, write: if isApproved(); }
+    match /cleaning/{doc} { allow read, write: if isApproved(); }
+    match /supplier/{doc} { allow read, write: if isApproved(); }
+    match /customer/{doc} { allow read, write: if isApproved(); }
+    match /parts/{doc}    { allow read, write: if isApproved(); }
+    match /kv/{doc}       { allow read, write: if isApproved(); }
+
+    // User profiles / approval workflow
     match /users/{uid} {
-      allow read: if isTeam();
-      allow write: if isTeam() && request.auth.uid == uid;
+      // อ่าน: admin อ่านได้ทุกคน, ผู้ใช้อ่านได้เฉพาะของตัวเอง (ไว้เช็คสถานะ)
+      allow read: if isAdmin() || (isTeam() && request.auth.uid == uid);
+      // สมัคร: สร้างโปรไฟล์ตัวเองได้ แต่สถานะต้องเป็น pending เท่านั้น
+      allow create: if isAdmin() || (
+        isTeam() && request.auth.uid == uid
+        && request.resource.data.status == 'pending'
+      );
+      // แก้ไข/อนุมัติ/เปลี่ยนโรล/ลบ: admin เท่านั้น
+      allow update, delete: if isAdmin();
     }
 
     // Deny everything else

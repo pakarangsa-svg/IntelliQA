@@ -284,59 +284,144 @@
     kvReady = false;
   }
 
-  // ---------- AUTH ----------
+  // ---------- AUTH + APPROVAL WORKFLOW ----------
   const domain = (window.FIREBASE_ALLOWED_DOMAIN || '').toLowerCase();
+  const adminEmails = (window.FIREBASE_ADMIN_EMAILS || []).map(e => e.toLowerCase());
   function domainOk(email) {
     return !domain || String(email).toLowerCase().endsWith('@' + domain);
   }
+  function isAdminEmail(email) {
+    return adminEmails.includes(String(email || '').toLowerCase());
+  }
+  window.CloudSync.isAdminEmail = isAdminEmail;
+  window.CloudSync.pendingInfo = null; // { email, status: 'pending'|'rejected' } — gates the app UI
 
   window.CloudSync.login = async function(email, password) {
     if (!domainOk(email)) throw new Error(`อนุญาตเฉพาะ email @${domain} เท่านั้น`);
     return auth.signInWithEmailAndPassword(email, password);
   };
-  window.CloudSync.signup = async function(email, password) {
+  window.CloudSync.signup = async function(email, password, profile) {
     if (!domainOk(email)) throw new Error(`อนุญาตเฉพาะ email @${domain} เท่านั้น`);
-    return auth.createUserWithEmailAndPassword(email, password);
+    await auth.createUserWithEmailAndPassword(email, password);
+    // Register with requested role — pending until admin approves
+    const u = auth.currentUser;
+    await db.collection('users').doc(u.uid).set({
+      email: u.email,
+      department: profile.department,
+      brand: profile.brand || 'back-office',
+      status: isAdminEmail(u.email) ? 'approved' : 'pending',
+      requestedAt: Date.now(),
+      updatedAt: Date.now()
+    });
+    await applyAuthState(u);
   };
   window.CloudSync.logout = function() { return auth.signOut(); };
-  window.CloudSync.saveProfile = async function(profile) {
-    const u = auth.currentUser;
-    if (!u) return;
-    await db.collection('users').doc(u.uid).set({
-      email: u.email, ...profile, updatedAt: Date.now()
-    }, { merge: true });
-  };
   window.CloudSync.loadProfile = async function() {
     const u = auth.currentUser;
     if (!u) return null;
     const snap = await db.collection('users').doc(u.uid).get();
     return snap.exists ? snap.data() : null;
   };
+  // Re-check approval status from the pending screen
+  window.CloudSync.refreshStatus = async function() {
+    if (auth.currentUser) await applyAuthState(auth.currentUser);
+    return window.CloudSync.pendingInfo;
+  };
 
-  auth.onAuthStateChanged(async user => {
+  // ----- Admin API (server-enforced via firestore.rules: admin email only) -----
+  window.CloudSync.adminListUsers = async function() {
+    const snap = await db.collection('users').get();
+    return snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+  };
+  window.CloudSync.adminSetStatus = async function(uid, status) {
+    await db.collection('users').doc(uid).set({
+      status,
+      approvedBy: auth.currentUser?.email || '',
+      approvedAt: Date.now(),
+      updatedAt: Date.now()
+    }, { merge: true });
+  };
+  window.CloudSync.adminUpdateUser = async function(uid, data) {
+    await db.collection('users').doc(uid).set({ ...data, updatedAt: Date.now() }, { merge: true });
+  };
+
+  function setSession(email, prof) {
+    const s = {
+      email,
+      department: prof?.department || 'QA/RD',
+      brand: prof?.brand || 'back-office',
+      signedAt: Date.now()
+    };
+    nativeSet('qa-app::session', JSON.stringify(s));
+    if (typeof state !== 'undefined') state.session = s;
+  }
+  function clearLocalSession() {
+    nativeRemove('qa-app::session');
+    if (typeof state !== 'undefined') state.session = null;
+  }
+
+  async function applyAuthState(user) {
     window.CloudSync.user = user;
-    window.CloudSync.status = user ? 'online' : 'signed-out';
-    if (user) {
-      // Restore department/brand from cloud profile if local session is missing
-      try {
-        if (typeof state !== 'undefined' && !state.session) {
-          const prof = await window.CloudSync.loadProfile();
-          if (prof && prof.department) {
-            const s = { email: user.email, department: prof.department, brand: prof.brand || 'back-office', signedAt: Date.now() };
-            nativeSet('qa-app::session', JSON.stringify(s));
-            state.session = s;
-          }
-        }
-      } catch (e) {}
+    if (!user) {
+      window.CloudSync.status = 'signed-out';
+      window.CloudSync.pendingInfo = null;
+      stopSync();
+      clearLocalSession();
+      return;
+    }
+    let prof = null;
+    let profErr = false;
+    try { prof = await window.CloudSync.loadProfile(); }
+    catch (e) { profErr = true; console.warn('[CloudSync] profile load failed', e); }
+
+    if (isAdminEmail(user.email)) {
+      // Admin: always approved; self-heal profile so it shows in the dashboard
+      if (!profErr && (!prof || prof.status !== 'approved')) {
+        try {
+          await db.collection('users').doc(user.uid).set({
+            email: user.email,
+            department: prof?.department || 'QA/RD',
+            brand: prof?.brand || 'back-office',
+            status: 'approved',
+            updatedAt: Date.now()
+          }, { merge: true });
+        } catch (e) {}
+      }
+      window.CloudSync.status = 'online';
+      window.CloudSync.pendingInfo = null;
+      setSession(user.email, prof);
+      startSync();
+      return;
+    }
+
+    if (profErr) {
+      // Offline / transient error: fall back to previously-approved local session
+      const localSession = (() => { try { return JSON.parse(localStorage.getItem('qa-app::session') || 'null'); } catch (e) { return null; } })();
+      if (localSession && localSession.email === user.email) {
+        window.CloudSync.status = 'online';
+        window.CloudSync.pendingInfo = null;
+        startSync();
+      }
+      return;
+    }
+
+    if (prof && prof.status === 'approved') {
+      window.CloudSync.status = 'online';
+      window.CloudSync.pendingInfo = null;
+      // Role always comes from the cloud profile — not the login form
+      setSession(user.email, prof);
       startSync();
     } else {
+      // pending / rejected / no profile → block the app
+      window.CloudSync.status = 'pending';
+      window.CloudSync.pendingInfo = { email: user.email, status: prof ? (prof.status || 'pending') : 'pending' };
       stopSync();
-      // Firebase says signed-out → stale local session must not grant access
-      if (typeof state !== 'undefined' && state.session) {
-        nativeRemove('qa-app::session');
-        state.session = null;
-      }
+      clearLocalSession();
     }
+  }
+
+  auth.onAuthStateChanged(async user => {
+    try { await applyAuthState(user); } catch (e) { console.warn('[CloudSync] auth state failed', e); }
     if (typeof render === 'function') { try { render(); } catch (e) {} }
   });
 })();
