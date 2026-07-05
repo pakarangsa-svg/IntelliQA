@@ -771,7 +771,7 @@ function renderHomeStandardList(allAudits) {
         const last = audits[0];
         const branchCount = window.BZM.branches(b.id).length;
         return `
-          <div class="brand-picker-card" style="border-top: 5px solid ${b.color};" data-brand-detail="${b.id}">
+          <div class="brand-picker-card" style="border-top: 3px solid ${b.color};" data-brand-detail="${b.id}">
             <div class="brand-summary-head">
               <div class="row">
                 ${brandBadge(b)}
@@ -1000,7 +1000,7 @@ function renderPlannerBrandList(allAudits) {
           }).map(a => a.header.branch)
         );
         return `
-          <div class="brand-picker-card" style="border-top: 5px solid ${b.color};" data-planner-brand="${b.id}">
+          <div class="brand-picker-card" style="border-top: 3px solid ${b.color};" data-planner-brand="${b.id}">
             <div class="brand-summary-head">
               <div class="row">
                 ${brandBadge(b)}
@@ -1475,7 +1475,7 @@ function renderCEMHome(allAudits) {
     ${window.BRANDS.filter(b => b.id === 'santafe-happy').map(b => {
       const stats = getCEMStats(b.id);
       return `
-      <div class="card brand-summary" style="border-top: 5px solid ${b.color}; margin-bottom: 18px;">
+      <div class="card brand-summary" style="border-top: 3px solid ${b.color}; margin-bottom: 18px;">
         <div class="brand-summary-head">
           <div class="row">
             ${brandBadge(b)}
@@ -1680,7 +1680,7 @@ function renderBrandSummary(brand, allAudits) {
   const startable = brand.enabled;
 
   return `
-    <div class="card brand-summary" style="border-top: 5px solid ${brand.color}; margin-bottom: 18px;">
+    <div class="card brand-summary" style="border-top: 3px solid ${brand.color}; margin-bottom: 18px;">
       <div class="brand-summary-head">
         <div class="row">
           ${brandBadge(brand)}
@@ -5271,7 +5271,7 @@ function renderAbout() {
           const isLoading = !window._storeContactsLoaded;
           return `
             <button class="brand-picker-card" data-store-popup="${b.id}"
-                    style="border-top: 5px solid ${b.color}; text-align:left; cursor:pointer; background:#fff;">
+                    style="border-top: 3px solid ${b.color}; text-align:left; cursor:pointer; background:#fff;">
               <div class="brand-summary-head">
                 <div class="row">
                   <div class="brand-letter" style="background:${b.color};">${b.icon}</div>
@@ -8192,7 +8192,7 @@ function renderSupplierBrandList() {
           color: typeColors[t]
         }));
         return `
-          <div class="brand-picker-card" style="border-top: 5px solid ${b.color};" data-supplier-brand="${b.id}">
+          <div class="brand-picker-card" style="border-top: 3px solid ${b.color};" data-supplier-brand="${b.id}">
             <div class="brand-summary-head">
               <div class="row">
                 ${brandBadge(b)}
@@ -9813,7 +9813,7 @@ function renderCustomerBrandList() {
           color: CUSTOMER_TYPE_COLORS[t]
         }));
         return `
-          <div class="brand-picker-card" style="border-top: 5px solid ${b.color};" data-customer-brand="${b.id}">
+          <div class="brand-picker-card" style="border-top: 3px solid ${b.color};" data-customer-brand="${b.id}">
             <div class="brand-summary-head">
               <div class="row">
                 ${brandBadge(b)}
