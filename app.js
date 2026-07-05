@@ -81,6 +81,7 @@ let state = {
   storeContactsModalBrand: null,  // when set, About → Store Contacts popup is open for this brandId
   dashBranchModal: false,         // Audit Dashboard: open expanded "คะแนนเฉลี่ยรายสาขา" chart popup
   session: null,           // { email, department, brand, signedAt }
+  loginSignupMode: false,  // login modal: false = sign-in, true = sign-up (Firebase mode only)
   chartInstances: {}
 };
 
@@ -234,21 +235,58 @@ function attachLightboxHandlers() {
 function wireLoginHandlers() {
   const submit = root.querySelector('[data-login-submit]');
   if (!submit) return;
-  submit.onclick = () => {
+  const toggleSignup = root.querySelector('[data-login-toggle-signup]');
+  if (toggleSignup) toggleSignup.onclick = () => {
+    state.loginSignupMode = !state.loginSignupMode;
+    render();
+  };
+  submit.onclick = async () => {
     const email = root.querySelector('[data-login-email]')?.value.trim();
     const dept  = root.querySelector('[data-login-dept]')?.value;
     const brand = root.querySelector('[data-login-brand]')?.value;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('กรุณากรอก E-mail ที่ถูกต้อง', 'error'); return; }
     if (!dept) { toast('กรุณาเลือกหน่วยงาน', 'error'); return; }
     if (!brand) { toast('กรุณาเลือกแบรนด์', 'error'); return; }
+
+    if (window.CloudSync?.enabled) {
+      const password = root.querySelector('[data-login-password]')?.value || '';
+      if (password.length < 6) { toast('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร', 'error'); return; }
+      submit.disabled = true;
+      try {
+        if (state.loginSignupMode) await window.CloudSync.signup(email, password);
+        else await window.CloudSync.login(email, password);
+        state.session = { email, department: dept, brand, signedAt: Date.now() };
+        saveSession(state.session);
+        window.CloudSync.saveProfile({ department: dept, brand });
+        state.loginSignupMode = false;
+        toast(`ยินดีต้อนรับ ${email} (${dept})`, 'success');
+        render();
+      } catch (e) {
+        const code = e?.code || '';
+        let msg = e?.message || 'เข้าสู่ระบบไม่สำเร็จ';
+        if (code === 'auth/user-not-found') msg = 'ไม่พบบัญชีนี้ — กด "สมัครใช้งานครั้งแรก" ด้านล่าง';
+        if (code === 'auth/wrong-password' || code === 'auth/invalid-credential') msg = 'รหัสผ่านไม่ถูกต้อง';
+        if (code === 'auth/email-already-in-use') msg = 'email นี้มีบัญชีอยู่แล้ว — กลับไปหน้าเข้าสู่ระบบ';
+        if (code === 'auth/weak-password') msg = 'รหัสผ่านสั้นเกินไป (อย่างน้อย 6 ตัว)';
+        if (code === 'auth/network-request-failed') msg = 'เชื่อมต่ออินเทอร์เน็ตไม่ได้';
+        toast(msg, 'error');
+      } finally {
+        submit.disabled = false;
+      }
+      return;
+    }
+
+    // Local mode (no Firebase configured) — behave as before
     state.session = { email, department: dept, brand, signedAt: Date.now() };
     saveSession(state.session);
     toast(`ยินดีต้อนรับ ${email} (${dept})`, 'success');
     render();
   };
-  // Enter-key submit on email field
+  // Enter-key submit on email + password fields
   const emailInput = root.querySelector('[data-login-email]');
   if (emailInput) emailInput.onkeydown = (e) => { if (e.key === 'Enter') submit.click(); };
+  const pwInput = root.querySelector('[data-login-password]');
+  if (pwInput) pwInput.onkeydown = (e) => { if (e.key === 'Enter') submit.click(); };
 }
 
 // ---------- Login Notification Banner ----------
@@ -402,6 +440,8 @@ function renderSidebar() {
 
 function renderLoginModal() {
   if (state.session) return '';
+  const cloud = !!window.CloudSync?.enabled;
+  const signupMode = cloud && state.loginSignupMode;
   return `
     <div class="login-backdrop"></div>
     <div class="login-card">
@@ -410,14 +450,21 @@ function renderLoginModal() {
         <div class="fab-tagline">FAB FOOD HOLDING</div>
       </div>
       <div style="text-align:center; margin: 6px 0 22px;">
-        <h2 style="margin:0; font-size:20px; color:#1e293b; font-weight:700;">เข้าใช้งาน IntelliQA</h2>
+        <h2 style="margin:0; font-size:20px; color:#1e293b; font-weight:700;">${signupMode ? 'สมัครใช้งาน IntelliQA' : 'เข้าใช้งาน IntelliQA'}</h2>
         <div class="muted small" style="margin-top:4px;">Intelligent Restaurant Quality Assurance</div>
+        ${cloud ? '' : '<div class="muted small" style="margin-top:6px; color:#b45309;">⚠️ Local mode — ข้อมูลเก็บในเครื่องนี้เท่านั้น (ยังไม่เชื่อมต่อ Firebase)</div>'}
       </div>
       <div class="sc-form" style="gap:14px;">
         <label class="sc-field">
           <span>📧 E-mail <em style="color:#dc2626;">*</em></span>
           <input type="email" data-login-email placeholder="name@fabfood.co.th" autocomplete="email" autofocus/>
         </label>
+        ${cloud ? `
+          <label class="sc-field">
+            <span>🔑 รหัสผ่าน <em style="color:#dc2626;">*</em></span>
+            <input type="password" data-login-password placeholder="${signupMode ? 'ตั้งรหัสผ่าน (อย่างน้อย 6 ตัว)' : 'รหัสผ่าน'}" autocomplete="${signupMode ? 'new-password' : 'current-password'}"/>
+          </label>
+        ` : ''}
         <label class="sc-field">
           <span>🏢 หน่วยงานสังกัด <em style="color:#dc2626;">*</em></span>
           <select data-login-dept>
@@ -433,7 +480,14 @@ function renderLoginModal() {
             <option value="back-office">🏢 Back Office</option>
           </select>
         </label>
-        <button class="btn btn-primary" data-login-submit style="width:100%; padding:12px;">เข้าใช้งาน →</button>
+        <button class="btn btn-primary" data-login-submit style="width:100%; padding:12px;">${signupMode ? 'สมัครและเข้าใช้งาน →' : 'เข้าใช้งาน →'}</button>
+        ${cloud ? `
+          <div style="text-align:center;">
+            <button class="btn btn-ghost btn-sm" data-login-toggle-signup>
+              ${signupMode ? '← มีบัญชีอยู่แล้ว? เข้าสู่ระบบ' : 'ยังไม่มีบัญชี? สมัครใช้งานครั้งแรก'}
+            </button>
+          </div>
+        ` : ''}
       </div>
     </div>
   `;
@@ -10886,6 +10940,7 @@ function attachPageHandlers() {
       // Reset to home so the next session lands cleanly
       state.page = 'home';
       state.homeView = 'landing';
+      if (window.CloudSync?.enabled) window.CloudSync.logout();
       render();
     };
   });

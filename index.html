@@ -11,6 +11,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Firebase (multi-user backend) — no-op until firebase-config.js is filled in -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
   <script>document.write('<link rel="stylesheet" href="styles.css?v=' + Date.now() + '"/>');</script>
 </head>
 <body>
@@ -29,7 +33,9 @@
     loadScript('recommendations.js');
     loadScript('storage.js');
     loadScript('store-contacts.js');
+    loadScript('firebase-config.js');
     loadScript('app.js');
+    loadScript('cloud-sync.js');
     loadScript('data-imports.js');
   </script>
 </body>

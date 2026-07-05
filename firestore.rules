@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// IntelliQA — Firestore Security Rules
+// วางเนื้อหาไฟล์นี้ที่ Firebase Console → Firestore Database → Rules → Publish
+//
+// นโยบาย: เฉพาะผู้ใช้ที่ login แล้ว "และ" email ลงท้ายด้วย @fabfood.co.th
+// เท่านั้นจึงอ่าน/เขียนข้อมูลได้ — คนนอกที่เจอ URL แอปหรือสมัคร email อื่น
+// จะถูกปฏิเสธที่ระดับ server เสมอ
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isTeam() {
+      return request.auth != null
+        && request.auth.token.email is string
+        && request.auth.token.email.matches('.*@fabfood[.]co[.]th');
+    }
+
+    // Shared record stores
+    match /audits/{doc}   { allow read, write: if isTeam(); }
+    match /cleaning/{doc} { allow read, write: if isTeam(); }
+    match /supplier/{doc} { allow read, write: if isTeam(); }
+    match /customer/{doc} { allow read, write: if isTeam(); }
+    match /parts/{doc}    { allow read, write: if isTeam(); }
+    match /kv/{doc}       { allow read, write: if isTeam(); }
+
+    // User profiles: ทุกคนในทีมอ่านได้ แต่แก้ได้เฉพาะโปรไฟล์ตัวเอง
+    match /users/{uid} {
+      allow read: if isTeam();
+      allow write: if isTeam() && request.auth.uid == uid;
+    }
+
+    // Deny everything else
+    match /{document=**} { allow read, write: if false; }
+  }
+}
