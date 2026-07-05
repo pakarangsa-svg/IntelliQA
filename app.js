@@ -442,6 +442,15 @@ function renderLoginModal() {
   if (state.session) return '';
   const cloud = !!window.CloudSync?.enabled;
   const signupMode = cloud && state.loginSignupMode;
+  // Local-data summary — helps identify which browser/origin holds the full
+  // dataset when bootstrapping the cloud (login there first = it gets imported)
+  let dataLine = '';
+  try {
+    const cnt = k => { try { return JSON.parse(localStorage.getItem(k) || '[]').length; } catch(e) { return 0; } };
+    const planner = Object.keys(localStorage).filter(k => k.startsWith('qa-app::planner')).length;
+    const contacts = !!localStorage.getItem('qa-app::store-contacts');
+    dataLine = `📦 ข้อมูลในเบราว์เซอร์นี้ · ตรวจ ${cnt('qa-app::audits')} · Cleaning ${cnt('qa-app::cleaning::records')} · Supplier ${cnt('qa-app::supplier::records')} · Customer ${cnt('qa-app::customer::records')} · Planner ${planner} · Contacts ${contacts ? 'มีแก้ไข' : '-'}`;
+  } catch(e) {}
   return `
     <div class="login-backdrop"></div>
     <div class="login-card">
@@ -453,6 +462,7 @@ function renderLoginModal() {
         <h2 style="margin:0; font-size:20px; color:#1e293b; font-weight:700;">${signupMode ? 'สมัครใช้งาน IntelliQA' : 'เข้าใช้งาน IntelliQA'}</h2>
         <div class="muted small" style="margin-top:4px;">Intelligent Restaurant Quality Assurance</div>
         ${cloud ? '' : '<div class="muted small" style="margin-top:6px; color:#b45309;">⚠️ Local mode — ข้อมูลเก็บในเครื่องนี้เท่านั้น (ยังไม่เชื่อมต่อ Firebase)</div>'}
+        ${dataLine ? `<div class="muted small" style="margin-top:6px; font-size:11px; color:#64748b;">${dataLine}</div>` : ''}
       </div>
       <div class="sc-form" style="gap:14px;">
         <label class="sc-field">
