@@ -6990,7 +6990,7 @@ function wireCleaningHandlers() {
     const photoInput = root.querySelector('[data-cleaning-photo]');
     if (photoInput) photoInput.onchange = async (e) => {
       for (const f of [...e.target.files]) {
-        const dataUrl = await readAsDataURL(f);
+        const dataUrl = await readImageCompressed(f);
         r.photos.push(dataUrl);
       }
       render();
@@ -7008,7 +7008,7 @@ function wireCleaningHandlers() {
         r.sectionPhotos = r.sectionPhotos || {};
         r.sectionPhotos[secId] = r.sectionPhotos[secId] || [];
         for (const f of [...e.target.files]) {
-          const dataUrl = await readAsDataURL(f);
+          const dataUrl = await readImageCompressed(f);
           r.sectionPhotos[secId].push(dataUrl);
         }
         render();
@@ -9713,7 +9713,7 @@ function wireSupplierHandlers() {
     if (photoInput) photoInput.onchange = async (e) => {
       draft.photos = draft.photos || [];
       for (const f of [...e.target.files]) {
-        draft.photos.push(await readAsDataURL(f));
+        draft.photos.push(await readImageCompressed(f));
       }
       render();
     };
@@ -10755,7 +10755,7 @@ function wireCustomerHandlers() {
     if (photoInput) photoInput.onchange = async (e) => {
       draft.photos = draft.photos || [];
       for (const f of [...e.target.files]) {
-        draft.photos.push(await readAsDataURL(f));
+        draft.photos.push(await readImageCompressed(f));
       }
       render();
     };
@@ -11879,7 +11879,7 @@ function wireAuditHandlers() {
       const files = [...e.target.files];
       state.audit.responses[key] = state.audit.responses[key] || { status: null, note: '', photos: [] };
       for (const f of files) {
-        const dataUrl = await readAsDataURL(f);
+        const dataUrl = await readImageCompressed(f);
         state.audit.responses[key].photos.push(dataUrl);
       }
       autosaveDraft();
@@ -11966,7 +11966,7 @@ function wireAuditHandlers() {
       const files = [...e.target.files];
       state.audit.critical[k] = state.audit.critical[k] || { found: false, note: '', photos: [] };
       for (const f of files) {
-        const dataUrl = await readAsDataURL(f);
+        const dataUrl = await readImageCompressed(f);
         state.audit.critical[k].photos.push(dataUrl);
       }
       autosaveDraft();
@@ -12022,12 +12022,7 @@ function wireAuditHandlers() {
       state.audit.rmnc[i] = state.audit.rmnc[i] || {};
       state.audit.rmnc[i].photos = state.audit.rmnc[i].photos || [];
       for (const f of files) {
-        const url = await new Promise(res => {
-          const r = new FileReader();
-          r.onload = () => res(r.result);
-          r.readAsDataURL(f);
-        });
-        state.audit.rmnc[i].photos.push(url);
+        state.audit.rmnc[i].photos.push(await readImageCompressed(f));
       }
       autosaveDraft();
       render();
@@ -12152,6 +12147,40 @@ function readAsDataURL(file) {
     r.onerror = rej;
     r.readAsDataURL(file);
   });
+}
+// Downscale + JPEG-compress an image before storing. A raw phone photo is
+// 3–12 MB as base64 — enough to blow the ~5 MB localStorage cap and the 10 MB
+// Firestore write limit. Resizing to ≤1600px @ q0.72 brings it to ~100–250 KB.
+// Non-image files (PDF/doc) pass through unchanged.
+async function readImageCompressed(file, { maxDim = 1600, quality = 0.72 } = {}) {
+  if (!file || !/^image\//.test(file.type) || /gif|svg/.test(file.type)) {
+    return readAsDataURL(file);
+  }
+  try {
+    const dataUrl = await readAsDataURL(file);
+    const img = await new Promise((res, rej) => {
+      const im = new Image();
+      im.onload = () => res(im);
+      im.onerror = rej;
+      im.src = dataUrl;
+    });
+    const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+    // Already small and already compressed → keep as-is
+    if (scale === 1 && dataUrl.length < 400 * 1024 && /jpe?g/.test(file.type)) return dataUrl;
+    const w = Math.max(1, Math.round(img.width * scale));
+    const h = Math.max(1, Math.round(img.height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); // flatten transparency for JPEG
+    ctx.drawImage(img, 0, 0, w, h);
+    const out = canvas.toDataURL('image/jpeg', quality);
+    // Guard: if compression somehow grew it, keep the smaller original
+    return out.length < dataUrl.length ? out : dataUrl;
+  } catch (e) {
+    console.warn('image compress failed, storing raw', e);
+    return readAsDataURL(file);
+  }
 }
 function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
 function escapeAttr(s) { return escapeHtml(s); }

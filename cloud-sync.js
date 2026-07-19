@@ -120,7 +120,15 @@
   const pushTimers = {};
   function schedulePush(key) {
     clearTimeout(pushTimers[key]);
-    pushTimers[key] = setTimeout(() => pushKey(key).catch(e => console.warn('[CloudSync] push failed', key, e)), 400);
+    pushTimers[key] = setTimeout(() => pushKey(key).catch(e => {
+      console.warn('[CloudSync] push failed', key, e);
+      const code = e && (e.code || e.name || '');
+      // Doc-too-large / payload limits surface as invalid-argument or resource-exhausted
+      if (/invalid-argument|resource-exhausted|out-of-range/i.test(String(code) + (e && e.message || ''))) {
+        try { if (typeof window.toast === 'function')
+          window.toast('ซิงก์ข้อมูลขึ้น cloud ไม่สำเร็จ — ข้อมูล/รูปมีขนาดใหญ่เกินไป กรุณาลดจำนวนรูป', 'error'); } catch(_) {}
+      }
+    }), 400);
   }
 
   async function pushKey(key) {

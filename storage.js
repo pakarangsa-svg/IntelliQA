@@ -3,6 +3,16 @@ window.Storage = (function() {
   const KEY_AUDITS = 'qa-app::audits';
   const KEY_DRAFT  = 'qa-app::draft';
 
+  function isQuotaError(e) {
+    return e && (e.name === 'QuotaExceededError' || e.code === 22 || e.code === 1014 ||
+      /quota/i.test(e.message || ''));
+  }
+  function warnQuota(context) {
+    const msg = 'พื้นที่จัดเก็บในเบราว์เซอร์เต็ม — บันทึก' + context + 'ไม่สำเร็จ ' +
+      '(มักเกิดจากรูปภาพจำนวนมาก) กรุณาลดจำนวนรูป หรือแจ้งผู้ดูแลระบบ';
+    try { if (typeof window.toast === 'function') window.toast(msg, 'error'); else alert(msg); } catch(e) {}
+    console.error('[Storage] quota exceeded while saving', context);
+  }
   function loadAudits() {
     try {
       const raw = localStorage.getItem(KEY_AUDITS);
@@ -10,7 +20,14 @@ window.Storage = (function() {
     } catch(e) { return []; }
   }
   function saveAudits(arr) {
-    localStorage.setItem(KEY_AUDITS, JSON.stringify(arr));
+    try {
+      localStorage.setItem(KEY_AUDITS, JSON.stringify(arr));
+      return true;
+    } catch(e) {
+      if (isQuotaError(e)) warnQuota('ผลการตรวจ');
+      else { console.error('[Storage] saveAudits failed', e); }
+      return false;
+    }
   }
   function addAudit(audit) {
     const arr = loadAudits();
@@ -28,7 +45,14 @@ window.Storage = (function() {
     } catch(e) { return null; }
   }
   function saveDraft(brandId, draft) {
-    localStorage.setItem(KEY_DRAFT + '::' + brandId, JSON.stringify(draft));
+    try {
+      localStorage.setItem(KEY_DRAFT + '::' + brandId, JSON.stringify(draft));
+      return true;
+    } catch(e) {
+      if (isQuotaError(e)) warnQuota('ฉบับร่าง');
+      else { console.error('[Storage] saveDraft failed', e); }
+      return false;
+    }
   }
   function clearDraft(brandId) {
     localStorage.removeItem(KEY_DRAFT + '::' + brandId);
