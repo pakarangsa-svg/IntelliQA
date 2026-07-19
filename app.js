@@ -5187,6 +5187,68 @@ function renderStoreContactsEditor(opts = {}) {
   `;
 }
 
+function renderBzmSummary() {
+  const brandTotals = {};
+  const summary = {}; // bzm name -> { name, brands: { brandId: count } }
+  window.BRANDS.forEach(b => {
+    const zones = window.BZM.effectiveZones ? window.BZM.effectiveZones(b.id) : (window.BZM_DATABASE[b.id]?.zones || []);
+    const total = zones.reduce((s, z) => s + z.branches.length, 0);
+    brandTotals[b.id] = total;
+    zones.forEach(z => {
+      if (!z.bzm) return;
+      summary[z.bzm] = summary[z.bzm] || { name: z.bzm, brands: {} };
+      summary[z.bzm].brands[b.id] = (summary[z.bzm].brands[b.id] || 0) + z.branches.length;
+    });
+  });
+  const rows = Object.values(summary)
+    .map(s => ({ ...s, total: Object.values(s.brands).reduce((a, c) => a + c, 0), brandCount: Object.keys(s.brands).length }))
+    .sort((a, b) => b.total - a.total);
+  const brandById = id => window.BRANDS.find(b => b.id === id);
+
+  return `
+    <div class="card">
+      <h2 style="margin:0 0 4px;">📊 สรุปผู้จัดการเขต (BZM)</h2>
+      <div class="desc">ภาพรวมว่าแต่ละ BZM ดูแลแบรนด์ใดบ้าง กี่สาขา และคิดเป็นสัดส่วนเท่าใดของจำนวนสาขาทั้งแบรนด์ (รวมการกำหนด BZM ที่มีผลแล้ว) · ${rows.length} BZM</div>
+      <table class="simple">
+        <thead><tr>
+          <th style="width:220px;">ผู้จัดการเขต (BZM)</th>
+          <th>แบรนด์ที่ดูแล · จำนวนสาขา · สัดส่วนของแบรนด์</th>
+          <th style="width:90px; text-align:right;">รวมสาขา</th>
+        </tr></thead>
+        <tbody>
+          ${rows.length === 0 ? '<tr><td colspan="3" class="muted">— ไม่มีข้อมูล —</td></tr>' : ''}
+          ${rows.map(r => `
+            <tr>
+              <td>
+                <b>${escapeHtml(r.name)}</b>
+                ${r.brandCount > 1 ? `<div class="muted small">ดูแล ${r.brandCount} แบรนด์</div>` : ''}
+              </td>
+              <td>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                  ${Object.entries(r.brands).sort((a, b) => b[1] - a[1]).map(([bid, cnt]) => {
+                    const b = brandById(bid); if (!b) return '';
+                    const pct = brandTotals[bid] ? (cnt / brandTotals[bid] * 100) : 0;
+                    return `<div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                      ${brandBadge(b, { cls: 'brand-letter brand-letter-mini' })}
+                      <span style="min-width:150px; font-weight:500;">${escapeHtml(b.name)}</span>
+                      <b>${cnt}</b><span class="muted small">/ ${brandTotals[bid]} สาขา</span>
+                      <div style="flex:1; min-width:120px; max-width:180px; height:8px; background:#f1f5f9; border-radius:4px; overflow:hidden;">
+                        <div style="height:100%; width:${pct}%; background:${b.color};"></div>
+                      </div>
+                      <span class="muted small" style="min-width:44px; text-align:right;">${pct.toFixed(1)}%</span>
+                    </div>`;
+                  }).join('')}
+                </div>
+              </td>
+              <td style="text-align:right;"><b style="font-size:16px;">${r.total}</b></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
 function renderAboutBzmEditor() {
   const brandId = state.aboutBzmBrand || 'jaedang';
   const edit = !!(state.aboutEditMode && state.aboutEditMode.bzmOverrides);
@@ -5361,6 +5423,8 @@ function renderAbout() {
         }).join('')}
       </div>
     </div>
+
+    ${renderBzmSummary()}
 
     ${renderAboutBzmEditor()}
 
