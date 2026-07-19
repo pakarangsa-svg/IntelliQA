@@ -42,7 +42,8 @@ let state = {
   plannerMonth: null,      // 1-12 for Yamachan monthly planner — null = current month
   cleaningYear: null,      // null = current year for cleaning module
   homeStandardFsType: 'all',  // 'all' | 'KT' | 'FS' — Santa Fe Happy filter on Store Audit detail
-  aboutEditMode: { storeContacts: false, emailRecipients: false },  // edit-mode gate on About page sections
+  aboutEditMode: { storeContacts: false, emailRecipients: false, bzmOverrides: false },  // edit-mode gate on About page sections
+  aboutBzmBrand: 'jaedang',  // active brand tab in About → BZM overrides editor
   homeView: 'landing',        // 'landing' | 'standard-list' | 'standard-detail' | 'cem' | 'planner-gate' | 'planner-list' | 'planner-detail'
   homeStandardBrandId: null,  // when homeView === 'standard-detail'
   plannerBrandId: null,        // when homeView === 'planner-detail'
@@ -1637,11 +1638,20 @@ function renderBrandSummary(brand, allAudits) {
   const pendingBranches = branches.filter(b => !auditedBranchSet.has(b.name) && !auditedBranchSet.has(b.code));
   const coverage = branches.length > 0 ? (auditedCount / branches.length * 100) : 0;
 
-  // Performance by zone
-  const db = window.BZM_DATABASE[brand.id];
-  const zonePerf = (db ? db.zones : []).map(z => {
-    const zoneBranchNames = new Set(z.branches.map(b => b.name));
-    const za = audits.filter(a => zoneBranchNames.has(a.header.branch));
+  // Performance by zone (override-aware: honours admin BZM assignments + effective dates)
+  const effZones = window.BZM.effectiveZones ? window.BZM.effectiveZones(brand.id) : (window.BZM_DATABASE[brand.id]?.zones || []);
+  const zonePerf = effZones.map(z => {
+    // Match audits to this zone by branch code OR name (branch may be stored as "code · name")
+    const zoneCodes = new Set(z.branches.map(b => String(b.code)));
+    const zoneNames = new Set(z.branches.map(b => (b.name || '').trim()));
+    const inZone = (a) => {
+      const bv = a.header.branch || '';
+      const code = window.BZM.parseCode ? window.BZM.parseCode(bv) : null;
+      if (code && zoneCodes.has(code)) return true;
+      const nameOnly = String(bv).replace(/^\S+\s*·\s*/, '').trim();
+      return zoneNames.has(nameOnly) || zoneNames.has(bv.trim());
+    };
+    const za = audits.filter(inZone);
     const auditedInZone = new Set(za.map(a => a.header.branch)).size;
     const avgZ = za.length > 0 ? (za.reduce((s,a)=>s+a.summary.totalScore,0)/za.length) : null;
     const critZ = za.reduce((s,a)=>s+(a.summary.criticalCount||0),0);
@@ -2281,8 +2291,10 @@ function renderItem(sub, groupIdx, item, customFailPt) {
       <div class="item-detail">
         <textarea data-note placeholder="บันทึกข้อสังเกต / สิ่งที่พบ / สถานที่ ...">${escapeHtml(r.note || '')}</textarea>
         <div class="photo-row">
-          <input type="file" accept="image/*" multiple data-photo />
-          <span class="muted small">แนบรูป (เก็บใน Browser, ไม่อัพโหลด)</span>
+          ${(r.photos && r.photos.length >= 2)
+            ? '<span class="muted small">📷 ครบ 2 รูปแล้ว — ลบรูปเดิมก่อนเพิ่มใหม่</span>'
+            : `<input type="file" accept="image/*" capture="environment" multiple data-photo />
+               <span class="muted small">แนบรูป สูงสุด 2 รูป · แตะรูปเพื่อขยาย</span>`}
         </div>
         ${r.photos && r.photos.length ? `
           <div class="photo-preview">
@@ -2323,8 +2335,10 @@ function renderCriticalTab(data, rmncCritNo) {
             <div class="item-detail">
               <textarea data-crit-note placeholder="รายละเอียดเหตุการณ์ที่พบ">${escapeHtml(v.note || '')}</textarea>
               <div class="photo-row">
-                <input type="file" accept="image/*" multiple data-crit-photo />
-                <span class="muted small">แนบรูปประกอบ</span>
+                ${(v.photos && v.photos.length >= 2)
+                  ? '<span class="muted small">📷 ครบ 2 รูปแล้ว — ลบรูปเดิมก่อนเพิ่มใหม่</span>'
+                  : `<input type="file" accept="image/*" capture="environment" multiple data-crit-photo />
+                     <span class="muted small">แนบรูปประกอบ สูงสุด 2 รูป · แตะรูปเพื่อขยาย</span>`}
               </div>
               ${v.photos && v.photos.length ? `
                 <div class="photo-preview">
@@ -5173,6 +5187,63 @@ function renderStoreContactsEditor(opts = {}) {
   `;
 }
 
+function renderAboutBzmEditor() {
+  const brandId = state.aboutBzmBrand || 'jaedang';
+  const edit = !!(state.aboutEditMode && state.aboutEditMode.bzmOverrides);
+  const overrides = window.BZMOverrides.list(brandId)
+    .sort((a, b) => String(a.code).localeCompare(String(b.code), undefined, { numeric: true }));
+  const branchList = (window.getCombinedBranches ? window.getCombinedBranches(brandId) : window.BZM.branches(brandId));
+  const rowInputs = (o) => `
+    <td><input type="text" list="bzmBranchList-${brandId}" data-bzm-f="branch" value="${escapeAttr(o.code ? (o.code + (o.branch ? ' · ' + o.branch : '')) : '')}" placeholder="เลือก/พิมพ์ รหัส · ชื่อสาขา" style="width:100%; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px;"/></td>
+    <td><input type="text" data-bzm-f="bzm" value="${escapeAttr(o.bzm || '')}" placeholder="เช่น คุณ นพชัย" style="width:100%; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px;"/></td>
+    <td><input type="date" data-bzm-f="date" value="${escapeAttr(o.effectiveDate || '')}" style="width:100%; padding:6px 8px; border:1px solid #cbd5e1; border-radius:6px;"/></td>`;
+  return `
+    <div class="card">
+      <div class="row" style="justify-content:space-between; align-items:center;">
+        <h2 style="margin:0;">🗺️ ผู้จัดการเขต (BZM) แยกแบรนด์</h2>
+        ${edit
+          ? `<button class="btn btn-sm btn-outline" data-edit-toggle="bzmOverrides">🔒 ออกจากโหมดแก้ไข</button>`
+          : `<button class="btn btn-sm btn-primary" data-edit-toggle="bzmOverrides">✏️ แก้ไข</button>`}
+      </div>
+      <div class="desc">กำหนดว่าสาขาใดอยู่ภายใต้ BZM ท่านใด และมีผลตั้งแต่วันที่ใด — จะถูกนำไปคิด <b>Performance ราย Zone</b> ในหน้าแบรนด์ (ใช้แทน/เพิ่มจากฐานข้อมูลตั้งต้น)${edit ? '' : ' · <b>กดปุ่ม ✏️ แก้ไข เพื่อเริ่ม</b>'}</div>
+      <div class="row" style="flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+        ${window.BRANDS.map(b => `
+          <button class="brand-pill ${b.id === brandId ? 'active' : ''}" data-bzm-brand="${b.id}" style="--brand:${b.color}">
+            <span class="dot" style="background:${b.color}"></span>${escapeHtml(b.short || b.name)}
+          </button>`).join('')}
+      </div>
+      <datalist id="bzmBranchList-${brandId}">
+        ${branchList.map(b => `<option value="${escapeAttr(b.code + ' · ' + b.name)}"></option>`).join('')}
+      </datalist>
+      <table class="simple">
+        <thead><tr><th style="width:230px;">สาขา (รหัส · ชื่อ)</th><th>ชื่อ BZM ที่ดูแล</th><th style="width:150px;">วันที่มีผล</th><th style="width:120px;"></th></tr></thead>
+        <tbody>
+          ${overrides.length === 0 && !edit ? '<tr><td colspan="4" class="muted">— ยังไม่มีการกำหนดเพิ่มเติม (ใช้ฐานข้อมูลตั้งต้น) —</td></tr>' : ''}
+          ${overrides.map(o => edit ? `
+            <tr data-bzm-row="${escapeAttr(o.code)}">
+              ${rowInputs(o)}
+              <td style="white-space:nowrap;">
+                <button class="btn btn-sm btn-primary" data-bzm-save="${escapeAttr(o.code)}">💾</button>
+                <button class="btn btn-sm btn-danger" data-bzm-del="${escapeAttr(o.code)}">×</button>
+              </td>
+            </tr>` : `
+            <tr>
+              <td><b>${escapeHtml(o.code)}</b> ${escapeHtml(o.branch || '')}</td>
+              <td>${escapeHtml(o.bzm || '-')}</td>
+              <td>${o.effectiveDate ? escapeHtml(formatDDMMYYYY(o.effectiveDate)) : '-'}</td>
+              <td></td>
+            </tr>`).join('')}
+          ${edit ? `
+            <tr data-bzm-row="__new__" style="background:#f8fafc;">
+              ${rowInputs({})}
+              <td><button class="btn btn-sm btn-success" data-bzm-add>+ เพิ่ม</button></td>
+            </tr>` : ''}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
 function renderAbout() {
   return `
     <div class="page-header"><h1>เกี่ยวกับระบบ</h1></div>
@@ -5290,6 +5361,8 @@ function renderAbout() {
         }).join('')}
       </div>
     </div>
+
+    ${renderAboutBzmEditor()}
 
     <div class="card">
       <h2>📑 เอกสารอ้างอิง (เวอร์ชั่นคู่มือและแบบฟอร์มตรวจ)</h2>
@@ -11610,6 +11683,60 @@ function attachPageHandlers() {
       render();
     };
   });
+  // BZM overrides editor (About page)
+  root.querySelectorAll('[data-bzm-brand]').forEach(el => {
+    el.onclick = () => { state.aboutBzmBrand = el.dataset.bzmBrand; render(); };
+  });
+  const readBzmRow = (rowEl) => {
+    const branchVal = rowEl.querySelector('[data-bzm-f="branch"]')?.value.trim() || '';
+    const bzm = rowEl.querySelector('[data-bzm-f="bzm"]')?.value.trim() || '';
+    const effectiveDate = rowEl.querySelector('[data-bzm-f="date"]')?.value || '';
+    const brandId = state.aboutBzmBrand || 'jaedang';
+    let code = window.BZM.parseCode(branchVal);
+    const nameOnly = branchVal.replace(/^\S+\s*·\s*/, '').trim();
+    let branchName = nameOnly;
+    if (!code && nameOnly) {
+      const list = window.getCombinedBranches ? window.getCombinedBranches(brandId) : window.BZM.branches(brandId);
+      const hit = list.find(b => b.name === nameOnly || (b.name && (b.name.includes(nameOnly) || nameOnly.includes(b.name))));
+      if (hit) { code = String(hit.code); branchName = hit.name; }
+    } else if (code) {
+      const list = window.getCombinedBranches ? window.getCombinedBranches(brandId) : window.BZM.branches(brandId);
+      const hit = list.find(b => String(b.code) === code);
+      if (hit && !branchName) branchName = hit.name;
+    }
+    return { code, branch: branchName, bzm, effectiveDate, brandId };
+  };
+  const saveBzmRow = (rowEl) => {
+    const r = readBzmRow(rowEl);
+    if (!r.code) { toast('กรุณาเลือกสาขา (ต้องมีรหัสสาขา)', 'error'); return false; }
+    if (!r.bzm) { toast('กรุณากรอกชื่อ BZM ที่ดูแล', 'error'); return false; }
+    window.BZMOverrides.save(r.brandId, { code: r.code, branch: r.branch, bzm: r.bzm, effectiveDate: r.effectiveDate });
+    return true;
+  };
+  root.querySelectorAll('[data-bzm-save]').forEach(el => {
+    el.onclick = () => {
+      const row = el.closest('[data-bzm-row]');
+      const oldCode = el.dataset.bzmSave;
+      const r = readBzmRow(row);
+      // If the branch code changed, drop the old entry
+      if (r.code && String(r.code) !== String(oldCode)) window.BZMOverrides.remove(state.aboutBzmBrand, oldCode);
+      if (saveBzmRow(row)) { toast('บันทึกแล้ว', 'success'); render(); }
+    };
+  });
+  root.querySelectorAll('[data-bzm-add]').forEach(el => {
+    el.onclick = () => {
+      const row = el.closest('[data-bzm-row]');
+      if (saveBzmRow(row)) { toast('เพิ่มการกำหนด BZM แล้ว', 'success'); render(); }
+    };
+  });
+  root.querySelectorAll('[data-bzm-del]').forEach(el => {
+    el.onclick = () => {
+      if (!confirm('ลบการกำหนด BZM ของสาขานี้?')) return;
+      window.BZMOverrides.remove(state.aboutBzmBrand, el.dataset.bzmDel);
+      toast('ลบแล้ว', 'success');
+      render();
+    };
+  });
   // Store Contacts editor (About page)
   root.querySelectorAll('[data-store-brand]').forEach(el => {
     el.onclick = () => {
@@ -11813,18 +11940,30 @@ function attachPageHandlers() {
   }
 }
 
+function applyAreaManager() {
+  if (!state.audit || !state.brand) return;
+  const asOf = state.audit.header.date || undefined;
+  const z = window.BZM.zoneManagerOf(state.brand.id, state.audit.header.branch, asOf);
+  if (z) {
+    state.audit.header.areaManager = `${z.name}${z.nickname && z.nickname !== z.name ? ' (' + z.nickname + ')' : ''}${z.phone ? ' · ' + z.phone : ''}`;
+  }
+}
+
 function wireAuditHandlers() {
   root.querySelectorAll('[data-header]').forEach(el => {
     el.oninput = () => {
       state.audit.header[el.dataset.header] = el.value;
       if (el.dataset.header === 'branch') {
-        const z = window.BZM.findZone(state.brand.id, el.value);
-        if (z) state.audit.header.areaManager = `${z.name} (${z.nickname})${z.phone ? ' · '+z.phone : ''}`;
+        applyAreaManager();
       }
       autosaveDraft();
       if (el.dataset.header === 'branch') render();
     };
   });
+  // Auto-fill ผู้จัดการเขต on load if a branch is already set but the field is empty
+  if (state.audit.header.branch && !state.audit.header.areaManager) {
+    applyAreaManager();
+  }
   root.querySelectorAll('[data-tab]').forEach(el => {
     el.onclick = () => navigate('audit', { brand: state.brand, tab: el.dataset.tab });
   });
@@ -11878,10 +12017,13 @@ function wireAuditHandlers() {
     if (photoInput) photoInput.onchange = async (e) => {
       const files = [...e.target.files];
       state.audit.responses[key] = state.audit.responses[key] || { status: null, note: '', photos: [] };
+      const arr = state.audit.responses[key].photos;
+      let skipped = false;
       for (const f of files) {
-        const dataUrl = await readImageCompressed(f);
-        state.audit.responses[key].photos.push(dataUrl);
+        if (arr.length >= 2) { skipped = true; break; }
+        arr.push(await readImageCompressed(f));
       }
+      if (skipped) toast('แนบได้สูงสุด 2 รูปต่อข้อ', 'info');
       autosaveDraft();
       render();
     };
@@ -11965,10 +12107,13 @@ function wireAuditHandlers() {
     if (cphoto) cphoto.onchange = async (e) => {
       const files = [...e.target.files];
       state.audit.critical[k] = state.audit.critical[k] || { found: false, note: '', photos: [] };
+      const arr = state.audit.critical[k].photos;
+      let skipped = false;
       for (const f of files) {
-        const dataUrl = await readImageCompressed(f);
-        state.audit.critical[k].photos.push(dataUrl);
+        if (arr.length >= 2) { skipped = true; break; }
+        arr.push(await readImageCompressed(f));
       }
+      if (skipped) toast('แนบได้สูงสุด 2 รูปต่อข้อ', 'info');
       autosaveDraft();
       render();
     };

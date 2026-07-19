@@ -32,7 +32,7 @@
     'qa-app::customer::records': 'customer'
   };
   // KV keys (exact or prefix) → stored in `kv` collection, doc id = key
-  const KV_EXACT = ['qa-app::store-contacts', 'qa-app::email-recipients'];
+  const KV_EXACT = ['qa-app::store-contacts', 'qa-app::email-recipients', 'qa-app::bzm-overrides'];
   const KV_PREFIX = ['qa-app::planner-type::', 'qa-app::planner-reason::', 'qa-app::planner::'];
 
   // Re-render pages that display each store

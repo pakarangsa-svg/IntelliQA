@@ -369,5 +369,103 @@ window.BZM = {
     const br = this.findBranch(brandId, branchName);
     return br ? { name: br.bzm, nickname: br.bzmNickname, phone: br.bzmPhone, owner: br.owner, franchiseType: br.franchiseType } : null;
   },
-  zoneCount(brandId) { return (window.BZM_DATABASE[brandId]?.zones || []).length; }
+  zoneCount(brandId) { return (window.BZM_DATABASE[brandId]?.zones || []).length; },
+
+  // ---- Extract a branch code from a value like "5068 · คอสโม" / "JD-101" / "5068" ----
+  parseCode(value) {
+    const m = String(value || '').match(/\b(JD-\d+|YM-\d+|\d{3,6})\b/);
+    return m ? m[1] : null;
+  },
+  // ---- Franchise type inferred from Santa Fe Happy code prefix (5xxx=KT, 8xxx=FS) ----
+  _inferFranchise(brandId, code) {
+    if (brandId !== 'santafe-happy') return null;
+    const s = String(code);
+    if (/^8/.test(s)) return 'FS';
+    if (/^5/.test(s)) return 'KT';
+    return null;
+  },
+
+  // ---- Effective zones = static BZM_DATABASE zones with admin overrides applied ----
+  // An override reassigns a branch to a (possibly new) BZM. effectiveDate ≤ asOf gates it.
+  effectiveZones(brandId, asOf) {
+    asOf = asOf || new Date().toISOString().slice(0, 10);
+    const db = window.BZM_DATABASE[brandId];
+    // Deep-clone so we never mutate the source database
+    const zones = db ? db.zones.map(z => ({ ...z, branches: z.branches.map(b => ({ ...b })) })) : [];
+    const overrides = (window.BZMOverrides ? window.BZMOverrides.list(brandId) : [])
+      .filter(o => o.bzm && o.code && (!o.effectiveDate || o.effectiveDate <= asOf));
+    if (!overrides.length) return zones;
+
+    const byBzm = new Map();
+    zones.forEach(z => byBzm.set(z.bzm, z));
+    overrides.forEach(o => {
+      const code = String(o.code);
+      let prevFranchise = null, prevName = null;
+      // Remove the branch from whatever zone currently holds it
+      zones.forEach(z => {
+        const hit = z.branches.find(b => String(b.code) === code);
+        if (hit) { prevFranchise = z.franchiseType || null; prevName = hit.name; }
+        z.branches = z.branches.filter(b => String(b.code) !== code);
+      });
+      let tz = byBzm.get(o.bzm);
+      if (!tz) {
+        tz = {
+          bzm: o.bzm, nickname: o.bzm,
+          franchiseType: prevFranchise || this._inferFranchise(brandId, code),
+          phone: '', branches: []
+        };
+        byBzm.set(o.bzm, tz);
+        zones.push(tz);
+      }
+      tz.branches.push({ code: o.code, name: o.branch || prevName || o.code });
+    });
+    return zones.filter(z => z.branches.length);
+  },
+
+  // ---- Resolve the responsible BZM for a branch (override-aware) → for auto-fill ----
+  zoneManagerOf(brandId, branchValue, asOf) {
+    const code = this.parseCode(branchValue);
+    const nameOnly = String(branchValue || '').replace(/^\S+\s*·\s*/, '').trim();
+    const zones = this.effectiveZones(brandId, asOf);
+    for (const z of zones) {
+      for (const b of z.branches) {
+        const codeHit = code && String(b.code) === code;
+        const nameHit = nameOnly && b.name && (b.name === nameOnly || b.name.includes(nameOnly) || nameOnly.includes(b.name));
+        if (codeHit || nameHit) {
+          return { name: z.bzm, nickname: z.nickname || z.bzm, phone: z.phone || '', franchiseType: z.franchiseType || null };
+        }
+      }
+    }
+    return null;
+  }
 };
+
+// ---- Admin BZM overrides (per-brand branch → BZM assignment, with effective date) ----
+// Stored in localStorage (synced to Firestore). Shape:
+//   { brandId: { code: { code, branch, bzm, effectiveDate } } }
+window.BZMOverrides = (function() {
+  const KEY = 'qa-app::bzm-overrides';
+  function all() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; }
+  }
+  function list(brandId) {
+    const m = all()[brandId] || {};
+    return Object.values(m).filter(Boolean);
+  }
+  function save(brandId, entry) {
+    const data = all();
+    if (!data[brandId]) data[brandId] = {};
+    data[brandId][String(entry.code)] = {
+      code: String(entry.code),
+      branch: entry.branch || '',
+      bzm: entry.bzm || '',
+      effectiveDate: entry.effectiveDate || ''
+    };
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }
+  function remove(brandId, code) {
+    const data = all();
+    if (data[brandId]) { delete data[brandId][String(code)]; localStorage.setItem(KEY, JSON.stringify(data)); }
+  }
+  return { all, list, save, remove, KEY };
+})();
