@@ -302,7 +302,7 @@ window.BZM_DATABASE = {
       },
       {
         franchiseType: 'FS',
-        bzm: 'BZM. คณสวรรณ อิ่มสำราญ', nickname: 'พี่เฟิร์น', phone: '090-090-1965',
+        bzm: 'คุณ คณัสวรรณ อิ่มสำราญ', nickname: 'พี่เฟิร์น', phone: '090-090-1965',
         owners: 'วัฒน์ทวีฟู๊ด',
         branches: [
           { code: '8051', name: 'เซ็นทรัลมหาชัย', owner: 'วัฒน์ทวีฟู๊ด' },

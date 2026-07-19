@@ -5188,16 +5188,22 @@ function renderStoreContactsEditor(opts = {}) {
 }
 
 function renderBzmSummary() {
+  // Group by a normalized identity so the same person written differently
+  // ("คุณ X" vs "BZM. X") merges into one row. Display the fullest name seen.
+  const normKey = (s) => String(s || '').replace(/^\s*(คุณ|BZM\.?)\s*/i, '').replace(/\s+/g, ' ').trim();
   const brandTotals = {};
-  const summary = {}; // bzm name -> { name, brands: { brandId: count } }
+  const summary = {}; // key -> { name, brands: { brandId: count } }
   window.BRANDS.forEach(b => {
     const zones = window.BZM.effectiveZones ? window.BZM.effectiveZones(b.id) : (window.BZM_DATABASE[b.id]?.zones || []);
     const total = zones.reduce((s, z) => s + z.branches.length, 0);
     brandTotals[b.id] = total;
     zones.forEach(z => {
       if (!z.bzm) return;
-      summary[z.bzm] = summary[z.bzm] || { name: z.bzm, brands: {} };
-      summary[z.bzm].brands[b.id] = (summary[z.bzm].brands[b.id] || 0) + z.branches.length;
+      const key = normKey(z.bzm) || z.bzm;
+      const entry = summary[key] || (summary[key] = { name: z.bzm, brands: {} });
+      // Prefer the most complete display name (longest)
+      if ((z.bzm || '').length > entry.name.length) entry.name = z.bzm;
+      entry.brands[b.id] = (entry.brands[b.id] || 0) + z.branches.length;
     });
   });
   const rows = Object.values(summary)
