@@ -2291,10 +2291,8 @@ function renderItem(sub, groupIdx, item, customFailPt) {
       <div class="item-detail">
         <textarea data-note placeholder="บันทึกข้อสังเกต / สิ่งที่พบ / สถานที่ ...">${escapeHtml(r.note || '')}</textarea>
         <div class="photo-row">
-          ${(r.photos && r.photos.length >= 2)
-            ? '<span class="muted small">📷 ครบ 2 รูปแล้ว — ลบรูปเดิมก่อนเพิ่มใหม่</span>'
-            : `<input type="file" accept="image/*" capture="environment" multiple data-photo />
-               <span class="muted small">แนบรูป สูงสุด 2 รูป · แตะรูปเพื่อขยาย</span>`}
+          <input type="file" accept="image/*" capture="environment" multiple data-photo />
+          <span class="muted small">แนบรูปได้ไม่จำกัด · แตะรูปเพื่อขยาย</span>
         </div>
         ${r.photos && r.photos.length ? `
           <div class="photo-preview">
@@ -2335,10 +2333,8 @@ function renderCriticalTab(data, rmncCritNo) {
             <div class="item-detail">
               <textarea data-crit-note placeholder="รายละเอียดเหตุการณ์ที่พบ">${escapeHtml(v.note || '')}</textarea>
               <div class="photo-row">
-                ${(v.photos && v.photos.length >= 2)
-                  ? '<span class="muted small">📷 ครบ 2 รูปแล้ว — ลบรูปเดิมก่อนเพิ่มใหม่</span>'
-                  : `<input type="file" accept="image/*" capture="environment" multiple data-crit-photo />
-                     <span class="muted small">แนบรูปประกอบ สูงสุด 2 รูป · แตะรูปเพื่อขยาย</span>`}
+                <input type="file" accept="image/*" capture="environment" multiple data-crit-photo />
+                <span class="muted small">แนบรูปประกอบได้ไม่จำกัด · แตะรูปเพื่อขยาย</span>
               </div>
               ${v.photos && v.photos.length ? `
                 <div class="photo-preview">
@@ -12087,13 +12083,9 @@ function wireAuditHandlers() {
     if (photoInput) photoInput.onchange = async (e) => {
       const files = [...e.target.files];
       state.audit.responses[key] = state.audit.responses[key] || { status: null, note: '', photos: [] };
-      const arr = state.audit.responses[key].photos;
-      let skipped = false;
       for (const f of files) {
-        if (arr.length >= 2) { skipped = true; break; }
-        arr.push(await readImageCompressed(f));
+        state.audit.responses[key].photos.push(await readImageCompressed(f));
       }
-      if (skipped) toast('แนบได้สูงสุด 2 รูปต่อข้อ', 'info');
       autosaveDraft();
       render();
     };
@@ -12177,13 +12169,9 @@ function wireAuditHandlers() {
     if (cphoto) cphoto.onchange = async (e) => {
       const files = [...e.target.files];
       state.audit.critical[k] = state.audit.critical[k] || { found: false, note: '', photos: [] };
-      const arr = state.audit.critical[k].photos;
-      let skipped = false;
       for (const f of files) {
-        if (arr.length >= 2) { skipped = true; break; }
-        arr.push(await readImageCompressed(f));
+        state.audit.critical[k].photos.push(await readImageCompressed(f));
       }
-      if (skipped) toast('แนบได้สูงสุด 2 รูปต่อข้อ', 'info');
       autosaveDraft();
       render();
     };
