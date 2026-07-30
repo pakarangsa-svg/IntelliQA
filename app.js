@@ -10963,11 +10963,12 @@ function renderAdminApprove() {
         </td>
         <td><span class="tag" style="background:${st.color}20; color:${st.color}; border:1px solid ${st.color}40;">${st.label}</span></td>
         <td style="white-space:nowrap;">
-          ${isMe ? '<span class="muted small">—</span>' : `
+          ${isMe ? '' : `
             ${u.status !== 'approved' ? `<button class="btn btn-sm btn-primary" data-admin-approve="${u.uid}">✓ อนุมัติ</button>` : ''}
             ${u.status !== 'rejected' ? `<button class="btn btn-sm btn-danger" data-admin-reject="${u.uid}">✕ ${u.status === 'approved' ? 'ระงับ' : 'ปฏิเสธ'}</button>` : ''}
             <button class="btn btn-sm btn-outline" data-admin-save="${u.uid}">💾 บันทึกโรล</button>
           `}
+          <button class="btn btn-sm btn-ghost" data-admin-reset="${escapeAttr(u.email || '')}" title="ส่งลิงก์ตั้งรหัสผ่านใหม่ไปที่อีเมลผู้ใช้">🔑 รีเซ็ตรหัสผ่าน</button>
         </td>
       </tr>
     `;
@@ -11012,6 +11013,10 @@ function renderAdminApprove() {
         <div class="muted small" style="margin-top:12px;">
           💡 สิทธิ์เข้าถึงโมดูลเป็นไปตามหน่วยงาน (โรล) — เปลี่ยนโรลแล้วกด "บันทึกโรล" ผู้ใช้จะได้สิทธิ์ใหม่ในการ login ครั้งถัดไป ·
           "ระงับ" ทำให้บัญชีเข้าใช้งานไม่ได้จนกว่าจะอนุมัติใหม่
+        </div>
+        <div class="muted small" style="margin-top:8px; padding:10px 12px; background:#fffbeb; border:1px solid #fde68a; border-radius:8px;">
+          🔒 <b>เรื่องรหัสผ่าน:</b> ระบบไม่สามารถแสดงรหัสผ่านของผู้ใช้ได้ เพราะ Firebase เก็บรหัสผ่านแบบเข้ารหัส (hash) ทางเดียว — แม้แต่ผู้ดูแลระบบหรือ Google ก็อ่านไม่ได้ (เป็นมาตรฐานความปลอดภัย)
+          หากผู้ใช้ลืมรหัสผ่าน ให้กด <b>🔑 รีเซ็ตรหัสผ่าน</b> ระบบจะส่งลิงก์ตั้งรหัสใหม่ไปที่อีเมลของผู้ใช้นั้น
         </div>
       </div>
     `}
@@ -11066,6 +11071,26 @@ function wireAdminHandlers() {
         if (u) { u.department = dept; u.brand = brand; }
         toast('บันทึกโรลแล้ว — มีผลตอน login ครั้งถัดไป', 'success');
       } catch (e) { toast('ไม่สำเร็จ: ' + (e.code || e.message), 'error'); }
+    };
+  });
+  root.querySelectorAll('[data-admin-reset]').forEach(el => {
+    el.onclick = async () => {
+      const email = el.dataset.adminReset;
+      if (!email) { toast('ไม่พบอีเมลของผู้ใช้นี้', 'error'); return; }
+      if (!confirm(`ส่งลิงก์ตั้งรหัสผ่านใหม่ไปที่\n${email}\nใช่หรือไม่?`)) return;
+      el.disabled = true;
+      try {
+        await window.CloudSync.sendPasswordReset(email);
+        toast('ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลผู้ใช้แล้ว', 'success');
+      } catch (e) {
+        const code = e?.code || '';
+        let msg = e?.message || 'ส่งไม่สำเร็จ';
+        if (code === 'auth/user-not-found') msg = 'ไม่พบบัญชีนี้ในระบบ Auth';
+        if (code === 'auth/invalid-email') msg = 'อีเมลไม่ถูกต้อง';
+        toast(msg, 'error');
+      } finally {
+        el.disabled = false;
+      }
     };
   });
 }

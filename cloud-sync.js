@@ -324,6 +324,11 @@
     await applyAuthState(u);
   };
   window.CloudSync.logout = function() { return auth.signOut(); };
+  // Send a password-reset email (admin helper). Passwords are hashed by
+  // Firebase and can never be read back — this is the only way to help a user.
+  window.CloudSync.sendPasswordReset = function(email) {
+    return auth.sendPasswordResetEmail(email);
+  };
   window.CloudSync.loadProfile = async function() {
     const u = auth.currentUser;
     if (!u) return null;
